@@ -162,6 +162,21 @@ def get_analytics():
         'timeline': timeline
     })
 
+@app.route('/api/threat-map')
+def get_threat_map():
+    conn = get_connection()
+    cursor = conn.cursor()
+    # Get recent unique attacker locations
+    cursor.execute('''
+        SELECT src_ip, country, city, latitude, longitude, severity, signature
+        FROM alerts 
+        WHERE latitude != 0 AND longitude != 0
+        ORDER BY timestamp DESC LIMIT 100
+    ''')
+    locations = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return jsonify(locations)
+
 @app.route('/api/dashboard-stats')
 def get_dashboard_stats():
     conn = get_connection()

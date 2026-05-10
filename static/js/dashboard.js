@@ -123,6 +123,66 @@ document.addEventListener('DOMContentLoaded', () => {
     updateResources();
     setInterval(updateResources, 3000);
 
+    // Threat Map Initialization (Leaflet)
+    let map;
+    const initMap = () => {
+        const mapContainer = document.getElementById('threatMap');
+        if (!mapContainer) return;
+
+        // Initialize map centered on world
+        map = L.map('threatMap', {
+            center: [20, 0],
+            zoom: 2,
+            zoomControl: false,
+            attributionControl: false
+        });
+
+        // Dark theme tiles for the map (CartoDB Dark Matter)
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+            maxZoom: 19
+        }).addTo(map);
+
+        updateThreatMap();
+    };
+
+    const updateThreatMap = async () => {
+        if (!map) return;
+
+        try {
+            const response = await fetch('/api/threat-map');
+            const locations = await response.json();
+
+            // Clear existing markers if any (optional, or just keep adding new ones)
+            // For a live SOC feel, we can just add new markers and maybe pulse them
+            
+            locations.forEach(loc => {
+                if (loc.latitude && loc.longitude) {
+                    const marker = L.circleMarker([loc.latitude, loc.longitude], {
+                        radius: 5,
+                        fillColor: loc.severity >= 3 ? '#ef4444' : '#f59e0b',
+                        color: '#fff',
+                        weight: 1,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    }).addTo(map);
+
+                    marker.bindPopup(`
+                        <div class="text-xs font-sans">
+                            <p class="font-bold text-red-500 uppercase">${loc.signature}</p>
+                            <p class="text-slate-600 mt-1">Source: <b>${loc.src_ip}</b></p>
+                            <p class="text-slate-600">Location: <b>${loc.city}, ${loc.country}</b></p>
+                        </div>
+                    `);
+                }
+            });
+        } catch (error) {
+            console.error('Error updating threat map:', error);
+        }
+    };
+
+    initMap();
+    setInterval(updateThreatMap, 15000); // Update map every 15s
+
     // Example: Fetch alerts every 30 seconds
     const fetchAlerts = async () => {
         try {

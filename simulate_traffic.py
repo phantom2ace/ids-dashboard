@@ -41,6 +41,12 @@ def simulate_traffic():
         {"type": "Port Scan", "severity": "Low", "prob": 0.10, "cve": "CVE-2021-3456"}
     ]
     
+    # Mix of public IPs for GeoIP visualization
+    public_ips = [
+        "8.8.8.8", "1.1.1.1", "185.22.14.102", "45.12.99.11", 
+        "103.21.244.0", "141.101.64.0", "173.245.48.0", "190.93.240.0"
+    ]
+    
     print(f"[{datetime.now().strftime('%H:%M:%S')}] IDS Traffic Simulator Started...")
     print(f"Targeting: {url}")
     
@@ -56,7 +62,12 @@ def simulate_traffic():
                 break
         
         is_attack = current_event is not None
-        source_ip = f"{random.randint(1, 255)}.{random.randint(1, 255)}.{random.randint(1, 255)}.{random.randint(1, 255)}"
+        
+        # Randomly choose between local and public IP
+        if random.random() < 0.7:
+            source_ip = f"{random.randint(1, 255)}.{random.randint(1, 255)}.{random.randint(1, 255)}.{random.randint(1, 255)}"
+        else:
+            source_ip = random.choice(public_ips)
         
         payload = {
             "source_ip": source_ip,

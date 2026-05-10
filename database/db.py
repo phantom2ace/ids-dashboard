@@ -25,9 +25,13 @@ def insert_alert(alert):
                 category,
                 severity,
                 ml_prediction,
-                confidence
+                confidence,
+                country,
+                city,
+                latitude,
+                longitude
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             alert["timestamp"],
             alert["src_ip"],
@@ -36,17 +40,29 @@ def insert_alert(alert):
             alert["category"],
             alert["severity"],
             alert["ml_prediction"],
-            alert["confidence"]
+            alert["confidence"],
+            alert.get("country", "Unknown"),
+            alert.get("city", "Unknown"),
+            alert.get("latitude", 0.0),
+            alert.get("longitude", 0.0)
         ))
 
         # Also update attackers table for historical intelligence
         cursor.execute("""
-            INSERT INTO attackers (ip_address, total_hits, last_seen)
-            VALUES (?, 1, ?)
+            INSERT INTO attackers (ip_address, country, city, latitude, longitude, total_hits, last_seen)
+            VALUES (?, ?, ?, ?, ?, 1, ?)
             ON CONFLICT(ip_address) DO UPDATE SET
             total_hits = total_hits + 1,
             last_seen = ?
-        """, (alert["src_ip"], alert["timestamp"], alert["timestamp"]))
+        """, (
+            alert["src_ip"], 
+            alert.get("country", "Unknown"),
+            alert.get("city", "Unknown"),
+            alert.get("latitude", 0.0),
+            alert.get("longitude", 0.0),
+            alert["timestamp"], 
+            alert["timestamp"]
+        ))
 
         conn.commit()
     except Exception as e:

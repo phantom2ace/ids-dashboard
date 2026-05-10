@@ -1,0 +1,14 @@
+[Unit]
+Description=IDSSD Security Dashboard Platform
+After=network.target
+
+[Service]
+User=spade
+WorkingDirectory=/home/spade/ids-dashboard
+ExecStart=/bin/bash /home/spade/ids-dashboard/start_ids.sh
+Restart=always
+# Wait 10s before restart
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

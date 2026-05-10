@@ -19,7 +19,12 @@ CREATE TABLE IF NOT EXISTS alerts (
     severity INTEGER,
 
     ml_prediction TEXT,
-    confidence REAL
+    confidence REAL,
+    
+    country TEXT,
+    city TEXT,
+    latitude REAL,
+    longitude REAL
 )
 """)
 
@@ -29,6 +34,9 @@ CREATE TABLE IF NOT EXISTS attackers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     ip_address TEXT UNIQUE NOT NULL,
     country TEXT,
+    city TEXT,
+    latitude REAL,
+    longitude REAL,
     total_hits INTEGER DEFAULT 0,
     last_seen DATETIME DEFAULT CURRENT_TIMESTAMP,
     status TEXT DEFAULT 'Active'
