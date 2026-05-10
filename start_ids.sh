@@ -1,12 +1,13 @@
 #!/bin/bash
 
+echo "[+] Initializing Database..."
+python3 init_db.py
+
+echo "[+] Starting Suricata Log Parser..."
+python3 parser.py &
+
 echo "[+] Starting Flask Dashboard..."
 python3 app.py &
 
-sleep 3
-
-echo "[+] Starting Telegram Bot..."
-python3 alert_bot.py &
-
-echo "[+] IDS Platform Running"
+echo "[+] IDSSD Platform Running"
 wait

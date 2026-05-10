@@ -10,7 +10,7 @@
             darkMode: 'class',
         }
     </script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans antialiased transition-colors duration-200">
@@ -29,7 +29,7 @@
             </div>
             <nav class="mt-4 px-3 space-y-1">
                 <a href="/" class="flex items-center px-3 py-2 text-sm font-medium rounded hover:bg-[#2c3546] hover:text-white transition-colors">
-                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 011 1m-6 0h6"/></svg>
                     Dashboard
                 </a>
                 <a href="/analytics" class="flex items-center px-3 py-2 text-sm font-medium rounded hover:bg-[#2c3546] hover:text-white transition-colors">
@@ -93,10 +93,7 @@
         </div>
     </div>
 
-    <!-- Overlay for mobile -->
-    <div id="sidebarOverlay" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-10 lg:hidden"></div>
-
-    <script src="{{ url_for('static', filename='dashboard.js') }}"></script>
-    <script src="{{ url_for('static', filename='charts.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
 </body>
 </html>

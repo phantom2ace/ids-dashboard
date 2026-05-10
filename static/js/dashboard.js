@@ -152,24 +152,24 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td class="py-4 px-4 text-slate-500 dark:text-slate-400 whitespace-nowrap text-[10px] font-mono">
                     ${new Date(alert.timestamp).toLocaleString()}
                 </td>
-                <td class="py-4 px-4 font-medium">${alert.type}</td>
+                <td class="py-4 px-4 font-medium">${alert.signature}</td>
                 <td class="py-4 px-4">
                     <div class="flex flex-col">
                         <span class="px-2 py-0.5 text-[9px] font-mono bg-blue-900/20 text-blue-400 rounded border border-blue-800/50 w-fit">
-                            ${alert.prediction === '1' ? 'MALICIOUS' : 'BENIGN'}
+                            ${alert.ml_prediction || 'PENDING'}
                         </span>
-                        <span class="text-[8px] text-slate-500 mt-1 uppercase">CONFIDENCE: ${Math.floor(Math.random() * 20) + 80}%</span>
+                        <span class="text-[8px] text-slate-500 mt-1 uppercase">CONFIDENCE: ${Math.floor((alert.confidence || 0) * 100)}%</span>
                     </div>
                 </td>
                 <td class="py-4 px-4">
-                    <span class="status-pill border ${getSeverityClass(alert.severity)}">
+                    <span class="status-pill border ${getSeverityClass(String(alert.severity))}">
                         ${alert.severity}
                     </span>
                 </td>
-                <td class="py-4 px-4 font-mono text-[10px] group-hover:text-red-400">
-                    ${alert.cve && alert.cve !== 'N/A' ? `<a href="https://nvd.nist.gov/vuln/detail/${alert.cve}" target="_blank" class="text-red-500 underline decoration-red-500/30 hover:decoration-red-500">${alert.cve}</a>` : '<span class="text-slate-600">N/A</span>'}
+                <td class="py-4 px-4 font-mono text-[10px] text-red-400/80 group-hover:text-red-400">
+                    ${alert.category || 'N/A'}
                 </td>
-                <td class="py-4 px-4 font-mono text-[10px] text-slate-400">${alert.source_ip}</td>
+                <td class="py-4 px-4 font-mono text-[10px] text-slate-400">${alert.src_ip}</td>
             </tr>
         `).join('');
     };
@@ -184,31 +184,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="space-y-4">
                     <div>
                         <p class="text-[10px] text-slate-500 uppercase font-bold">Source IP</p>
-                        <p class="text-lg font-mono text-white">${alert.source_ip}</p>
+                        <p class="text-lg font-mono text-white">${alert.src_ip}</p>
                     </div>
                     <div>
-                        <p class="text-[10px] text-slate-500 uppercase font-bold">Attack Type</p>
-                        <p class="text-lg text-blue-400 font-semibold">${alert.type}</p>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">Signature</p>
+                        <p class="text-lg text-blue-400 font-semibold">${alert.signature}</p>
                     </div>
                     <div>
-                        <p class="text-[10px] text-slate-500 uppercase font-bold">CVE Identifier</p>
-                        <p class="text-lg text-red-400 font-mono">${alert.cve || 'N/A'}</p>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">Category</p>
+                        <p class="text-lg text-red-400 font-mono">${alert.category || 'N/A'}</p>
                     </div>
                 </div>
                 <div class="space-y-4 bg-[#141820] p-4 rounded border border-slate-800">
                     <div>
                         <p class="text-[10px] text-slate-500 uppercase font-bold">ML Prediction</p>
-                        <p class="text-sm font-bold text-slate-200">${alert.prediction === '1' ? 'MALICIOUS' : 'BENIGN'}</p>
+                        <p class="text-sm font-bold text-slate-200">${alert.ml_prediction || 'PENDING'}</p>
                     </div>
                     <div>
                         <p class="text-[10px] text-slate-500 uppercase font-bold">Model Confidence</p>
                         <div class="w-full h-1.5 bg-slate-800 rounded-full mt-1">
-                            <div class="h-full bg-blue-500 rounded-full" style="width: 94%"></div>
+                            <div class="h-full bg-blue-500 rounded-full" style="width: ${(alert.confidence || 0) * 100}%"></div>
                         </div>
                     </div>
                     <div>
-                        <p class="text-[10px] text-slate-500 uppercase font-bold">Status</p>
-                        <p class="text-sm text-green-400 font-bold uppercase">Processed</p>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">Severity</p>
+                        <p class="text-sm text-orange-400 font-bold uppercase">${alert.severity}</p>
                     </div>
                 </div>
             </div>

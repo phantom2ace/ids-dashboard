@@ -3,6 +3,7 @@ import sqlite3
 import joblib
 import os
 
+from database.db import get_connection, insert_alert, get_recent_alerts
 from alert_bot import AlertBot
 from dotenv import load_dotenv
 
@@ -51,7 +52,7 @@ def analytics():
 
 @app.route('/attackers')
 def attackers():
-    conn = sqlite3.connect('alerts.db')
+    conn = get_connection()
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
     cursor.execute('SELECT * FROM attackers ORDER BY last_seen DESC')
@@ -138,11 +139,11 @@ def predict():
 
 @app.route('/api/analytics')
 def get_analytics():
-    conn = sqlite3.connect('alerts.db')
+    conn = get_connection()
     cursor = conn.cursor()
     
     # Attack Distribution (Pie)
-    cursor.execute('SELECT type, COUNT(*) FROM alerts GROUP BY type')
+    cursor.execute('SELECT category, COUNT(*) FROM alerts GROUP BY category')
     distribution = dict(cursor.fetchall())
     
     # Severity Breakdown (Bar)
@@ -163,7 +164,7 @@ def get_analytics():
 
 @app.route('/api/dashboard-stats')
 def get_dashboard_stats():
-    conn = sqlite3.connect('alerts.db')
+    conn = get_connection()
     cursor = conn.cursor()
     
     # Line chart data (last 6 segments of time)
@@ -174,8 +175,8 @@ def get_dashboard_stats():
     cursor.execute('SELECT severity, COUNT(*) FROM alerts GROUP BY severity')
     bar_data = dict(cursor.fetchall())
     
-    # Pie chart data (Type)
-    cursor.execute('SELECT type, COUNT(*) FROM alerts GROUP BY type')
+    # Pie chart data (Type/Category)
+    cursor.execute('SELECT category, COUNT(*) FROM alerts GROUP BY category')
     pie_data = dict(cursor.fetchall())
     
     conn.close()
@@ -223,12 +224,7 @@ def update_settings():
 
 @app.route('/api/alerts')
 def get_alerts():
-    conn = sqlite3.connect('alerts.db')
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM alerts ORDER BY timestamp DESC LIMIT 50')
-    alerts = [dict(row) for row in cursor.fetchall()]
-    conn.close()
+    alerts = get_recent_alerts(50)
     return jsonify(alerts)
 
 if __name__ == '__main__':
