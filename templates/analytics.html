@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mb-6 flex justify-between items-end">
+    <div>
+        <h2 class="text-2xl font-bold text-white">Security Analytics</h2>
+        <p class="text-slate-500 text-sm">Deep statistical analysis of network intrusions</p>
+    </div>
+    <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">
+        Root > IDSSD > Analytics
+    </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+    <!-- Stat Card 1 -->
+    <div class="bg-[#1c222d] border border-slate-800 rounded p-4 flex flex-col justify-center">
+        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Detection Rate</p>
+        <div class="flex items-baseline space-x-2">
+            <h4 class="text-2xl font-bold text-white">98.2%</h4>
+            <span class="text-[10px] text-green-500 font-bold">+1.2%</span>
+        </div>
+    </div>
+    <!-- Stat Card 2 -->
+    <div class="bg-[#1c222d] border border-slate-800 rounded p-4 flex flex-col justify-center">
+        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Avg Response Time</p>
+        <div class="flex items-baseline space-x-2">
+            <h4 class="text-2xl font-bold text-white">24ms</h4>
+            <span class="text-[10px] text-blue-500 font-bold">STABLE</span>
+        </div>
+    </div>
+    <!-- Stat Card 3 -->
+    <div class="bg-[#1c222d] border border-slate-800 rounded p-4 flex flex-col justify-center">
+        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Threat Level</p>
+        <div class="flex items-baseline space-x-2">
+            <h4 class="text-2xl font-bold text-orange-500 uppercase">Elevated</h4>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+    <!-- Attack Vectors Widget -->
+    <div class="bg-[#1c222d] border border-slate-800 rounded shadow-lg overflow-hidden flex flex-col h-[400px]">
+        <div class="px-4 py-2 border-b border-slate-800 bg-[#242b38] flex justify-between items-center">
+            <h3 class="text-[10px] font-bold text-slate-300 uppercase tracking-wider">Attack Vector Distribution</h3>
+        </div>
+        <div class="p-6 flex-1 flex items-center justify-center">
+            <canvas id="vectorChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Time Series Widget -->
+    <div class="bg-[#1c222d] border border-slate-800 rounded shadow-lg overflow-hidden flex flex-col h-[400px]">
+        <div class="px-4 py-2 border-b border-slate-800 bg-[#242b38] flex justify-between items-center">
+            <h3 class="text-[10px] font-bold text-slate-300 uppercase tracking-wider">24H Threat Timeline</h3>
+        </div>
+        <div class="p-6 flex-1">
+            <canvas id="timeSeriesChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 gap-6">
+    <!-- Top Attackers Widget -->
+    <div class="bg-[#1c222d] border border-slate-800 rounded shadow-lg overflow-hidden flex flex-col">
+        <div class="px-4 py-2 border-b border-slate-800 bg-[#242b38] flex justify-between items-center">
+            <h3 class="text-[10px] font-bold text-slate-300 uppercase tracking-wider">Top 5 Threat Sources</h3>
+        </div>
+        <div class="p-0">
+            <table class="w-full text-left text-[11px]">
+                <thead class="bg-[#141820] text-slate-500 uppercase font-bold">
+                    <tr>
+                        <th class="py-3 px-6">Source IP</th>
+                        <th class="py-3 px-6">Total Attempts</th>
+                        <th class="py-3 px-6">Primary Method</th>
+                        <th class="py-3 px-6">Impact Score</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-800 text-slate-300">
+                    <tr class="hover:bg-[#242b38]">
+                        <td class="py-3 px-6 font-mono">185.22.14.102</td>
+                        <td class="py-3 px-6 font-bold">1,402</td>
+                        <td class="py-3 px-6">DDoS (SYN Flood)</td>
+                        <td class="py-3 px-6"><span class="text-red-500">9.4/10</span></td>
+                    </tr>
+                    <tr class="hover:bg-[#242b38]">
+                        <td class="py-3 px-6 font-mono">45.12.99.11</td>
+                        <td class="py-3 px-6 font-bold">842</td>
+                        <td class="py-3 px-6">SQL Injection</td>
+                        <td class="py-3 px-6"><span class="text-orange-500">7.2/10</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

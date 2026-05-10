@@ -1,0 +1,49 @@
+/* Fortinet-style UI Refinements */
+body {
+    background-color: #0a0c10;
+    scrollbar-width: thin;
+    scrollbar-color: #2c3546 #0a0c10;
+}
+
+/* Custom Scrollbar for Widgets */
+.custom-scrollbar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+    background: #1c222d;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #2c3546;
+    border-radius: 2px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #3b82f6;
+}
+
+/* Table Row Hover Effect */
+#alertTableBody tr:hover {
+    background-color: #242b38 !important;
+}
+
+/* Widget Transition */
+.widget-card {
+    transition: all 0.2s ease-in-out;
+}
+
+.widget-card:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* Status Badges */
+.status-pill {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}

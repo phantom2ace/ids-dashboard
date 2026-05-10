@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+
+# Databases
+alerts.db
+
+# Models & Large Files
+ids_model.pkl
+
+# Configuration & Secrets
+.env
+config.json
+
+# IDEs
+.vscode/
+.idea/
+.trae/

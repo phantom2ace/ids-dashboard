@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mb-6 flex justify-between items-end">
+    <div>
+        <h2 class="text-2xl font-bold text-white">Security Dashboard</h2>
+        <p class="text-slate-500 text-sm">FortiOS-inspired Intrusion Detection System</p>
+    </div>
+    <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">
+        Root > IDSSD > Dashboard
+    </div>
+</div>
+
+<!-- Graphs Section (Fortinet Style Widgets) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <!-- Line Chart Widget -->
+    <div class="bg-[#1c222d] border border-slate-800 rounded shadow-lg overflow-hidden flex flex-col h-[320px]">
+        <div class="px-4 py-2 border-b border-slate-800 bg-[#242b38] flex justify-between items-center">
+            <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Traffic Trends</h3>
+            <div class="flex space-x-1">
+                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+            </div>
+        </div>
+        <div class="p-4 flex-1">
+            <canvas id="lineChart"></canvas>
+        </div>
+    </div>
+    
+    <!-- Bar Chart Widget -->
+    <div class="bg-[#1c222d] border border-slate-800 rounded shadow-lg overflow-hidden flex flex-col h-[320px]">
+        <div class="px-4 py-2 border-b border-slate-800 bg-[#242b38] flex justify-between items-center">
+            <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Attack Severity</h3>
+            <div class="flex space-x-1">
+                <div class="w-2 h-2 rounded-full bg-blue-500"></div>
+            </div>
+        </div>
+        <div class="p-4 flex-1">
+            <canvas id="barChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Pie Chart Widget -->
+    <div class="bg-[#1c222d] border border-slate-800 rounded shadow-lg overflow-hidden flex flex-col h-[320px]">
+        <div class="px-4 py-2 border-b border-slate-800 bg-[#242b38] flex justify-between items-center">
+            <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Attack Distribution</h3>
+            <div class="flex space-x-1">
+                <div class="w-2 h-2 rounded-full bg-purple-500"></div>
+            </div>
+        </div>
+        <div class="p-4 flex-1">
+            <canvas id="pieChart"></canvas>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 gap-6">
+    <!-- Live Alerts Widget -->
+    <div class="bg-[#1c222d] border border-slate-800 rounded shadow-lg overflow-hidden flex flex-col h-[450px]">
+        <div class="px-4 py-2 border-b border-slate-800 bg-[#242b38] flex justify-between items-center shrink-0">
+            <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Live Alerts Log</h3>
+            <div class="flex items-center space-x-4">
+                <button onclick="exportAlerts()" class="text-[10px] text-blue-400 font-bold uppercase hover:text-blue-300 transition-colors">Export CSV</button>
+                <span class="text-[10px] text-slate-500 font-mono">REFRESH: 10S</span>
+            </div>
+        </div>
+        <div class="overflow-y-auto flex-1 custom-scrollbar">
+            <table class="w-full text-left text-xs border-collapse">
+                <thead class="sticky top-0 bg-[#242b38] z-10">
+                    <tr class="text-slate-400 uppercase text-[10px] font-bold">
+                        <th class="py-3 px-4 border-b border-slate-800">Time</th>
+                        <th class="py-3 px-4 border-b border-slate-800">Attack Type</th>
+                        <th class="py-3 px-4 border-b border-slate-800">ML Prediction</th>
+                        <th class="py-3 px-4 border-b border-slate-800">Severity</th>
+                        <th class="py-3 px-4 border-b border-slate-800">CVE</th>
+                        <th class="py-3 px-4 border-b border-slate-800">Source IP</th>
+                    </tr>
+                </thead>
+                <tbody id="alertTableBody" class="text-slate-300 divide-y divide-slate-800">
+                    <!-- Data will be populated by JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Alert Details Modal -->
+<div id="alertModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal()"></div>
+    <div class="bg-[#1c222d] border border-slate-700 rounded-lg shadow-2xl w-full max-w-2xl relative z-10 overflow-hidden flex flex-col max-h-[90vh]">
+        <div class="px-6 py-4 border-b border-slate-800 bg-[#242b38] flex justify-between items-center">
+            <h3 class="text-sm font-bold text-slate-300 uppercase tracking-widest">Alert Technical Details</h3>
+            <button onclick="closeModal()" class="text-slate-500 hover:text-white transition-colors">
+                <svg class="w-5 h-5" viewBox="0 0 16 16" fill="currentColor"><path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L9.06 8l3.22 3.22a.75.75 0 1 1-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"></path></svg>
+            </button>
+        </div>
+        <div id="modalContent" class="p-6 overflow-y-auto space-y-6 text-sm">
+            <!-- Modal data injected by JS -->
+        </div>
+        <div class="px-6 py-4 border-t border-slate-800 bg-[#141820] flex justify-end space-x-3">
+            <button onclick="closeModal()" class="px-4 py-2 text-xs font-bold text-slate-400 hover:text-white uppercase">Close</button>
+            <button class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold rounded uppercase transition-colors">Export PCAP</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

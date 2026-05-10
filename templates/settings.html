@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mb-6 flex justify-between items-end">
+    <div>
+        <h2 class="text-2xl font-bold text-white">System Settings</h2>
+        <p class="text-slate-500 text-sm">Configure IDS model and notification preferences</p>
+    </div>
+    <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">
+        Root > IDSSD > Settings
+    </div>
+</div>
+
+<div class="max-w-4xl">
+    <form action="/api/settings/update" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Model Configuration Tile -->
+        <div class="bg-[#1c222d] border border-slate-800 rounded shadow-lg overflow-hidden flex flex-col">
+            <div class="px-4 py-2 border-b border-slate-800 bg-[#242b38] flex justify-between items-center">
+                <h3 class="text-[10px] font-bold text-slate-300 uppercase tracking-wider">Inference Engine</h3>
+            </div>
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Model File Path</label>
+                    <input type="text" name="model_path" value="ids_model.pkl" 
+                           class="w-full bg-[#141820] border border-slate-800 rounded px-3 py-2 text-xs text-slate-300 focus:border-blue-500 outline-none transition-colors">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Sensitivity Threshold</label>
+                    <input type="range" name="sensitivity" min="0" max="100" value="75" 
+                           class="w-full h-1.5 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-blue-600">
+                    <div class="flex justify-between text-[10px] text-slate-600 mt-1 font-mono">
+                        <span>STRICT</span>
+                        <span>BALANCED</span>
+                        <span>LENIENT</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Tile -->
+        <div class="bg-[#1c222d] border border-slate-800 rounded shadow-lg overflow-hidden flex flex-col">
+            <div class="px-4 py-2 border-b border-slate-800 bg-[#242b38] flex justify-between items-center">
+                <h3 class="text-[10px] font-bold text-slate-300 uppercase tracking-wider">Alert Notifications</h3>
+            </div>
+            <div class="p-6 space-y-4">
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Telegram Bot Token</label>
+                    <input type="password" name="bot_token" placeholder="••••••••••••" 
+                           class="w-full bg-[#141820] border border-slate-800 rounded px-3 py-2 text-xs text-slate-300 focus:border-blue-500 outline-none transition-colors">
+                </div>
+                <div>
+                    <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Admin Chat ID</label>
+                    <input type="text" name="chat_id" placeholder="123456789" 
+                           class="w-full bg-[#141820] border border-slate-800 rounded px-3 py-2 text-xs text-slate-300 focus:border-blue-500 outline-none transition-colors">
+                </div>
+            </div>
+        </div>
+
+        <div class="md:col-span-2 flex justify-end">
+            <button type="submit" class="bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-bold px-8 py-2.5 rounded uppercase tracking-widest shadow-lg transition-all active:scale-95">
+                Apply System Changes
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
