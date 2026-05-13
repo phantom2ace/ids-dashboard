@@ -104,7 +104,41 @@ def attackers():
 
 @app.route('/settings')
 def settings():
-    return render_template('settings.html')
+    import json
+    import os
+    config = {
+        'model_path': 'ids_model.pkl',
+        'sensitivity': 75,
+        'bot_token': '',
+        'chat_id': ''
+    }
+    if os.path.exists('config.json'):
+        with open('config.json', 'r') as f:
+            try:
+                config.update(json.load(f))
+            except:
+                pass
+    return render_template('settings.html', config=config)
+
+@app.route('/rules')
+def ips_rules():
+    import os
+    rules_content = ""
+    rule_paths = [
+        '/var/lib/suricata/rules/suricata.rules',
+        '/etc/suricata/rules/local.rules',
+        '/etc/suricata/suricata.rules'
+    ]
+    for path in rule_paths:
+        if os.path.exists(path):
+            with open(path, 'r') as f:
+                rules_content = f.read()
+            break
+            
+    if not rules_content:
+        rules_content = "# No active Suricata rules found.\n# Ensure suricata-update has been run."
+        
+    return render_template('rules.html', rules=rules_content)
 
 import pandas as pd
 from datetime import datetime

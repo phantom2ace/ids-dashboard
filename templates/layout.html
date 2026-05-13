@@ -19,33 +19,37 @@
 <body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans antialiased transition-colors duration-200">
     <div class="flex h-screen overflow-hidden">
         <!-- Sidebar -->
-        <aside id="sidebar" class="w-64 bg-[#1c222d] dark:bg-[#1c222d] text-slate-300 border-r border-slate-800 flex-shrink-0 transition-all duration-300 ease-in-out transform translate-x-0 fixed inset-y-0 left-0 lg:relative z-30">
-            <div class="h-16 flex items-center px-6 border-b border-slate-800 bg-[#141820]">
-                <h1 class="text-xl font-bold text-white tracking-wider">IDSSD</h1>
+        <aside id="sidebar" class="w-64 bg-white dark:bg-[#1c222d] dark:bg-[#1c222d] text-slate-600 dark:text-slate-300 border-r border-slate-200 dark:border-slate-800 flex-shrink-0 transition-all duration-300 ease-in-out transform translate-x-0 fixed inset-y-0 left-0 lg:relative z-30">
+            <div class="h-16 flex items-center px-6 border-b border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-[#141820]">
+                <h1 class="text-xl font-bold text-slate-900 dark:text-white tracking-wider">IDSSD</h1>
                 <div class="flex-1"></div>
                 <!-- GitHub-style Close Button (X) -->
                 <button id="closeSidebar" class="p-1.5 rounded-md hover:bg-slate-800 transition-all focus:outline-none group">
-                    <svg class="w-4 h-4 text-slate-400 group-hover:text-white" viewBox="0 0 16 16" fill="currentColor">
+                    <svg class="w-4 h-4 text-slate-500 dark:text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:text-white" viewBox="0 0 16 16" fill="currentColor">
                         <path d="M3.72 3.72a.75.75 0 0 1 1.06 0L8 6.94l3.22-3.22a.75.75 0 1 1 1.06 1.06L9.06 8l3.22 3.22a.75.75 0 1 1-1.06 1.06L8 9.06l-3.22 3.22a.75.75 0 0 1-1.06-1.06L6.94 8 3.72 4.78a.75.75 0 0 1 0-1.06Z"></path>
                     </svg>
                 </button>
             </div>
             <nav class="mt-4 px-3 space-y-1">
-                <a href="/" class="flex items-center px-3 py-2 text-sm font-medium rounded hover:bg-[#2c3546] hover:text-white transition-colors">
+                <a href="/" class="flex items-center px-3 py-2 text-sm font-medium rounded hover:bg-slate-200 dark:hover:bg-[#2c3546] hover:text-slate-900 dark:hover:text-white text-slate-500 dark:text-slate-400 transition-colors">
                     <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 011 1m-6 0h6"/></svg>
                     Dashboard
                 </a>
-                <a href="/analytics" class="flex items-center px-3 py-2 text-sm font-medium rounded hover:bg-[#2c3546] hover:text-white transition-colors">
+                <a href="/analytics" class="flex items-center px-3 py-2 text-sm font-medium rounded hover:bg-slate-200 dark:hover:bg-[#2c3546] hover:text-slate-900 dark:hover:text-white text-slate-500 dark:text-slate-400 transition-colors">
                     <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
                     Analytics
                 </a>
-                <a href="/attackers" class="flex items-center px-3 py-2 text-sm font-medium rounded hover:bg-[#2c3546] hover:text-white transition-colors">
+                <a href="/attackers" class="flex items-center px-3 py-2 text-sm font-medium rounded hover:bg-slate-200 dark:hover:bg-[#2c3546] hover:text-slate-900 dark:hover:text-white text-slate-500 dark:text-slate-400 transition-colors">
                     <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
                     Attackers
                 </a>
-                <a href="/settings" class="flex items-center px-3 py-2 text-sm font-medium rounded hover:bg-[#2c3546] hover:text-white transition-colors">
+                <a href="/settings" class="flex items-center px-3 py-2 text-sm font-medium rounded hover:bg-slate-200 dark:hover:bg-[#2c3546] hover:text-slate-900 dark:hover:text-white text-slate-500 dark:text-slate-400 transition-colors">
                     <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
                     Settings
+                </a>
+                <a href="/rules" class="flex items-center px-3 py-2 text-sm font-medium rounded hover:bg-slate-200 dark:hover:bg-[#2c3546] hover:text-slate-900 dark:hover:text-white text-slate-500 dark:text-slate-400 transition-colors">
+                    <svg class="w-4 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    IPS Rules
                 </a>
             </nav>
         </aside>
@@ -53,14 +57,14 @@
         <!-- Main Content Wrapper -->
         <div class="flex-1 flex flex-col min-w-0 overflow-hidden relative">
             <!-- Top Bar (Fortinet Style) -->
-            <header class="h-16 bg-[#141820] text-white flex items-center px-4 space-x-6 shrink-0 border-b border-slate-800">
+            <header class="h-16 bg-slate-100 dark:bg-[#141820] text-slate-900 dark:text-white flex items-center px-4 space-x-6 shrink-0 border-b border-slate-200 dark:border-slate-800">
                 <button id="menuBtn" class="p-1.5 rounded hover:bg-slate-800 transition-all focus:outline-none group">
-                    <svg class="w-5 h-5 text-slate-400 group-hover:text-white" viewBox="0 0 16 16" fill="currentColor">
+                    <svg class="w-5 h-5 text-slate-500 dark:text-slate-500 dark:text-slate-400 group-hover:text-slate-900 dark:text-white" viewBox="0 0 16 16" fill="currentColor">
                         <path d="M1 2.75A.75.75 0 0 1 1.75 2h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 2.75Zm0 5A.75.75 0 0 1 1.75 7h12.5a.75.75 0 0 1 0 1.5H1.75A.75.75 0 0 1 1 7.75ZM1.75 12h12.5a.75.75 0 0 1 0 1.5H1.75a.75.75 0 0 1 0-1.5Z"></path>
                     </svg>
                 </button>
 
-                <div class="flex items-center space-x-6 text-xs uppercase tracking-wider font-semibold text-slate-400">
+                <div class="flex items-center space-x-6 text-xs uppercase tracking-wider font-semibold text-slate-500 dark:text-slate-500 dark:text-slate-400">
                     <div class="flex items-center space-x-2">
                         <span>CPU:</span>
                         <div class="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden">
@@ -80,17 +84,17 @@
                 <div class="flex-1"></div>
                 
                 <div class="flex items-center space-x-4">
-                    <div id="systemTime" class="text-sm text-slate-400 font-mono hidden md:block">--:--:--</div>
+                    <div id="systemTime" class="text-sm text-slate-500 dark:text-slate-500 dark:text-slate-400 font-mono hidden md:block">--:--:--</div>
                     <button id="themeToggle" class="p-2 rounded hover:bg-slate-800 transition-colors">
                         <svg id="sunIcon" class="hidden w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"/></svg>
-                        <svg id="moonIcon" class="w-4 h-4 text-slate-400" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+                        <svg id="moonIcon" class="w-4 h-4 text-slate-500 dark:text-slate-500 dark:text-slate-400" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
                     </button>
                     <div class="px-2 py-0.5 rounded bg-green-900/30 text-green-400 text-[10px] border border-green-500/30">ONLINE</div>
                 </div>
             </header>
 
             <!-- Main Content -->
-            <main class="flex-1 overflow-y-auto bg-[#0a0c10] p-4 lg:p-6 transition-colors duration-200">
+            <main class="flex-1 overflow-y-auto bg-slate-200 dark:bg-[#0a0c10] p-4 lg:p-6 transition-colors duration-200">
                 {% block content %}{% endblock %}
             </main>
         </div>

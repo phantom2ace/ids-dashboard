@@ -3,37 +3,37 @@
 {% block content %}
 <div class="mb-6 flex justify-between items-end">
     <div>
-        <h2 class="text-2xl font-bold text-white">Threat Actors</h2>
-        <p class="text-slate-500 text-sm">Real-time monitoring and management of malicious sources</p>
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Threat Actors</h2>
+        <p class="text-slate-500 dark:text-slate-500 text-sm">Real-time monitoring and management of malicious sources</p>
     </div>
-    <div class="text-xs text-slate-500 uppercase tracking-widest font-bold">
+    <div class="text-xs text-slate-500 dark:text-slate-500 uppercase tracking-widest font-bold">
         Root > IDSSD > Attackers
     </div>
 </div>
 
-<div class="bg-[#1c222d] border border-slate-800 rounded shadow-lg overflow-hidden flex flex-col">
-    <div class="px-4 py-2 border-b border-slate-800 bg-[#242b38] flex justify-between items-center">
-        <h3 class="text-[10px] font-bold text-slate-300 uppercase tracking-wider">Known Malicious Sources</h3>
+<div class="bg-white dark:bg-[#1c222d] border border-slate-200 dark:border-slate-800 rounded shadow-lg overflow-hidden flex flex-col">
+    <div class="px-4 py-2 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#242b38] flex justify-between items-center">
+        <h3 class="text-[10px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">Known Malicious Sources</h3>
         <div class="flex items-center space-x-4">
-            <span class="text-[10px] text-slate-500 font-mono">TOTAL: {{ attackers|length }}</span>
+            <span class="text-[10px] text-slate-500 dark:text-slate-500 font-mono">TOTAL: {{ attackers|length }}</span>
         </div>
     </div>
     <div class="overflow-x-auto">
         <table class="w-full text-left text-[11px] border-collapse">
-            <thead class="bg-[#141820] text-slate-500 uppercase font-bold">
+            <thead class="bg-slate-100 dark:bg-[#141820] text-slate-500 dark:text-slate-500 uppercase font-bold">
                 <tr>
-                    <th class="py-3 px-6 border-b border-slate-800">Source IP</th>
-                    <th class="py-3 px-6 border-b border-slate-800">Origin</th>
-                    <th class="py-3 px-6 border-b border-slate-800">Total Hits</th>
-                    <th class="py-3 px-6 border-b border-slate-800">Risk Profile</th>
-                    <th class="py-3 px-6 border-b border-slate-800">Last Seen</th>
-                    <th class="py-3 px-6 border-b border-slate-800">Status</th>
-                    <th class="py-3 px-6 border-b border-slate-800 text-right">Action</th>
+                    <th class="py-3 px-6 border-b border-slate-200 dark:border-slate-800">Source IP</th>
+                    <th class="py-3 px-6 border-b border-slate-200 dark:border-slate-800">Origin</th>
+                    <th class="py-3 px-6 border-b border-slate-200 dark:border-slate-800">Total Hits</th>
+                    <th class="py-3 px-6 border-b border-slate-200 dark:border-slate-800">Risk Profile</th>
+                    <th class="py-3 px-6 border-b border-slate-200 dark:border-slate-800">Last Seen</th>
+                    <th class="py-3 px-6 border-b border-slate-200 dark:border-slate-800">Status</th>
+                    <th class="py-3 px-6 border-b border-slate-200 dark:border-slate-800 text-right">Action</th>
                 </tr>
             </thead>
-            <tbody class="divide-y divide-slate-800 text-slate-300">
+            <tbody class="divide-y divide-slate-800 text-slate-600 dark:text-slate-300">
                 {% for attacker in attackers %}
-                <tr class="hover:bg-[#242b38] transition-colors">
+                <tr class="hover:bg-slate-50 dark:hover:bg-[#242b38] transition-colors">
                     <td class="py-3 px-6 font-mono font-bold">{{ attacker.ip_address }}</td>
                     <td class="py-3 px-6">
                         <div class="flex items-center">
@@ -51,7 +51,7 @@
                         <span class="text-[10px] px-2 py-0.5 rounded bg-blue-900/40 text-blue-400 border border-blue-800/50 uppercase font-bold tracking-widest">Low</span>
                         {% endif %}
                     </td>
-                    <td class="py-3 px-6 text-slate-500 font-mono">{{ attacker.last_seen }}</td>
+                    <td class="py-3 px-6 text-slate-500 dark:text-slate-500 font-mono">{{ attacker.last_seen }}</td>
                     <td class="py-3 px-6">
                         <span class="status-pill 
                             {% if attacker.status == 'Blocked' %}
@@ -64,7 +64,7 @@
                     </td>
                     <td class="py-3 px-6 text-right">
                         <button onclick="toggleStatus('{{ attacker.ip_address }}', '{{ attacker.status }}')" 
-                                class="text-[10px] font-bold px-3 py-1 rounded border border-slate-700 bg-[#141820] hover:bg-slate-800 hover:text-white transition-all uppercase tracking-tighter">
+                                class="text-[10px] font-bold px-3 py-1 rounded border border-slate-700 bg-slate-100 dark:bg-[#141820] hover:bg-slate-200 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white transition-all uppercase tracking-tighter">
                             {% if attacker.status == 'Blocked' %}Unblock{% else %}Block IP{% endif %}
                         </button>
                     </td>
