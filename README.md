@@ -68,10 +68,6 @@ python3 simulate_traffic.py
 ```
 This script generates diverse network traffic scenarios (DDoS, SQLi, etc.) and sends them to the dashboard to demonstrate detection and visualization capabilities.
 
-## 🔒 Security Note
-
-- Ensure `.env` and `config.json` are never committed to version control (already configured in `.gitignore`).
-- Change the `SECRET_KEY` in production.
 
 ## 📄 License
 

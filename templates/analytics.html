@@ -14,10 +14,10 @@
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
     <!-- Stat Card 1 -->
     <div class="bg-[#1c222d] border border-slate-800 rounded p-4 flex flex-col justify-center">
-        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Detection Rate</p>
+        <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Avg ML Confidence</p>
         <div class="flex items-baseline space-x-2">
-            <h4 class="text-2xl font-bold text-white">98.2%</h4>
-            <span class="text-[10px] text-green-500 font-bold">+1.2%</span>
+            <h4 class="text-2xl font-bold text-white">{{ avg_confidence }}%</h4>
+            <span class="text-[10px] text-blue-500 font-bold">ACTIVE</span>
         </div>
     </div>
     <!-- Stat Card 2 -->
@@ -32,7 +32,7 @@
     <div class="bg-[#1c222d] border border-slate-800 rounded p-4 flex flex-col justify-center">
         <p class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Threat Level</p>
         <div class="flex items-baseline space-x-2">
-            <h4 class="text-2xl font-bold text-orange-500 uppercase">Elevated</h4>
+            <h4 class="text-2xl font-bold {% if threat_level == 'Severe' %}text-red-500{% elif threat_level == 'Elevated' %}text-orange-500{% else %}text-green-500{% endif %} uppercase">{{ threat_level }}</h4>
         </div>
     </div>
 </div>
@@ -76,18 +76,26 @@
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800 text-slate-300">
+                    {% for attacker in top_attackers %}
                     <tr class="hover:bg-[#242b38]">
-                        <td class="py-3 px-6 font-mono">185.22.14.102</td>
-                        <td class="py-3 px-6 font-bold">1,402</td>
-                        <td class="py-3 px-6">DDoS (SYN Flood)</td>
-                        <td class="py-3 px-6"><span class="text-red-500">9.4/10</span></td>
+                        <td class="py-3 px-6 font-mono">{{ attacker.src_ip }}</td>
+                        <td class="py-3 px-6 font-bold">{{ attacker.total_hits }}</td>
+                        <td class="py-3 px-6">{{ attacker.primary_method or 'Unknown' }}</td>
+                        <td class="py-3 px-6">
+                            {% if attacker.total_hits > 50 %}
+                            <span class="text-red-500 font-bold">Critical</span>
+                            {% elif attacker.total_hits > 10 %}
+                            <span class="text-orange-500 font-bold">High</span>
+                            {% else %}
+                            <span class="text-yellow-500 font-bold">Medium</span>
+                            {% endif %}
+                        </td>
                     </tr>
-                    <tr class="hover:bg-[#242b38]">
-                        <td class="py-3 px-6 font-mono">45.12.99.11</td>
-                        <td class="py-3 px-6 font-bold">842</td>
-                        <td class="py-3 px-6">SQL Injection</td>
-                        <td class="py-3 px-6"><span class="text-orange-500">7.2/10</span></td>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="py-6 text-center text-slate-500 italic">No attackers found.</td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

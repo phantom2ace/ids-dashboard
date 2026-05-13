@@ -26,12 +26,15 @@ def insert_alert(alert):
                 severity,
                 ml_prediction,
                 confidence,
+                cve,
+                cvss,
+                behavior,
                 country,
                 city,
                 latitude,
                 longitude
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             alert["timestamp"],
             alert["src_ip"],
@@ -41,6 +44,9 @@ def insert_alert(alert):
             alert["severity"],
             alert["ml_prediction"],
             alert["confidence"],
+            alert.get("cve", "N/A"),
+            alert.get("cvss", 0.0),
+            alert.get("behavior", "N/A"),
             alert.get("country", "Unknown"),
             alert.get("city", "Unknown"),
             alert.get("latitude", 0.0),

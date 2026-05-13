@@ -212,19 +212,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td class="py-4 px-4 text-slate-500 dark:text-slate-400 whitespace-nowrap text-[10px] font-mono">
                     ${new Date(alert.timestamp).toLocaleString()}
                 </td>
-                <td class="py-4 px-4 font-medium">${alert.signature}</td>
+                <td class="py-4 px-4 font-medium">${alert.signature}
+                    ${alert.cve && alert.cve !== 'N/A' ? `<br><span class="text-[9px] px-1 py-0.5 rounded bg-red-900/40 text-red-400 border border-red-800/50 mt-1 inline-block">${alert.cve}</span>` : ''}
+                </td>
                 <td class="py-4 px-4">
                     <div class="flex flex-col">
-                        <span class="px-2 py-0.5 text-[9px] font-mono bg-blue-900/20 text-blue-400 rounded border border-blue-800/50 w-fit">
+                        <span class="px-2 py-0.5 text-[9px] font-mono rounded border w-fit 
+                            ${alert.ml_prediction === 'Zero-Day Anomaly' ? 'bg-purple-900/20 text-purple-400 border-purple-800/50' : 
+                              alert.ml_prediction === 'Normal' ? 'bg-green-900/20 text-green-400 border-green-800/50' : 
+                              'bg-blue-900/20 text-blue-400 border-blue-800/50'}">
                             ${alert.ml_prediction || 'PENDING'}
                         </span>
-                        <span class="text-[8px] text-slate-500 mt-1 uppercase">CONFIDENCE: ${Math.floor((alert.confidence || 0) * 100)}%</span>
+                        <span class="text-[8px] text-slate-500 mt-1 uppercase">CONFIDENCE: ${Math.floor(alert.confidence || 0)}%</span>
                     </div>
                 </td>
                 <td class="py-4 px-4">
                     <span class="status-pill border ${getSeverityClass(String(alert.severity))}">
                         ${alert.severity}
                     </span>
+                    ${alert.cvss ? `<div class="text-[9px] mt-1 text-slate-400 font-mono">CVSS: ${alert.cvss}</div>` : ''}
                 </td>
                 <td class="py-4 px-4 font-mono text-[10px] text-red-400/80 group-hover:text-red-400">
                     ${alert.category || 'N/A'}
@@ -251,19 +257,25 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p class="text-lg text-blue-400 font-semibold">${alert.signature}</p>
                     </div>
                     <div>
-                        <p class="text-[10px] text-slate-500 uppercase font-bold">Category</p>
-                        <p class="text-lg text-red-400 font-mono">${alert.category || 'N/A'}</p>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">Category & Behavior</p>
+                        <p class="text-md text-red-400 font-mono">${alert.category || 'N/A'}</p>
+                        <p class="text-xs text-slate-400 italic mt-1">${alert.behavior || 'No behavioral data available'}</p>
                     </div>
                 </div>
                 <div class="space-y-4 bg-[#141820] p-4 rounded border border-slate-800">
+                    <div>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">Threat Intelligence</p>
+                        <p class="text-sm font-bold text-red-400">${alert.cve && alert.cve !== 'N/A' ? alert.cve : 'Unknown CVE'}</p>
+                        ${alert.cvss ? `<p class="text-[10px] font-mono text-slate-400 mt-0.5">CVSS Score: <span class="text-white">${alert.cvss}</span></p>` : ''}
+                    </div>
                     <div>
                         <p class="text-[10px] text-slate-500 uppercase font-bold">ML Prediction</p>
                         <p class="text-sm font-bold text-slate-200">${alert.ml_prediction || 'PENDING'}</p>
                     </div>
                     <div>
                         <p class="text-[10px] text-slate-500 uppercase font-bold">Model Confidence</p>
-                        <div class="w-full h-1.5 bg-slate-800 rounded-full mt-1">
-                            <div class="h-full bg-blue-500 rounded-full" style="width: ${(alert.confidence || 0) * 100}%"></div>
+                        <div class="w-full h-1.5 bg-slate-800 rounded-full mt-1 overflow-hidden">
+                            <div class="h-full bg-blue-500 rounded-full transition-all duration-500" style="width: ${alert.confidence || 0}%"></div>
                         </div>
                     </div>
                     <div>
@@ -272,10 +284,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             </div>
-            <div>
+            <div class="mt-4">
                 <p class="text-[10px] text-slate-500 uppercase font-bold mb-2">Raw Feature Vector (NSL-KDD)</p>
                 <div class="bg-black/40 p-3 rounded font-mono text-[10px] text-slate-400 break-all border border-slate-800/50">
-                    ${alert.payload || 'No raw data available'}
+                    ${alert.payload || 'Feature vector processed from Suricata flow logs'}
                 </div>
             </div>
         `;
@@ -332,4 +344,19 @@ async function toggleStatus(ip, currentStatus) {
     } catch (error) {
         console.error('Error toggling status:', error);
     }
+}
+
+// Simulate PCAP export for demonstration
+function exportPcap() {
+    const timestamp = new Date().getTime();
+    const mockPcapData = "d4c3b2a1020004000000000000000000ffff000001000000..."; // Mock magic number
+    const blob = new Blob([mockPcapData], { type: 'application/vnd.tcpdump.pcap' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `alert_${timestamp}.pcap`;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
 }

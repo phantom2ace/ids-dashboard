@@ -16,10 +16,14 @@ CREATE TABLE IF NOT EXISTS alerts (
     signature TEXT,
     category TEXT,
 
-    severity INTEGER,
+    severity TEXT,
 
     ml_prediction TEXT,
     confidence REAL,
+    
+    cve TEXT,
+    cvss REAL,
+    behavior TEXT,
     
     country TEXT,
     city TEXT,

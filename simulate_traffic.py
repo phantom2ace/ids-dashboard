@@ -18,27 +18,41 @@ FEATURES = [
     "dst_host_rerror_rate", "dst_host_srv_rerror_rate"
 ]
 
-def get_random_features(is_attack=False):
+def get_random_features(is_attack=False, category="Normal"):
     """Generates a pseudo-random feature vector."""
-    if is_attack:
-        return [
-            random.uniform(0.5, 1.0) if i % 3 == 0 else random.uniform(0, 0.5)
-            for i in range(len(FEATURES))
-        ]
+    features = [random.uniform(0, 0.1) for _ in range(41)]
+    
+    if not is_attack:
+        return features
+        
+    if "Web Application Attack" in category:
+        features[13] = random.uniform(0.8, 1.0) # U2R
+        features[16] = random.uniform(0.8, 1.0)
+    elif "Information Leak" in category:
+        features[31] = random.uniform(0.8, 1.0) # Probe
+        features[29] = random.uniform(0.8, 1.0)
+    elif "Privilege Gain" in category:
+        features[10] = random.uniform(0.5, 1.0) # R2L
+        features[21] = random.uniform(0.8, 1.0)
+    elif "DDoS" in category:
+        features[4] = random.uniform(0.8, 1.0)  # DoS
+        features[22] = random.uniform(0.8, 1.0)
+        features[23] = random.uniform(0.8, 1.0)
     else:
-        return [
-            random.uniform(0, 0.2) if i % 3 == 0 else random.uniform(0, 0.1)
-            for i in range(len(FEATURES))
-        ]
+        # Zero-Day Anomaly Simulation (Extremely weird values)
+        features[0] = random.uniform(5.0, 10.0)
+        features[7] = random.uniform(5.0, 10.0)
+        
+    return features
 
 def simulate_traffic():
     url = "http://localhost:5000/api/predict"
     
     attack_scenarios = [
-        {"type": "DDoS", "severity": "Critical", "prob": 0.05, "cve": "CVE-2023-1234"},
-        {"type": "SQL Injection", "severity": "High", "prob": 0.03, "cve": "CVE-2024-5678"},
-        {"type": "Brute Force", "severity": "Medium", "prob": 0.07, "cve": "CVE-2022-9012"},
-        {"type": "Port Scan", "severity": "Low", "prob": 0.10, "cve": "CVE-2021-3456"}
+        {"signature": "ET WEB_SERVER Apache Log4j Attempt", "category": "Web Application Attack", "severity": "Critical", "prob": 0.05},
+        {"signature": "ET EXPLOIT Possible SQL Injection Attempt", "category": "Web Application Attack", "severity": "High", "prob": 0.03},
+        {"signature": "ET POLICY SSH Brute Force Attempt", "category": "Attempted Admin Privilege Gain", "severity": "Medium", "prob": 0.07},
+        {"signature": "ET SCAN Nmap Scripting Engine", "category": "Information Leak", "severity": "Low", "prob": 0.10}
     ]
     
     # Mix of public IPs for GeoIP visualization
@@ -72,10 +86,10 @@ def simulate_traffic():
         payload = {
             "source_ip": source_ip,
             "destination_ip": "10.0.0.5",
-            "type": current_event["type"] if is_attack else "Normal Traffic",
+            "signature": current_event["signature"] if is_attack else "Normal Traffic",
+            "category": current_event["category"] if is_attack else "Misc activity",
             "severity": current_event["severity"] if is_attack else "Low",
-            "cve": current_event["cve"] if is_attack else "N/A",
-            "features": get_random_features(is_attack)
+            "features": get_random_features(is_attack, current_event["category"] if is_attack else "Normal")
         }
         
         try:
@@ -83,7 +97,7 @@ def simulate_traffic():
             if response.status_code == 200:
                 result = response.json()
                 status_icon = "🚨" if result['prediction'] == 1 else "✅"
-                print(f"[{datetime.now().strftime('%H:%M:%S')}] {status_icon} Source: {source_ip.ljust(15)} | Type: {payload['type'].ljust(15)} | Prediction: {result['severity']}")
+                print(f"[{datetime.now().strftime('%H:%M:%S')}] {status_icon} Source: {source_ip.ljust(15)} | Sig: {payload['signature'].ljust(35)} | Prediction: {result['severity']}")
             else:
                 print(f"Error {response.status_code}: {response.text}")
         except requests.exceptions.ConnectionError:
