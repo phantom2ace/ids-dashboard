@@ -151,6 +151,16 @@ def predict():
         return jsonify({'error': 'Models not loaded'}), 500
     
     try:
+        api_key = request.headers.get('X-API-KEY')
+        org_name = 'Local Sensor'
+        if api_key:
+            conn = get_connection()
+            cursor = conn.cursor()
+            cursor.execute("SELECT name FROM organizations WHERE api_key = ?", (api_key,))
+            row = cursor.fetchone()
+            if row:
+                org_name = row[0]
+            conn.close()
         data = request.json
         features_list = data['features']
         
@@ -204,7 +214,11 @@ def predict():
             "country": geo_info['country'],
             "city": geo_info['city'],
             "latitude": geo_info['lat'],
-            "longitude": geo_info['lon']
+            "longitude": geo_info['lon'],
+            "org_name": org_name,
+            "mitre_id": cve_info.get('mitre_id', 'N/A'),
+            "mitre_tactic": cve_info.get('mitre_tactic', 'N/A'),
+            "recommendation": cve_info.get('recommendation', 'N/A')
         }
         
         # Save to database and update attackers (handled internally)
@@ -212,7 +226,7 @@ def predict():
         
         # Send Alert if High or Critical Severity
         if severity in ['High', 'Critical']:
-            msg = f"<b>Attack Detected!</b>\nSignature: {signature}\nSource: {alert['src_ip']}\nCVE: {alert['cve']}"
+            msg = f"<b>Attack Detected at {org_name}!</b>\nSignature: {signature}\nSource: {alert['src_ip']}\nCVE: {alert['cve']}"
             bot.send_alert(msg)
         
         return jsonify({
@@ -328,6 +342,25 @@ def update_settings():
 def get_alerts():
     alerts = get_recent_alerts(50)
     return jsonify(alerts)
+
+@app.route('/api/alerts/<int:alert_id>/update', methods=['POST'])
+def update_alert(alert_id):
+    data = request.json
+    status = data.get('status')
+    notes = data.get('notes')
+    analyst = data.get('analyst')
+    
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute('''
+        UPDATE alerts 
+        SET status = ?, analyst_notes = ?, assigned_analyst = ? 
+        WHERE id = ?
+    ''', (status, notes, analyst, alert_id))
+    conn.commit()
+    conn.close()
+    
+    return jsonify({'success': True})
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

@@ -32,9 +32,17 @@ def insert_alert(alert):
                 country,
                 city,
                 latitude,
-                longitude
+                longitude,
+                org_name,
+                mitre_id,
+                mitre_tactic,
+                recommendation,
+                status,
+                analyst_notes,
+                incident_id,
+                assigned_analyst
             )
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             alert["timestamp"],
             alert["src_ip"],
@@ -50,8 +58,21 @@ def insert_alert(alert):
             alert.get("country", "Unknown"),
             alert.get("city", "Unknown"),
             alert.get("latitude", 0.0),
-            alert.get("longitude", 0.0)
+            alert.get("longitude", 0.0),
+            alert.get("org_name", "Local Sensor"),
+            alert.get("mitre_id", "N/A"),
+            alert.get("mitre_tactic", "N/A"),
+            alert.get("recommendation", "N/A"),
+            "NEW",
+            "",
+            "N/A", # temp incident_id
+            "Unassigned"
         ))
+        
+        # Update incident ID using the generated row ID
+        alert_id = cursor.lastrowid
+        incident_id = f"INC-2026-{alert_id:04d}"
+        cursor.execute("UPDATE alerts SET incident_id = ? WHERE id = ?", (incident_id, alert_id))
 
         # Also update attackers table for historical intelligence
         cursor.execute("""

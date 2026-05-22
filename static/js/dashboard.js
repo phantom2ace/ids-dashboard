@@ -157,14 +157,21 @@ document.addEventListener('DOMContentLoaded', () => {
             
             locations.forEach(loc => {
                 if (loc.latitude && loc.longitude) {
-                    const marker = L.circleMarker([loc.latitude, loc.longitude], {
-                        radius: 5,
-                        fillColor: loc.severity >= 3 ? '#ef4444' : '#f59e0b',
-                        color: '#fff',
-                        weight: 1,
-                        opacity: 1,
-                        fillOpacity: 0.8
-                    }).addTo(map);
+                    // Fortinet-style Radar Ping
+                    let pingClass = 'radar-ping-low';
+                    const sev = (loc.severity || '').toString().toLowerCase();
+                    if (sev === 'critical') pingClass = 'radar-ping-critical';
+                    else if (sev === 'high') pingClass = 'radar-ping-high';
+                    else if (sev === 'medium') pingClass = 'radar-ping-medium';
+
+                    const icon = L.divIcon({
+                        className: 'bg-transparent border-0',
+                        html: `<div class="${pingClass}"></div>`,
+                        iconSize: [12, 12],
+                        iconAnchor: [6, 6]
+                    });
+
+                    const marker = L.marker([loc.latitude, loc.longitude], { icon: icon }).addTo(map);
 
                     marker.bindPopup(`
                         <div class="text-xs font-sans">
@@ -207,24 +214,38 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Calculate active critical incidents
+        const activeCritical = alerts.filter(a => String(a.severity).toLowerCase() === 'critical' && a.status !== 'RESOLVED' && a.status !== 'FALSE_POSITIVE');
+        const widget = document.getElementById('needsAttentionWidget');
+        const countSpan = document.getElementById('activeCriticalCount');
+        if (widget && countSpan) {
+            if (activeCritical.length > 0) {
+                countSpan.innerText = activeCritical.length;
+                widget.classList.remove('hidden');
+                widget.classList.add('flex');
+            } else {
+                widget.classList.add('hidden');
+                widget.classList.remove('flex');
+            }
+        }
+
+        const getStatusBadge = (status) => {
+            switch(status) {
+                case 'NEW': return '<span class="px-2 py-0.5 rounded border bg-blue-900/20 text-blue-400 border-blue-800/50">🚨 NEW</span>';
+                case 'INVESTIGATING': return '<span class="px-2 py-0.5 rounded border bg-orange-900/20 text-orange-400 border-orange-800/50">👀 INVESTIGATING</span>';
+                case 'RESOLVED': return '<span class="px-2 py-0.5 rounded border bg-green-900/20 text-green-400 border-green-800/50">✅ RESOLVED</span>';
+                case 'FALSE_POSITIVE': return '<span class="px-2 py-0.5 rounded border bg-slate-800 text-slate-400 border-slate-700">👻 FALSE POSITIVE</span>';
+                default: return `<span class="px-2 py-0.5 rounded border bg-blue-900/20 text-blue-400 border-blue-800/50">🚨 OPEN</span>`;
+            }
+        };
+
         tbody.innerHTML = alerts.map(alert => `
             <tr onclick='openAlertDetails(${JSON.stringify(alert).replace(/'/g, "&apos;")})' class="hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors cursor-pointer group">
+                <td class="py-4 px-4 font-bold text-[10px] text-purple-400 tracking-widest whitespace-nowrap">
+                    ${alert.incident_id || 'INC-PENDING'}
+                </td>
                 <td class="py-4 px-4 text-slate-500 dark:text-slate-400 whitespace-nowrap text-[10px] font-mono">
                     ${new Date(alert.timestamp).toLocaleString()}
-                </td>
-                <td class="py-4 px-4 font-medium">${alert.signature}
-                    ${alert.cve && alert.cve !== 'N/A' ? `<br><span class="text-[9px] px-1 py-0.5 rounded bg-red-900/40 text-red-400 border border-red-800/50 mt-1 inline-block">${alert.cve}</span>` : ''}
-                </td>
-                <td class="py-4 px-4">
-                    <div class="flex flex-col">
-                        <span class="px-2 py-0.5 text-[9px] font-mono rounded border w-fit 
-                            ${alert.ml_prediction === 'Zero-Day Anomaly' ? 'bg-purple-900/20 text-purple-400 border-purple-800/50' : 
-                              alert.ml_prediction === 'Normal' ? 'bg-green-900/20 text-green-400 border-green-800/50' : 
-                              'bg-blue-900/20 text-blue-400 border-blue-800/50'}">
-                            ${alert.ml_prediction || 'PENDING'}
-                        </span>
-                        <span class="text-[8px] text-slate-500 mt-1 uppercase">CONFIDENCE: ${Math.floor(alert.confidence || 0)}%</span>
-                    </div>
                 </td>
                 <td class="py-4 px-4">
                     <span class="status-pill border ${getSeverityClass(String(alert.severity))}">
@@ -232,8 +253,20 @@ document.addEventListener('DOMContentLoaded', () => {
                     </span>
                     ${alert.cvss ? `<div class="text-[9px] mt-1 text-slate-400 font-mono">CVSS: ${alert.cvss}</div>` : ''}
                 </td>
-                <td class="py-4 px-4 font-mono text-[10px] text-red-400/80 group-hover:text-red-400">
-                    ${alert.category || 'N/A'}
+                <td class="py-4 px-4 font-mono text-[9px] whitespace-nowrap">
+                    ${getStatusBadge(alert.status || 'NEW')}
+                </td>
+                <td class="py-4 px-4 font-mono text-[10px] text-slate-300">
+                    <div class="flex items-center space-x-1">
+                        <svg class="w-3 h-3 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        <span>${alert.assigned_analyst || 'Unassigned'}</span>
+                    </div>
+                </td>
+                <td class="py-4 px-4 font-bold text-[10px] text-blue-500 uppercase tracking-widest whitespace-nowrap">
+                    ${alert.org_name || 'Local Sensor'}
+                </td>
+                <td class="py-4 px-4 font-medium">${alert.signature}
+                    ${alert.cve && alert.cve !== 'N/A' ? `<br><span class="text-[9px] px-1 py-0.5 rounded bg-red-900/40 text-red-400 border border-red-800/50 mt-1 inline-block">${alert.cve}</span>` : ''}
                 </td>
                 <td class="py-4 px-4 font-mono text-[10px] text-slate-400">${alert.src_ip}</td>
             </tr>
@@ -267,6 +300,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         <p class="text-[10px] text-slate-500 uppercase font-bold">Threat Intelligence</p>
                         <p class="text-sm font-bold text-red-400">${alert.cve && alert.cve !== 'N/A' ? alert.cve : 'Unknown CVE'}</p>
                         ${alert.cvss ? `<p class="text-[10px] font-mono text-slate-400 mt-0.5">CVSS Score: <span class="text-white">${alert.cvss}</span></p>` : ''}
+                        
+                        <!-- MITRE ATT&CK Mapping -->
+                        <div class="mt-2 bg-[#0a0c10] p-2 rounded border border-slate-700/50 flex flex-col space-y-1">
+                            <p class="text-[9px] text-slate-500 uppercase font-bold tracking-widest">MITRE ATT&CK®</p>
+                            <p class="text-xs text-blue-400 font-mono">${alert.mitre_id || 'N/A'} - <span class="text-slate-300 font-sans">${alert.mitre_tactic || 'Unknown'}</span></p>
+                        </div>
                     </div>
                     <div>
                         <p class="text-[10px] text-slate-500 uppercase font-bold">ML Prediction</p>
@@ -284,7 +323,69 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 </div>
             </div>
-            <div class="mt-4">
+            
+            <!-- AI Incident Response Playbook -->
+            <div class="mt-6 border-t border-slate-800 pt-4">
+                <div class="flex items-center space-x-2 mb-3">
+                    <div class="w-2 h-2 rounded-full bg-purple-500 animate-pulse"></div>
+                    <p class="text-[10px] text-purple-400 uppercase font-bold tracking-widest">AI Analyst Recommendation Playbook</p>
+                </div>
+                <div class="bg-purple-900/10 border border-purple-800/30 p-4 rounded-lg">
+                    <p class="text-sm text-slate-300 leading-relaxed">${alert.recommendation || 'No specific automated playbook available. Investigate manually.'}</p>
+                </div>
+            </div>
+
+            <!-- Investigation Timeline -->
+            <div class="mt-6 border-t border-slate-800 pt-4">
+                <p class="text-[10px] text-slate-500 uppercase font-bold mb-3">Investigation Timeline</p>
+                <div class="flex flex-col space-y-4 pl-2 border-l-2 border-slate-700/50">
+                    <div class="relative pl-4">
+                        <div class="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-red-500"></div>
+                        <p class="text-[9px] text-slate-500 font-mono">${new Date(alert.timestamp).toLocaleTimeString()} - Alert Generated</p>
+                    </div>
+                    <div class="relative pl-4">
+                        <div class="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-blue-500"></div>
+                        <p class="text-[9px] text-slate-500 font-mono">${new Date(new Date(alert.timestamp).getTime() + 2000).toLocaleTimeString()} - ML Engine Classified as ${alert.severity}</p>
+                    </div>
+                    ${alert.status !== 'NEW' ? `
+                    <div class="relative pl-4">
+                        <div class="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-orange-500"></div>
+                        <p class="text-[9px] text-slate-500 font-mono">${new Date(new Date(alert.timestamp).getTime() + 60000).toLocaleTimeString()} - Status changed to ${alert.status} by ${alert.assigned_analyst}</p>
+                    </div>` : ''}
+                </div>
+            </div>
+
+            <!-- Analyst Notes System -->
+            <div class="mt-6 border-t border-slate-800 pt-4">
+                <p class="text-[10px] text-slate-500 uppercase font-bold mb-2">Analyst Investigation</p>
+                <div class="flex flex-col space-y-3">
+                    <div class="flex space-x-6 items-center">
+                        <div class="flex items-center space-x-2">
+                            <label class="text-xs text-slate-400">Status:</label>
+                            <select id="modalStatusSelect" class="bg-[#141820] text-xs text-slate-200 border border-slate-700 rounded p-1 outline-none focus:border-blue-500 transition-colors">
+                                <option value="NEW" ${alert.status === 'NEW' ? 'selected' : ''}>🚨 NEW</option>
+                                <option value="INVESTIGATING" ${alert.status === 'INVESTIGATING' ? 'selected' : ''}>👀 INVESTIGATING</option>
+                                <option value="ESCALATED" ${alert.status === 'ESCALATED' ? 'selected' : ''}>🛡️ ESCALATED</option>
+                                <option value="RESOLVED" ${alert.status === 'RESOLVED' ? 'selected' : ''}>✅ RESOLVED</option>
+                                <option value="FALSE_POSITIVE" ${alert.status === 'FALSE_POSITIVE' ? 'selected' : ''}>👻 FALSE POSITIVE</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <label class="text-xs text-slate-400">Assign To:</label>
+                            <select id="modalAnalystSelect" class="bg-[#141820] text-xs text-slate-200 border border-slate-700 rounded p-1 outline-none focus:border-blue-500 transition-colors">
+                                <option value="Unassigned" ${alert.assigned_analyst === 'Unassigned' ? 'selected' : ''}>Unassigned</option>
+                                <option value="Alice (L1)" ${alert.assigned_analyst === 'Alice (L1)' ? 'selected' : ''}>Alice (L1 Analyst)</option>
+                                <option value="Texin (L2)" ${alert.assigned_analyst === 'Texin (L2)' ? 'selected' : ''}>Texin (L2 Escalation)</option>
+                                <option value="SOC Lead" ${alert.assigned_analyst === 'SOC Lead' ? 'selected' : ''}>SOC Lead</option>
+                            </select>
+                        </div>
+                    </div>
+                    <textarea id="modalNotesText" class="w-full bg-[#141820] border border-slate-700 rounded p-2 text-xs text-slate-300 outline-none focus:border-blue-500 transition-colors" rows="3" placeholder="Add investigation notes...">${alert.analyst_notes || ''}</textarea>
+                    <button onclick="saveAnalystNotes(${alert.id})" class="self-end px-4 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold uppercase rounded transition-colors shadow-lg">Save Case Details</button>
+                </div>
+            </div>
+
+            <div class="mt-6 border-t border-slate-800 pt-4">
                 <p class="text-[10px] text-slate-500 uppercase font-bold mb-2">Raw Feature Vector (NSL-KDD)</p>
                 <div class="bg-black/40 p-3 rounded font-mono text-[10px] text-slate-400 break-all border border-slate-800/50">
                     ${alert.payload || 'Feature vector processed from Suricata flow logs'}
@@ -297,6 +398,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.closeModal = () => {
         document.getElementById('alertModal').classList.add('hidden');
+    };
+
+    window.saveAnalystNotes = async (alertId) => {
+        const status = document.getElementById('modalStatusSelect').value;
+        const analyst = document.getElementById('modalAnalystSelect').value;
+        const notes = document.getElementById('modalNotesText').value;
+
+        try {
+            const res = await fetch(`/api/alerts/${alertId}/update`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ status, analyst, notes })
+            });
+            if (res.ok) {
+                closeModal();
+                fetchAlerts(); // refresh table instantly
+            } else {
+                alert('Failed to update case details.');
+            }
+        } catch (error) {
+            console.error('Error saving notes:', error);
+        }
     };
 
     window.exportAlerts = () => {

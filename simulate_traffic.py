@@ -61,6 +61,12 @@ def simulate_traffic():
         "103.21.244.0", "141.101.64.0", "173.245.48.0", "190.93.240.0"
     ]
     
+    api_keys = [
+        ("school_a_123", "School A"),
+        ("hospital_b_123", "Hospital B"),
+        (None, "Local Sensor")
+    ]
+    
     print(f"[{datetime.now().strftime('%H:%M:%S')}] IDS Traffic Simulator Started...")
     print(f"Targeting: {url}")
     
@@ -92,12 +98,18 @@ def simulate_traffic():
             "features": get_random_features(is_attack, current_event["category"] if is_attack else "Normal")
         }
         
+        # Pick random tenant
+        tenant_key, tenant_name = random.choice(api_keys)
+        headers = {'Content-Type': 'application/json'}
+        if tenant_key:
+            headers['X-API-KEY'] = tenant_key
+        
         try:
-            response = requests.post(url, json=payload)
+            response = requests.post(url, json=payload, headers=headers)
             if response.status_code == 200:
                 result = response.json()
-                status_icon = "🚨" if result['prediction'] == 1 else "✅"
-                print(f"[{datetime.now().strftime('%H:%M:%S')}] {status_icon} Source: {source_ip.ljust(15)} | Sig: {payload['signature'].ljust(35)} | Prediction: {result['severity']}")
+                status_icon = "🚨" if result.get('severity') in ['High', 'Critical'] else "✅"
+                print(f"[{datetime.now().strftime('%H:%M:%S')}] {status_icon} Tenant: {tenant_name[:10].ljust(10)} | Src: {source_ip.ljust(15)} | Sig: {payload['signature'][:25].ljust(25)} | Sev: {result['severity']}")
             else:
                 print(f"Error {response.status_code}: {response.text}")
         except requests.exceptions.ConnectionError:
