@@ -14,3 +14,29 @@ services:
     environment:
       - FLASK_ENV=production
       - TZ=UTC
+
+  sensor-oakridge:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: idssd-sensor-oakridge
+    command: python3 sensor_agent.py
+    restart: unless-stopped
+    depends_on:
+      - soc-platform
+    environment:
+      - SOC_DASHBOARD_URL=http://soc-platform:5000/api/predict
+      - AGENT_API_KEY=oakridge_api_123
+
+  sensor-mercy:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: idssd-sensor-mercy
+    command: python3 sensor_agent.py
+    restart: unless-stopped
+    depends_on:
+      - soc-platform
+    environment:
+      - SOC_DASHBOARD_URL=http://soc-platform:5000/api/predict
+      - AGENT_API_KEY=mercy_api_123

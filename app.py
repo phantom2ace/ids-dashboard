@@ -55,8 +55,8 @@ def dashboard():
                            high_severity=high_severity, 
                            active_attackers=active_attackers)
 
-@app.route('/analytics')
-def analytics():
+@app.route('/ai-analysis')
+def ai_analysis():
     conn = get_connection()
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
@@ -76,31 +76,128 @@ def analytics():
     else:
         threat_level = "Normal"
         
-    # Top 5 Attackers
+    # Get recent predictions
     cursor.execute('''
-        SELECT ip_address as src_ip, total_hits, 
-               (SELECT category FROM alerts WHERE alerts.src_ip = attackers.ip_address ORDER BY id DESC LIMIT 1) as primary_method
-        FROM attackers 
-        ORDER BY total_hits DESC LIMIT 5
+        SELECT signature as attack, confidence, ml_prediction, timestamp
+        FROM alerts
+        WHERE ml_prediction != 'Normal'
+        ORDER BY id DESC LIMIT 10
     ''')
-    top_attackers = [dict(row) for row in cursor.fetchall()]
+    recent_predictions = [dict(row) for row in cursor.fetchall()]
+    
+    # Calculate False Positive Rate (mocked for demo based on RESOLVED FALSE POSITIVE cases)
+    cursor.execute('''
+        SELECT COUNT(*) as count FROM incidents WHERE status = 'FALSE_POSITIVE'
+    ''')
+    fp_count = cursor.fetchone()[0]
+    cursor.execute('''
+        SELECT COUNT(*) as count FROM incidents
+    ''')
+    total_incidents = cursor.fetchone()[0]
+    fp_rate = f"{(fp_count / total_incidents * 100):.1f}%" if total_incidents > 0 else "0.0%"
     
     conn.close()
     
-    return render_template('analytics.html', 
+    return render_template('ai_analysis.html', 
                            avg_confidence=avg_confidence, 
                            threat_level=threat_level, 
-                           top_attackers=top_attackers)
+                           recent_predictions=recent_predictions,
+                           fp_rate=fp_rate)
 
-@app.route('/attackers')
-def attackers():
+@app.route('/threat-intel')
+def threat_intel():
     conn = get_connection()
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
-    cursor.execute('SELECT * FROM attackers ORDER BY last_seen DESC')
+    
+    # Get active attackers
+    cursor.execute('SELECT * FROM attackers ORDER BY last_seen DESC LIMIT 50')
     attackers_list = [dict(row) for row in cursor.fetchall()]
+    
+    # Get Top CVEs
+    cursor.execute('''
+        SELECT cve, COUNT(*) as count 
+        FROM alerts 
+        WHERE cve != 'N/A' AND cve IS NOT NULL 
+        GROUP BY cve 
+        ORDER BY count DESC LIMIT 5
+    ''')
+    top_cves = [dict(row) for row in cursor.fetchall()]
+    
+    # Get MITRE Techniques
+    cursor.execute('''
+        SELECT mitre_tactic, COUNT(*) as count 
+        FROM incidents 
+        WHERE mitre_tactic != 'Unknown' AND mitre_tactic != 'N/A' AND mitre_tactic IS NOT NULL
+        GROUP BY mitre_tactic 
+        ORDER BY count DESC LIMIT 5
+    ''')
+    top_mitre = [dict(row) for row in cursor.fetchall()]
+    
     conn.close()
-    return render_template('attackers.html', attackers=attackers_list)
+    return render_template('threat_intel.html', 
+                           attackers=attackers_list, 
+                           top_cves=top_cves, 
+                           top_mitre=top_mitre)
+
+@app.route('/incidents')
+def incidents_page():
+    conn = get_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT * FROM incidents 
+        ORDER BY created_at DESC LIMIT 500
+    ''')
+    incidents = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return render_template('incidents.html', incidents=incidents)
+
+@app.route('/sensors')
+def sensors_page():
+    conn = get_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute('SELECT * FROM organizations ORDER BY name ASC')
+    orgs = [dict(row) for row in cursor.fetchall()]
+    
+    # Calculate traffic volume per org
+    for org in orgs:
+        cursor.execute("SELECT COUNT(*) FROM alerts WHERE org_name = ?", (org['name'],))
+        org['traffic_volume'] = cursor.fetchone()[0]
+        # Mask the API key
+        org['api_key'] = org['api_key'][:4] + "*" * 8 + org['api_key'][-4:]
+        
+    conn.close()
+    return render_template('sensors.html', orgs=orgs)
+
+@app.route('/investigations')
+def investigations_page():
+    conn = get_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    
+    cursor.execute('''
+        SELECT * FROM incidents 
+        WHERE assigned_analyst != 'Unassigned' 
+        ORDER BY updated_at DESC
+    ''')
+    investigations = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    
+    return render_template('investigations.html', investigations=investigations)
+
+@app.route('/attack-map')
+def attack_map_page():
+    return render_template('attack_map.html')
+
+@app.route('/reports')
+def reports_page():
+    return render_template('reports.html')
+
+@app.route('/team')
+def team_page():
+    return render_template('team.html')
 
 @app.route('/settings')
 def settings():
@@ -343,8 +440,14 @@ def get_alerts():
     alerts = get_recent_alerts(50)
     return jsonify(alerts)
 
-@app.route('/api/alerts/<int:alert_id>/update', methods=['POST'])
-def update_alert(alert_id):
+@app.route('/api/incidents')
+def get_incidents():
+    from database.db import get_recent_incidents
+    incidents = get_recent_incidents(50)
+    return jsonify(incidents)
+
+@app.route('/api/incidents/<incident_id>/update', methods=['POST'])
+def update_incident(incident_id):
     data = request.json
     status = data.get('status')
     notes = data.get('notes')
@@ -353,10 +456,10 @@ def update_alert(alert_id):
     conn = get_connection()
     cursor = conn.cursor()
     cursor.execute('''
-        UPDATE alerts 
+        UPDATE incidents 
         SET status = ?, analyst_notes = ?, assigned_analyst = ? 
-        WHERE id = ?
-    ''', (status, notes, analyst, alert_id))
+        WHERE incident_id = ?
+    ''', (status, notes, analyst, incident_id))
     conn.commit()
     conn.close()
     

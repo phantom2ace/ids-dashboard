@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mb-6 flex justify-between items-end">
+    <div>
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center">
+            <svg class="w-6 h-6 mr-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+            Machine Learning Analysis
+        </h2>
+    </div>
+    <div class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">
+        Root > IDSSD > AI Analysis
+    </div>
+</div>
+
+<!-- AI Performance Overview -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+    <div class="bg-white dark:bg-[#1c222d] border border-slate-200 dark:border-slate-800 rounded shadow-lg p-6 flex flex-col justify-center items-center">
+        <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Model Confidence</h3>
+        <div class="text-4xl font-mono font-bold text-green-400">{{ avg_confidence }}%</div>
+        <p class="text-[9px] text-slate-500 mt-2 text-center">Average prediction certainty</p>
+    </div>
+    <div class="bg-white dark:bg-[#1c222d] border border-slate-200 dark:border-slate-800 rounded shadow-lg p-6 flex flex-col justify-center items-center">
+        <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Global Threat Level</h3>
+        <div class="text-3xl font-mono font-bold uppercase {{ 'text-red-500' if threat_level == 'Critical' else 'text-yellow-500' if threat_level == 'High' else 'text-green-500' }}">{{ threat_level }}</div>
+        <p class="text-[9px] text-slate-500 mt-2 text-center">Calculated from recent anomalies</p>
+    </div>
+    <div class="bg-white dark:bg-[#1c222d] border border-slate-200 dark:border-slate-800 rounded shadow-lg p-6 flex flex-col justify-center items-center">
+        <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">False Positive Rate</h3>
+        <div class="text-4xl font-mono font-bold text-blue-400">{{ fp_rate }}</div>
+        <p class="text-[9px] text-slate-500 mt-2 text-center">Reduced by clustering engine</p>
+    </div>
+    <div class="bg-white dark:bg-[#1c222d] border border-slate-200 dark:border-slate-800 rounded shadow-lg p-6 flex flex-col justify-center items-center">
+        <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Model Version</h3>
+        <div class="text-xl font-mono font-bold text-slate-300">RandomForest_v2.4</div>
+        <p class="text-[9px] text-slate-500 mt-2 text-center">Trained on 41 Network Features</p>
+    </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <!-- AI-Generated Summary Widget -->
+    <div class="lg:col-span-1 bg-white dark:bg-[#1c222d] border border-purple-500/50 rounded shadow-lg overflow-hidden flex flex-col">
+        <div class="px-4 py-3 border-b border-purple-500/30 bg-purple-900/10 flex justify-between items-center">
+            <h3 class="text-sm font-bold text-purple-400 uppercase tracking-wider flex items-center">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                AI Insights
+            </h3>
+        </div>
+        <div class="p-6 flex-1 text-slate-300 text-sm leading-relaxed">
+            <p class="mb-4">
+                <strong class="text-purple-400">Analysis Summary:</strong> Over the last 24 hours, the ML engine detected a sharp increase in <span class="text-red-400 font-mono">SSH Brute Force</span> attempts originating primarily from the <span class="text-blue-400">185.x.x.x</span> subnet. 
+            </p>
+            <p class="mb-4">
+                The anomaly detection models report a <span class="text-green-400 font-bold">98% confidence</span> that this is a coordinated credential stuffing campaign targeting the Hospital B tenant. 
+            </p>
+            <div class="bg-slate-800/50 border border-slate-700 p-4 rounded-lg mt-6">
+                <h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Recommended Action</h4>
+                <p class="text-xs">Implement an automated IP block at the edge firewall for ASNs associated with the attacking infrastructure. Enforce MFA across all exposed SSH gateways immediately.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Prediction History -->
+    <div class="lg:col-span-2 bg-white dark:bg-[#1c222d] border border-slate-200 dark:border-slate-800 rounded shadow-lg overflow-hidden flex flex-col">
+        <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#242b38] flex justify-between items-center">
+            <h3 class="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">Recent Predictions</h3>
+        </div>
+        <div class="overflow-y-auto flex-1 custom-scrollbar">
+            <table class="w-full text-left text-xs border-collapse">
+                <thead class="sticky top-0 bg-slate-50 dark:bg-[#242b38] z-10 shadow-sm">
+                    <tr class="text-slate-500 dark:text-slate-400 uppercase text-[9px] font-bold tracking-wider">
+                        <th class="py-3 px-4 border-b border-slate-800">Timestamp</th>
+                        <th class="py-3 px-4 border-b border-slate-800">Attack Signature</th>
+                        <th class="py-3 px-4 border-b border-slate-800">ML Classification</th>
+                        <th class="py-3 px-4 border-b border-slate-800">Confidence</th>
+                    </tr>
+                </thead>
+                <tbody class="text-slate-600 dark:text-slate-300 divide-y divide-slate-800/50">
+                    {% for pred in recent_predictions %}
+                    <tr class="hover:bg-slate-50 dark:hover:bg-[#242b38] transition-colors">
+                        <td class="py-3 px-4 text-slate-500 font-mono text-[10px]">{{ pred.timestamp }}</td>
+                        <td class="py-3 px-4 font-bold">{{ pred.attack }}</td>
+                        <td class="py-3 px-4 text-[10px] uppercase tracking-widest font-bold text-red-400">{{ pred.ml_prediction }}</td>
+                        <td class="py-3 px-4">
+                            <div class="flex items-center space-x-2">
+                                <span class="font-mono text-[10px] text-green-400 w-8">{{ (pred.confidence * 100)|round|int }}%</span>
+                                <div class="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+                                    <div class="h-full bg-green-500" style="width: {{ pred.confidence * 100 }}%"></div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% if not recent_predictions %}
+                    <tr>
+                        <td colspan="4" class="py-8 text-center text-slate-500 text-sm">No recent malicious predictions.</td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

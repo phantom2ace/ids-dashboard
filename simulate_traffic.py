@@ -62,8 +62,11 @@ def simulate_traffic():
     ]
     
     api_keys = [
-        ("school_a_123", "School A"),
-        ("hospital_b_123", "Hospital B"),
+        ("oakridge_api_123", "Oakridge Public Schools"),
+        ("mercy_api_123", "Mercy General Hospital"),
+        ("techcorp_api_123", "TechCorp Global"),
+        ("apex_api_123", "Apex Financial"),
+        ("city_api_123", "City Municipal Network"),
         (None, "Local Sensor")
     ]
     

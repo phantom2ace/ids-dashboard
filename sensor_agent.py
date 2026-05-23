@@ -4,12 +4,14 @@ import random
 import requests
 from datetime import datetime
 
+import os
+
 # ==========================================
 # CONFIGURATION
 # ==========================================
-SOC_DASHBOARD_URL = "http://localhost:5000/api/predict"
+SOC_DASHBOARD_URL = os.getenv("SOC_DASHBOARD_URL", "http://localhost:5000/api/predict")
 # In a real enterprise, each branch has its own API key
-AGENT_API_KEY = "school-a-key-999" 
+AGENT_API_KEY = os.getenv("AGENT_API_KEY", "school-a-key-999") 
 
 # Mock Suricata alerts (Normally this script would tail /var/log/suricata/eve.json)
 MOCK_ALERTS = [

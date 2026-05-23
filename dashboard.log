@@ -1,12 +1,10 @@
-[2026-05-22 22:25:34 +0000] [1101] [INFO] Starting gunicorn 26.0.0
-[2026-05-22 22:25:34 +0000] [1101] [INFO] Listening at: http://0.0.0.0:5000 (1101)
-[2026-05-22 22:25:34 +0000] [1101] [INFO] Using worker: sync
-[2026-05-22 22:25:34 +0000] [1238] [INFO] Booting worker with pid: 1238
-[2026-05-22 22:25:35 +0000] [1244] [INFO] Booting worker with pid: 1244
-[2026-05-22 22:25:35 +0000] [1257] [INFO] Booting worker with pid: 1257
-[2026-05-22 22:25:36 +0000] [1101] [INFO] Control socket listening at /home/spade/.gunicorn/gunicorn.ctl
-[2026-05-22 22:45:10 +0000] [1101] [CRITICAL] WORKER TIMEOUT (pid:1244)
-[2026-05-22 22:45:10 +0000] [1244] [ERROR] Error handling request (no URI read)
+[2026-05-23 01:00:08 +0000] [69118] [INFO] Starting gunicorn 26.0.0
+[2026-05-23 01:00:08 +0000] [69118] [ERROR] Connection in use: ('0.0.0.0', 5000)
+[2026-05-23 01:00:08 +0000] [69118] [ERROR] connection to ('0.0.0.0', 5000) failed: [Errno 98] Address already in use
+[2026-05-23 01:00:09 +0000] [69118] [ERROR] Connection in use: ('0.0.0.0', 5000)
+[2026-05-23 01:00:09 +0000] [69118] [ERROR] connection to ('0.0.0.0', 5000) failed: [Errno 98] Address already in use
+[2026-05-23 01:00:10 +0000] [69118] [ERROR] Connection in use: ('0.0.0.0', 50[2026-05-23 01:04:10 +0000] [69062] [CRITICAL] WORKER TIMEOUT (pid:69063)
+[2026-05-23 01:04:10 +0000] [69063] [ERROR] Error handling request (no URI read)
 Traceback (most recent call last):
   File "/home/spade/ids-dashboard/.venv/lib/python3.13/site-packages/gunicorn/workers/sync.py", line 140, in handle
     req = next(parser)
@@ -32,14 +30,13 @@ Traceback (most recent call last):
     sys.exit(1)
     ~~~~~~~~^^^
 SystemExit: 1
-[2026-05-22 22:45:11 +0000] [1244] [INFO] Worker exiting (pid: 1244)
+[2026-05-23 01:04:10 +0000] [69063] [INFO] Worker exiting (pid: 69063)
 [*] Random Forest Classifier loaded successfully
 [*] Isolation Forest loaded successfully
-[2026-05-22 22:45:12 +0000] [1101] [ERROR] Worker (pid:1244) was sent SIGKILL! Perhaps out of memory?
-[2026-05-22 22:45:12 +0000] [4846] [INFO] Booting worker with pid: 4846
-[2026-05-22 22:45:12 +0000] [1101] [INFO] Control socket listening at /home/spade/.gunicorn/gunicorn.ctl
-[2026-05-22 22:48:36 +0000] [1101] [CRITICAL] WORKER TIMEOUT (pid:4846)
-[2026-05-22 22:48:36 +0000] [4846] [ERROR] Error handling request (no URI read)
+[2026-05-23 01:04:11 +0000] [70402] [INFO] Booting worker with pid: 70402
+[2026-05-23 01:04:11 +0000] [69062] [INFO] Control socket listening at /home/spade/.gunicorn/gunicorn.ctl
+[2026-05-23 01:07:24 +0000] [69062] [CRITICAL] WORKER TIMEOUT (pid:69064)
+[2026-05-23 01:07:24 +0000] [69064] [ERROR] Error handling request (no URI read)
 Traceback (most recent call last):
   File "/home/spade/ids-dashboard/.venv/lib/python3.13/site-packages/gunicorn/workers/sync.py", line 140, in handle
     req = next(parser)
@@ -65,9 +62,8 @@ Traceback (most recent call last):
     sys.exit(1)
     ~~~~~~~~^^^
 SystemExit: 1
-[2026-05-22 22:48:36 +0000] [4846] [INFO] Worker exiting (pid: 4846)
+[2026-05-23 01:07:24 +0000] [69064] [INFO] Worker exiting (pid: 69064)
 [*] Random Forest Classifier loaded successfully
 [*] Isolation Forest loaded successfully
-[!] GeoIP Error for 173.181.128.238: HTTPConnectionPool(host='ip-api.com', port=80): Read timed out. (read timeout=5)
-[2026-05-22 22:48:36 +0000] [6464] [INFO] Booting worker with pid: 6464
-[2026-05-22 22:48:36 +0000] [1101] [INFO] Control socket listening at /home/spade/.gunicorn/gunicorn.ctl
+[2026-05-23 01:07:25 +0000] [71601] [INFO] Booting worker with pid: 71601
+[2026-05-23 01:07:25 +0000] [69062] [INFO] Control socket listening at /home/spade/.gunicorn/gunicorn.ctl

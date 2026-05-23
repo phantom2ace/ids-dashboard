@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mb-6 flex justify-between items-end">
+    <div>
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center">
+            <svg class="w-6 h-6 mr-2 text-rose-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            Historical Incident Management
+        </h2>
+    </div>
+    <div class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">
+        Root > IDSSD > Incidents
+    </div>
+</div>
+
+<div class="bg-white dark:bg-[#1c222d] border border-slate-200 dark:border-slate-800 rounded shadow-lg overflow-hidden flex flex-col h-[750px]">
+    <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#242b38] flex justify-between items-center shrink-0">
+        <h3 class="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">All Clustered Cases</h3>
+        <div class="flex items-center space-x-4">
+            <input type="text" placeholder="Search Incident ID, IP, or Title..." class="bg-[#141820] border border-slate-700 text-slate-300 text-xs rounded px-3 py-1.5 w-64 focus:outline-none focus:border-rose-500 transition-colors">
+            <button class="bg-slate-800 hover:bg-slate-700 text-white px-3 py-1.5 rounded text-[10px] uppercase font-bold transition-colors">Filter</button>
+        </div>
+    </div>
+    <div class="overflow-y-auto flex-1 custom-scrollbar">
+        <table class="w-full text-left text-xs border-collapse">
+            <thead class="sticky top-0 bg-slate-50 dark:bg-[#242b38] z-10 shadow-sm">
+                <tr class="text-slate-500 dark:text-slate-400 uppercase text-[9px] font-bold tracking-wider">
+                    <th class="py-4 px-4 border-b border-slate-800">Incident ID</th>
+                    <th class="py-4 px-4 border-b border-slate-800">Created At</th>
+                    <th class="py-4 px-4 border-b border-slate-800">Campaign Title</th>
+                    <th class="py-4 px-4 border-b border-slate-800">Tenant</th>
+                    <th class="py-4 px-4 border-b border-slate-800">Source IP</th>
+                    <th class="py-4 px-4 border-b border-slate-800">Events</th>
+                    <th class="py-4 px-4 border-b border-slate-800">Severity</th>
+                    <th class="py-4 px-4 border-b border-slate-800">Status</th>
+                    <th class="py-4 px-4 border-b border-slate-800">Analyst</th>
+                </tr>
+            </thead>
+            <tbody class="text-slate-600 dark:text-slate-300 divide-y divide-slate-800/50">
+                {% for inv in incidents %}
+                <tr class="hover:bg-slate-50 dark:hover:bg-[#242b38] transition-colors cursor-pointer">
+                    <td class="py-3 px-4 font-bold text-[10px] text-purple-400 tracking-widest">{{ inv.incident_id }}</td>
+                    <td class="py-3 px-4 text-slate-500 text-[10px] font-mono">{{ inv.created_at.split('.')[0] if inv.created_at else '' }}</td>
+                    <td class="py-3 px-4 font-medium">{{ inv.title }}</td>
+                    <td class="py-3 px-4 font-bold text-[10px] text-blue-500 uppercase tracking-widest">{{ inv.org_name }}</td>
+                    <td class="py-3 px-4 font-mono text-[10px] text-slate-400">{{ inv.src_ip }}</td>
+                    <td class="py-3 px-4 font-bold text-[10px] text-slate-300">
+                        <span class="bg-slate-800 px-2 py-1 rounded-full">{{ inv.alert_count }}</span>
+                    </td>
+                    <td class="py-3 px-4">
+                        <span class="px-2 py-0.5 text-[9px] uppercase font-bold tracking-widest rounded {{ 'bg-red-900/30 text-red-500 border border-red-500/30' if inv.severity == 'Critical' else 'bg-orange-900/30 text-orange-500 border border-orange-500/30' if inv.severity == 'High' else 'bg-yellow-900/30 text-yellow-500 border border-yellow-500/30' if inv.severity == 'Medium' else 'bg-blue-900/30 text-blue-500 border border-blue-500/30' }}">{{ inv.severity }}</span>
+                    </td>
+                    <td class="py-3 px-4 font-mono text-[9px]">
+                        <span class="px-2 py-0.5 rounded border {{ 'bg-green-900/20 text-green-500 border-green-500/30' if inv.status == 'RESOLVED' else 'bg-slate-800 text-slate-400 border-slate-700' if inv.status == 'FALSE_POSITIVE' else 'bg-blue-900/20 text-blue-500 border-blue-500/30' }}">{{ inv.status }}</span>
+                    </td>
+                    <td class="py-3 px-4 font-mono text-[10px] text-slate-300">{{ inv.assigned_analyst }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

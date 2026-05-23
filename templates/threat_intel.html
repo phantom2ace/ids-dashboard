@@ -1,0 +1,129 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="mb-6 flex justify-between items-end">
+    <div>
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white uppercase tracking-wider flex items-center">
+            <svg class="w-6 h-6 mr-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            Security Intelligence Center
+        </h2>
+    </div>
+    <div class="text-[10px] text-slate-500 uppercase tracking-widest font-bold">
+        Root > IDSSD > Threat Intel
+    </div>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+    <!-- Top Active CVEs -->
+    <div class="bg-white dark:bg-[#1c222d] border border-slate-200 dark:border-slate-800 rounded shadow-lg overflow-hidden flex flex-col h-[250px]">
+        <div class="px-4 py-2 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#242b38] flex justify-between items-center">
+            <h3 class="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">Top Active CVEs</h3>
+            <span class="text-[10px] bg-red-900/30 text-red-500 px-2 py-0.5 rounded border border-red-500/30 uppercase font-bold">Exploited in wild</span>
+        </div>
+        <div class="p-4 flex-1 overflow-y-auto custom-scrollbar">
+            {% if top_cves %}
+                <ul class="space-y-3">
+                {% for cve in top_cves %}
+                    <li class="flex justify-between items-center bg-[#141820] px-3 py-2 rounded border border-slate-700/50">
+                        <span class="text-xs font-bold text-red-400 font-mono">{{ cve.cve }}</span>
+                        <span class="text-[10px] text-slate-400 font-bold bg-slate-800 px-2 py-0.5 rounded">{{ cve.count }} hits</span>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <div class="h-full flex items-center justify-center text-sm text-slate-500">No CVE data available.</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- MITRE ATT&CK Techniques -->
+    <div class="bg-white dark:bg-[#1c222d] border border-slate-200 dark:border-slate-800 rounded shadow-lg overflow-hidden flex flex-col h-[250px]">
+        <div class="px-4 py-2 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#242b38] flex justify-between items-center">
+            <h3 class="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">MITRE Techniques</h3>
+            <span class="text-[10px] bg-blue-900/30 text-blue-500 px-2 py-0.5 rounded border border-blue-500/30 uppercase font-bold">Tactics Observed</span>
+        </div>
+        <div class="p-4 flex-1 overflow-y-auto custom-scrollbar">
+            {% if top_mitre %}
+                <ul class="space-y-3">
+                {% for mitre in top_mitre %}
+                    <li class="flex justify-between items-center bg-[#141820] px-3 py-2 rounded border border-slate-700/50">
+                        <span class="text-xs font-bold text-blue-400 uppercase tracking-wider">{{ mitre.mitre_tactic }}</span>
+                        <span class="text-[10px] text-slate-400 font-bold bg-slate-800 px-2 py-0.5 rounded">{{ mitre.count }} incidents</span>
+                    </li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                <div class="h-full flex items-center justify-center text-sm text-slate-500">No MITRE data available.</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Most Attacked Ports -->
+    <div class="bg-white dark:bg-[#1c222d] border border-slate-200 dark:border-slate-800 rounded shadow-lg overflow-hidden flex flex-col h-[250px]">
+        <div class="px-4 py-2 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#242b38] flex justify-between items-center">
+            <h3 class="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">Targeted Ports</h3>
+            <span class="text-[10px] bg-yellow-900/30 text-yellow-500 px-2 py-0.5 rounded border border-yellow-500/30 uppercase font-bold">Network Layer</span>
+        </div>
+        <div class="p-4 flex-1 overflow-y-auto custom-scrollbar">
+            <ul class="space-y-3">
+                <li class="flex justify-between items-center bg-[#141820] px-3 py-2 rounded border border-slate-700/50">
+                    <span class="text-xs font-bold text-yellow-400 font-mono">22 (SSH)</span>
+                    <div class="w-24 h-1.5 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-yellow-500" style="width: 85%"></div></div>
+                </li>
+                <li class="flex justify-between items-center bg-[#141820] px-3 py-2 rounded border border-slate-700/50">
+                    <span class="text-xs font-bold text-yellow-400 font-mono">80 (HTTP)</span>
+                    <div class="w-24 h-1.5 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-yellow-500" style="width: 60%"></div></div>
+                </li>
+                <li class="flex justify-between items-center bg-[#141820] px-3 py-2 rounded border border-slate-700/50">
+                    <span class="text-xs font-bold text-yellow-400 font-mono">445 (SMB)</span>
+                    <div class="w-24 h-1.5 bg-slate-800 rounded-full overflow-hidden"><div class="h-full bg-yellow-500" style="width: 30%"></div></div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Known Malicious IPs Tracking -->
+<div class="bg-white dark:bg-[#1c222d] border border-slate-200 dark:border-slate-800 rounded shadow-lg overflow-hidden flex flex-col h-[500px]">
+    <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#242b38] flex justify-between items-center">
+        <h3 class="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">Adversary Infrastructure Tracking</h3>
+    </div>
+    <div class="overflow-y-auto flex-1 custom-scrollbar">
+        <table class="w-full text-left text-xs border-collapse">
+            <thead class="sticky top-0 bg-slate-50 dark:bg-[#242b38] z-10 shadow-sm">
+                <tr class="text-slate-500 dark:text-slate-400 uppercase text-[9px] font-bold tracking-wider">
+                    <th class="py-3 px-4 border-b border-slate-800">IP Address</th>
+                    <th class="py-3 px-4 border-b border-slate-800">Origin</th>
+                    <th class="py-3 px-4 border-b border-slate-800">Total Hits</th>
+                    <th class="py-3 px-4 border-b border-slate-800">Last Seen</th>
+                    <th class="py-3 px-4 border-b border-slate-800">Status</th>
+                    <th class="py-3 px-4 border-b border-slate-800 text-right">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="text-slate-600 dark:text-slate-300 divide-y divide-slate-800/50">
+                {% for attacker in attackers %}
+                <tr class="hover:bg-slate-50 dark:hover:bg-[#242b38] transition-colors">
+                    <td class="py-3 px-4 font-mono font-bold text-red-400 text-[10px]">{{ attacker.ip_address }}</td>
+                    <td class="py-3 px-4">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-lg">🌍</span>
+                            <span>{{ attacker.city }}, {{ attacker.country }}</span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-4 font-bold font-mono">{{ attacker.total_hits }}</td>
+                    <td class="py-3 px-4 text-slate-500 font-mono text-[9px]">{{ attacker.last_seen }}</td>
+                    <td class="py-3 px-4">
+                        <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-widest bg-red-900/30 text-red-500 border border-red-500/30">
+                            MALICIOUS
+                        </span>
+                    </td>
+                    <td class="py-3 px-4 text-right">
+                        <button class="bg-slate-800 hover:bg-slate-700 text-white px-2 py-1 rounded text-[9px] uppercase font-bold transition-colors">Ban IP</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

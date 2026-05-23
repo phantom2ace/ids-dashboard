@@ -69,9 +69,43 @@ def insert_alert(alert):
             "Unassigned"
         ))
         
-        # Update incident ID using the generated row ID
         alert_id = cursor.lastrowid
-        incident_id = f"INC-2026-{alert_id:04d}"
+        
+        # Incident Engine Correlation Logic
+        # Check if an open incident exists for this IP and Signature
+        title = f"{alert['signature']} Campaign"
+        cursor.execute('''
+            SELECT incident_id FROM incidents 
+            WHERE src_ip = ? AND title = ? AND status != 'RESOLVED' AND status != 'FALSE_POSITIVE'
+        ''', (alert['src_ip'], title))
+        
+        existing_incident = cursor.fetchone()
+        
+        if existing_incident:
+            incident_id = existing_incident[0]
+            # Update existing incident
+            cursor.execute('''
+                UPDATE incidents 
+                SET alert_count = alert_count + 1, updated_at = ?
+                WHERE incident_id = ?
+            ''', (alert['timestamp'], incident_id))
+        else:
+            # Create new incident
+            incident_id = f"INC-2026-{alert_id:04d}"
+            cursor.execute('''
+                INSERT INTO incidents (
+                    incident_id, title, severity, status, assigned_analyst, 
+                    analyst_notes, src_ip, org_name, alert_count, created_at, 
+                    updated_at, mitre_id, mitre_tactic, recommendation
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?)
+            ''', (
+                incident_id, title, alert['severity'], "NEW", "Unassigned",
+                "", alert['src_ip'], alert.get("org_name", "Local Sensor"),
+                alert['timestamp'], alert['timestamp'], alert.get("mitre_id", "N/A"),
+                alert.get("mitre_tactic", "N/A"), alert.get("recommendation", "N/A")
+            ))
+            
+        # Update the alert with the final incident_id
         cursor.execute("UPDATE alerts SET incident_id = ? WHERE id = ?", (incident_id, alert_id))
 
         # Also update attackers table for historical intelligence
@@ -108,3 +142,16 @@ def get_recent_alerts(limit=100):
     """, (limit,)).fetchall()
     conn.close()
     return [dict(a) for a in alerts]
+
+def get_recent_incidents(limit=50):
+    conn = get_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT * FROM incidents 
+        ORDER BY created_at DESC 
+        LIMIT ?
+    ''', (limit,))
+    rows = cursor.fetchall()
+    conn.close()
+    return [dict(row) for row in rows]

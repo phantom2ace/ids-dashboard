@@ -10,6 +10,61 @@
     </div>
 </div>
 
+<!-- Main SOC Workspace (Incident Queue & Live Feed) -->
+<div class="grid grid-cols-1 xl:grid-cols-4 gap-6 mb-6">
+    <!-- Active Incidents Queue Widget (Main Center) -->
+    <div class="xl:col-span-3 bg-white dark:bg-[#1c222d] border border-slate-200 dark:border-slate-800 rounded shadow-lg overflow-hidden flex flex-col h-[600px]">
+        <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#242b38] flex justify-between items-center shrink-0">
+            <div class="flex items-center space-x-3">
+                <h3 class="text-sm font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">Incident Response Queue</h3>
+                <!-- Needs Attention Widget -->
+                <div id="needsAttentionWidget" class="hidden items-center space-x-2 bg-red-900/20 border border-red-800/50 px-2 py-1 rounded">
+                    <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+                    <span class="text-[10px] text-red-400 font-bold uppercase tracking-widest"><span id="activeCriticalCount">0</span> Active Critical</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <button onclick="exportAlerts()" class="text-[10px] text-blue-400 font-bold uppercase hover:text-blue-300 transition-colors bg-[#141820] px-2 py-1 rounded border border-slate-700">Export CSV</button>
+            </div>
+        </div>
+        <div class="overflow-y-auto flex-1 custom-scrollbar">
+            <table class="w-full text-left text-xs border-collapse">
+                <thead class="sticky top-0 bg-slate-50 dark:bg-[#242b38] z-10 shadow-sm">
+                    <tr class="text-slate-500 dark:text-slate-400 uppercase text-[9px] font-bold tracking-wider">
+                        <th class="py-3 px-4 border-b border-slate-800">Incident ID</th>
+                        <th class="py-3 px-4 border-b border-slate-800">Last Seen</th>
+                        <th class="py-3 px-4 border-b border-slate-800">Severity</th>
+                        <th class="py-3 px-4 border-b border-slate-800">Status</th>
+                        <th class="py-3 px-4 border-b border-slate-800">Analyst</th>
+                        <th class="py-3 px-4 border-b border-slate-800">Tenant</th>
+                        <th class="py-3 px-4 border-b border-slate-800">Campaign</th>
+                        <th class="py-3 px-4 border-b border-slate-800">Source IP</th>
+                        <th class="py-3 px-4 border-b border-slate-800">Events</th>
+                    </tr>
+                </thead>
+                <tbody id="alertTableBody" class="text-slate-600 dark:text-slate-300 divide-y divide-slate-800/50">
+                    <!-- Data will be populated by JS -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Live Feed Widget (Right Sidebar) -->
+    <div class="bg-white dark:bg-[#1c222d] border border-slate-200 dark:border-slate-800 rounded shadow-lg overflow-hidden flex flex-col h-[600px]">
+        <div class="px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#242b38] flex justify-between items-center shrink-0">
+            <h3 class="text-xs font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wider flex items-center">
+                <div class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse mr-2"></div>
+                Live Alert Feed
+            </h3>
+        </div>
+        <div class="overflow-y-auto flex-1 custom-scrollbar p-0 bg-[#0a0c10]">
+            <div id="liveAlertsFeed" class="flex flex-col divide-y divide-slate-800/50">
+                <!-- Data populated by JS -->
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Graphs Section (Fortinet Style Widgets) -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
     <!-- Line Chart Widget -->
@@ -52,67 +107,7 @@
     </div>
 </div>
 
-<!-- Threat Map Section (Fortinet Style) -->
-<div class="grid grid-cols-1 gap-6 mb-6">
-    <div class="bg-white dark:bg-[#1c222d] border border-slate-200 dark:border-slate-800 rounded shadow-lg overflow-hidden flex flex-col h-[400px]">
-        <div class="px-4 py-2 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#242b38] flex justify-between items-center">
-            <h3 class="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">Global Threat Map</h3>
-            <div class="flex space-x-2">
-                <span class="text-[10px] text-red-500 font-bold uppercase">LIVE ATTACK VECTORS</span>
-            </div>
-        </div>
-        <div class="relative flex-1 z-0">
-            <div id="threatMap" class="absolute inset-0"></div>
-            <!-- Map Legend (The Keys) -->
-            <div class="absolute bottom-4 right-4 z-[400] bg-black/60 backdrop-blur-md border border-slate-700/50 rounded-lg p-3 shadow-lg pointer-events-none">
-                <h4 class="text-[9px] text-slate-400 font-bold uppercase tracking-widest mb-2 border-b border-slate-700 pb-1">Threat Legend</h4>
-                <div class="flex flex-col space-y-2 text-[10px] font-mono text-slate-200">
-                    <div class="flex items-center"><div class="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_8px_#ef4444] mr-2"></div> CRITICAL</div>
-                    <div class="flex items-center"><div class="w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_8px_#f97316] mr-2"></div> HIGH</div>
-                    <div class="flex items-center"><div class="w-2 h-2 rounded-full bg-yellow-500 shadow-[0_0_5px_#eab308] mr-2"></div> MEDIUM</div>
-                    <div class="flex items-center"><div class="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_5px_#3b82f6] mr-2"></div> LOW</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="grid grid-cols-1 gap-6">
-    <!-- Active Incidents Queue Widget -->
-    <div class="bg-white dark:bg-[#1c222d] border border-slate-200 dark:border-slate-800 rounded shadow-lg overflow-hidden flex flex-col h-[450px]">
-        <div class="px-4 py-2 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#242b38] flex justify-between items-center shrink-0">
-            <h3 class="text-xs font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider">Incident Response Queue</h3>
-            <div class="flex items-center space-x-4">
-                <!-- Needs Attention Widget -->
-                <div id="needsAttentionWidget" class="hidden items-center space-x-2 bg-red-900/20 border border-red-800/50 px-2 py-1 rounded">
-                    <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
-                    <span class="text-[9px] text-red-400 font-bold uppercase tracking-widest"><span id="activeCriticalCount">0</span> Active Critical Incidents</span>
-                </div>
-                <button onclick="exportAlerts()" class="text-[10px] text-blue-400 font-bold uppercase hover:text-blue-300 transition-colors">Export CSV</button>
-                <span class="text-[10px] text-slate-500 dark:text-slate-500 font-mono">REFRESH: 10S</span>
-            </div>
-        </div>
-        <div class="overflow-y-auto flex-1 custom-scrollbar">
-            <table class="w-full text-left text-xs border-collapse">
-                <thead class="sticky top-0 bg-slate-50 dark:bg-[#242b38] z-10">
-                    <tr class="text-slate-500 dark:text-slate-500 dark:text-slate-400 uppercase text-[10px] font-bold">
-                        <th class="py-3 px-4 border-b border-slate-200 dark:border-slate-800">Incident ID</th>
-                        <th class="py-3 px-4 border-b border-slate-200 dark:border-slate-800">Time</th>
-                        <th class="py-3 px-4 border-b border-slate-200 dark:border-slate-800">Severity</th>
-                        <th class="py-3 px-4 border-b border-slate-200 dark:border-slate-800">Status</th>
-                        <th class="py-3 px-4 border-b border-slate-200 dark:border-slate-800">Analyst</th>
-                        <th class="py-3 px-4 border-b border-slate-200 dark:border-slate-800">Tenant</th>
-                        <th class="py-3 px-4 border-b border-slate-200 dark:border-slate-800">Signature</th>
-                        <th class="py-3 px-4 border-b border-slate-200 dark:border-slate-800">Source IP</th>
-                    </tr>
-                </thead>
-                <tbody id="alertTableBody" class="text-slate-600 dark:text-slate-300 divide-y divide-slate-800">
-                    <!-- Data will be populated by JS -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 
 <!-- Alert Details Modal -->
 <div id="alertModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4">

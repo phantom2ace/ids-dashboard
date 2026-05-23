@@ -191,31 +191,37 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(updateThreatMap, 15000); // Update map every 15s
 
     // Example: Fetch alerts every 30 seconds
-    const fetchAlerts = async () => {
+    const fetchData = async () => {
         try {
-            const response = await fetch('/api/alerts');
-            const data = await response.json();
-            updateAlertTable(data);
+            const [incidentsRes, alertsRes] = await Promise.all([
+                fetch('/api/incidents'),
+                fetch('/api/alerts')
+            ]);
+            const incidents = await incidentsRes.json();
+            const alerts = await alertsRes.json();
+            
+            updateIncidentTable(incidents);
+            updateLiveFeed(alerts);
         } catch (error) {
-            console.error('Error fetching alerts:', error);
+            console.error('Error fetching data:', error);
         }
     };
 
-    const updateAlertTable = (alerts) => {
+    const updateIncidentTable = (incidents) => {
         const tbody = document.getElementById('alertTableBody');
         if (!tbody) return;
         
-        if (!alerts || alerts.length === 0) {
+        if (!incidents || incidents.length === 0) {
             tbody.innerHTML = `
                 <tr>
-                    <td colspan="6" class="py-8 text-center text-slate-500 italic">No live alerts detected</td>
+                    <td colspan="9" class="py-8 text-center text-slate-500 italic">No active incidents</td>
                 </tr>
             `;
             return;
         }
 
         // Calculate active critical incidents
-        const activeCritical = alerts.filter(a => String(a.severity).toLowerCase() === 'critical' && a.status !== 'RESOLVED' && a.status !== 'FALSE_POSITIVE');
+        const activeCritical = incidents.filter(a => String(a.severity).toLowerCase() === 'critical' && a.status !== 'RESOLVED' && a.status !== 'FALSE_POSITIVE');
         const widget = document.getElementById('needsAttentionWidget');
         const countSpan = document.getElementById('activeCriticalCount');
         if (widget && countSpan) {
@@ -239,42 +245,62 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        tbody.innerHTML = alerts.map(alert => `
-            <tr onclick='openAlertDetails(${JSON.stringify(alert).replace(/'/g, "&apos;")})' class="hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors cursor-pointer group">
+        tbody.innerHTML = incidents.map(incident => `
+            <tr onclick='openIncidentDetails(${JSON.stringify(incident).replace(/'/g, "&apos;")})' class="hover:bg-slate-100 dark:hover:bg-slate-700/30 transition-colors cursor-pointer group">
                 <td class="py-4 px-4 font-bold text-[10px] text-purple-400 tracking-widest whitespace-nowrap">
-                    ${alert.incident_id || 'INC-PENDING'}
+                    ${incident.incident_id}
                 </td>
                 <td class="py-4 px-4 text-slate-500 dark:text-slate-400 whitespace-nowrap text-[10px] font-mono">
-                    ${new Date(alert.timestamp).toLocaleString()}
+                    ${new Date(incident.updated_at).toLocaleString()}
                 </td>
                 <td class="py-4 px-4">
-                    <span class="status-pill border ${getSeverityClass(String(alert.severity))}">
-                        ${alert.severity}
+                    <span class="status-pill border ${getSeverityClass(String(incident.severity))}">
+                        ${incident.severity}
                     </span>
-                    ${alert.cvss ? `<div class="text-[9px] mt-1 text-slate-400 font-mono">CVSS: ${alert.cvss}</div>` : ''}
                 </td>
                 <td class="py-4 px-4 font-mono text-[9px] whitespace-nowrap">
-                    ${getStatusBadge(alert.status || 'NEW')}
+                    ${getStatusBadge(incident.status)}
                 </td>
                 <td class="py-4 px-4 font-mono text-[10px] text-slate-300">
                     <div class="flex items-center space-x-1">
                         <svg class="w-3 h-3 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                        <span>${alert.assigned_analyst || 'Unassigned'}</span>
+                        <span>${incident.assigned_analyst}</span>
                     </div>
                 </td>
                 <td class="py-4 px-4 font-bold text-[10px] text-blue-500 uppercase tracking-widest whitespace-nowrap">
-                    ${alert.org_name || 'Local Sensor'}
+                    ${incident.org_name || 'Local Sensor'}
                 </td>
-                <td class="py-4 px-4 font-medium">${alert.signature}
-                    ${alert.cve && alert.cve !== 'N/A' ? `<br><span class="text-[9px] px-1 py-0.5 rounded bg-red-900/40 text-red-400 border border-red-800/50 mt-1 inline-block">${alert.cve}</span>` : ''}
+                <td class="py-4 px-4 font-medium">${incident.title}
+                    ${incident.mitre_id && incident.mitre_id !== 'N/A' ? `<br><span class="text-[9px] px-1 py-0.5 rounded bg-blue-900/40 text-blue-400 border border-blue-800/50 mt-1 inline-block">${incident.mitre_id}</span>` : ''}
                 </td>
-                <td class="py-4 px-4 font-mono text-[10px] text-slate-400">${alert.src_ip}</td>
+                <td class="py-4 px-4 font-mono text-[10px] text-slate-400">${incident.src_ip}</td>
+                <td class="py-4 px-4 font-bold text-[10px] text-slate-300">
+                    <span class="bg-slate-800 px-2 py-1 rounded-full">${incident.alert_count}</span>
+                </td>
             </tr>
         `).join('');
     };
 
+    const updateLiveFeed = (alerts) => {
+        const feed = document.getElementById('liveAlertsFeed');
+        if (!feed) return;
+        
+        feed.innerHTML = alerts.map(alert => `
+            <div class="p-3 hover:bg-slate-800/50 transition-colors">
+                <div class="flex justify-between items-start mb-1">
+                    <span class="text-[9px] text-slate-500 font-mono">${new Date(alert.timestamp).toLocaleTimeString()}</span>
+                    <span class="text-[9px] font-bold ${alert.severity === 'Critical' ? 'text-red-500' : 'text-orange-400'} uppercase">${alert.severity}</span>
+                </div>
+                <div class="text-[10px] text-slate-300 font-medium truncate mb-1" title="${alert.signature}">${alert.signature}</div>
+                <div class="flex justify-between items-center text-[9px] font-mono text-slate-500">
+                    <span>${alert.src_ip} &rarr; ${alert.dest_ip}</span>
+                </div>
+            </div>
+        `).join('');
+    };
+
     // Modal Logic
-    window.openAlertDetails = (alert) => {
+    window.openIncidentDetails = (incident) => {
         const modal = document.getElementById('alertModal');
         const content = document.getElementById('modalContent');
         
@@ -283,43 +309,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="space-y-4">
                     <div>
                         <p class="text-[10px] text-slate-500 uppercase font-bold">Source IP</p>
-                        <p class="text-lg font-mono text-white">${alert.src_ip}</p>
+                        <p class="text-lg font-mono text-white">${incident.src_ip}</p>
                     </div>
                     <div>
-                        <p class="text-[10px] text-slate-500 uppercase font-bold">Signature</p>
-                        <p class="text-lg text-blue-400 font-semibold">${alert.signature}</p>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">Incident Title</p>
+                        <p class="text-lg text-blue-400 font-semibold">${incident.title}</p>
                     </div>
                     <div>
-                        <p class="text-[10px] text-slate-500 uppercase font-bold">Category & Behavior</p>
-                        <p class="text-md text-red-400 font-mono">${alert.category || 'N/A'}</p>
-                        <p class="text-xs text-slate-400 italic mt-1">${alert.behavior || 'No behavioral data available'}</p>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">Incident ID</p>
+                        <p class="text-md text-purple-400 font-mono">${incident.incident_id}</p>
                     </div>
                 </div>
                 <div class="space-y-4 bg-[#141820] p-4 rounded border border-slate-800">
                     <div>
                         <p class="text-[10px] text-slate-500 uppercase font-bold">Threat Intelligence</p>
-                        <p class="text-sm font-bold text-red-400">${alert.cve && alert.cve !== 'N/A' ? alert.cve : 'Unknown CVE'}</p>
-                        ${alert.cvss ? `<p class="text-[10px] font-mono text-slate-400 mt-0.5">CVSS Score: <span class="text-white">${alert.cvss}</span></p>` : ''}
                         
                         <!-- MITRE ATT&CK Mapping -->
                         <div class="mt-2 bg-[#0a0c10] p-2 rounded border border-slate-700/50 flex flex-col space-y-1">
                             <p class="text-[9px] text-slate-500 uppercase font-bold tracking-widest">MITRE ATT&CK®</p>
-                            <p class="text-xs text-blue-400 font-mono">${alert.mitre_id || 'N/A'} - <span class="text-slate-300 font-sans">${alert.mitre_tactic || 'Unknown'}</span></p>
+                            <p class="text-xs text-blue-400 font-mono">${incident.mitre_id || 'N/A'} - <span class="text-slate-300 font-sans">${incident.mitre_tactic || 'Unknown'}</span></p>
                         </div>
                     </div>
                     <div>
-                        <p class="text-[10px] text-slate-500 uppercase font-bold">ML Prediction</p>
-                        <p class="text-sm font-bold text-slate-200">${alert.ml_prediction || 'PENDING'}</p>
-                    </div>
-                    <div>
-                        <p class="text-[10px] text-slate-500 uppercase font-bold">Model Confidence</p>
-                        <div class="w-full h-1.5 bg-slate-800 rounded-full mt-1 overflow-hidden">
-                            <div class="h-full bg-blue-500 rounded-full transition-all duration-500" style="width: ${alert.confidence || 0}%"></div>
-                        </div>
+                        <p class="text-[10px] text-slate-500 uppercase font-bold">Correlated Alerts</p>
+                        <p class="text-sm font-bold text-slate-200">${incident.alert_count} Alerts Clustered</p>
                     </div>
                     <div>
                         <p class="text-[10px] text-slate-500 uppercase font-bold">Severity</p>
-                        <p class="text-sm text-orange-400 font-bold uppercase">${alert.severity}</p>
+                        <p class="text-sm text-orange-400 font-bold uppercase">${incident.severity}</p>
                     </div>
                 </div>
             </div>
@@ -331,7 +348,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <p class="text-[10px] text-purple-400 uppercase font-bold tracking-widest">AI Analyst Recommendation Playbook</p>
                 </div>
                 <div class="bg-purple-900/10 border border-purple-800/30 p-4 rounded-lg">
-                    <p class="text-sm text-slate-300 leading-relaxed">${alert.recommendation || 'No specific automated playbook available. Investigate manually.'}</p>
+                    <p class="text-sm text-slate-300 leading-relaxed">${incident.recommendation || 'No specific automated playbook available. Investigate manually.'}</p>
                 </div>
             </div>
 
@@ -341,16 +358,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="flex flex-col space-y-4 pl-2 border-l-2 border-slate-700/50">
                     <div class="relative pl-4">
                         <div class="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-red-500"></div>
-                        <p class="text-[9px] text-slate-500 font-mono">${new Date(alert.timestamp).toLocaleTimeString()} - Alert Generated</p>
+                        <p class="text-[9px] text-slate-500 font-mono">${new Date(incident.created_at).toLocaleTimeString()} - Incident Opened</p>
                     </div>
                     <div class="relative pl-4">
                         <div class="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-blue-500"></div>
-                        <p class="text-[9px] text-slate-500 font-mono">${new Date(new Date(alert.timestamp).getTime() + 2000).toLocaleTimeString()} - ML Engine Classified as ${alert.severity}</p>
+                        <p class="text-[9px] text-slate-500 font-mono">${new Date(new Date(incident.created_at).getTime() + 2000).toLocaleTimeString()} - ML Engine Classified as ${incident.severity}</p>
                     </div>
-                    ${alert.status !== 'NEW' ? `
+                    ${incident.status !== 'NEW' ? `
                     <div class="relative pl-4">
                         <div class="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-orange-500"></div>
-                        <p class="text-[9px] text-slate-500 font-mono">${new Date(new Date(alert.timestamp).getTime() + 60000).toLocaleTimeString()} - Status changed to ${alert.status} by ${alert.assigned_analyst}</p>
+                        <p class="text-[9px] text-slate-500 font-mono">${new Date(incident.updated_at).toLocaleTimeString()} - Status changed to ${incident.status} by ${incident.assigned_analyst}</p>
                     </div>` : ''}
                 </div>
             </div>
@@ -363,32 +380,25 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="flex items-center space-x-2">
                             <label class="text-xs text-slate-400">Status:</label>
                             <select id="modalStatusSelect" class="bg-[#141820] text-xs text-slate-200 border border-slate-700 rounded p-1 outline-none focus:border-blue-500 transition-colors">
-                                <option value="NEW" ${alert.status === 'NEW' ? 'selected' : ''}>🚨 NEW</option>
-                                <option value="INVESTIGATING" ${alert.status === 'INVESTIGATING' ? 'selected' : ''}>👀 INVESTIGATING</option>
-                                <option value="ESCALATED" ${alert.status === 'ESCALATED' ? 'selected' : ''}>🛡️ ESCALATED</option>
-                                <option value="RESOLVED" ${alert.status === 'RESOLVED' ? 'selected' : ''}>✅ RESOLVED</option>
-                                <option value="FALSE_POSITIVE" ${alert.status === 'FALSE_POSITIVE' ? 'selected' : ''}>👻 FALSE POSITIVE</option>
+                                <option value="NEW" ${incident.status === 'NEW' ? 'selected' : ''}>🚨 NEW</option>
+                                <option value="INVESTIGATING" ${incident.status === 'INVESTIGATING' ? 'selected' : ''}>👀 INVESTIGATING</option>
+                                <option value="ESCALATED" ${incident.status === 'ESCALATED' ? 'selected' : ''}>🛡️ ESCALATED</option>
+                                <option value="RESOLVED" ${incident.status === 'RESOLVED' ? 'selected' : ''}>✅ RESOLVED</option>
+                                <option value="FALSE_POSITIVE" ${incident.status === 'FALSE_POSITIVE' ? 'selected' : ''}>👻 FALSE POSITIVE</option>
                             </select>
                         </div>
                         <div class="flex items-center space-x-2">
                             <label class="text-xs text-slate-400">Assign To:</label>
                             <select id="modalAnalystSelect" class="bg-[#141820] text-xs text-slate-200 border border-slate-700 rounded p-1 outline-none focus:border-blue-500 transition-colors">
-                                <option value="Unassigned" ${alert.assigned_analyst === 'Unassigned' ? 'selected' : ''}>Unassigned</option>
-                                <option value="Alice (L1)" ${alert.assigned_analyst === 'Alice (L1)' ? 'selected' : ''}>Alice (L1 Analyst)</option>
-                                <option value="Texin (L2)" ${alert.assigned_analyst === 'Texin (L2)' ? 'selected' : ''}>Texin (L2 Escalation)</option>
-                                <option value="SOC Lead" ${alert.assigned_analyst === 'SOC Lead' ? 'selected' : ''}>SOC Lead</option>
+                                <option value="Unassigned" ${incident.assigned_analyst === 'Unassigned' ? 'selected' : ''}>Unassigned</option>
+                                <option value="Alice (L1)" ${incident.assigned_analyst === 'Alice (L1)' ? 'selected' : ''}>Alice (L1 Analyst)</option>
+                                <option value="Texin (L2)" ${incident.assigned_analyst === 'Texin (L2)' ? 'selected' : ''}>Texin (L2 Escalation)</option>
+                                <option value="SOC Lead" ${incident.assigned_analyst === 'SOC Lead' ? 'selected' : ''}>SOC Lead</option>
                             </select>
                         </div>
                     </div>
-                    <textarea id="modalNotesText" class="w-full bg-[#141820] border border-slate-700 rounded p-2 text-xs text-slate-300 outline-none focus:border-blue-500 transition-colors" rows="3" placeholder="Add investigation notes...">${alert.analyst_notes || ''}</textarea>
-                    <button onclick="saveAnalystNotes(${alert.id})" class="self-end px-4 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold uppercase rounded transition-colors shadow-lg">Save Case Details</button>
-                </div>
-            </div>
-
-            <div class="mt-6 border-t border-slate-800 pt-4">
-                <p class="text-[10px] text-slate-500 uppercase font-bold mb-2">Raw Feature Vector (NSL-KDD)</p>
-                <div class="bg-black/40 p-3 rounded font-mono text-[10px] text-slate-400 break-all border border-slate-800/50">
-                    ${alert.payload || 'Feature vector processed from Suricata flow logs'}
+                    <textarea id="modalNotesText" class="w-full bg-[#141820] border border-slate-700 rounded p-2 text-xs text-slate-300 outline-none focus:border-blue-500 transition-colors" rows="3" placeholder="Add investigation notes...">${incident.analyst_notes || ''}</textarea>
+                    <button onclick="saveAnalystNotes('${incident.incident_id}')" class="self-end px-4 py-1.5 bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold uppercase rounded transition-colors shadow-lg">Save Case Details</button>
                 </div>
             </div>
         `;
@@ -400,13 +410,13 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('alertModal').classList.add('hidden');
     };
 
-    window.saveAnalystNotes = async (alertId) => {
+    window.saveAnalystNotes = async (incidentId) => {
         const status = document.getElementById('modalStatusSelect').value;
         const analyst = document.getElementById('modalAnalystSelect').value;
         const notes = document.getElementById('modalNotesText').value;
 
         try {
-            const res = await fetch(`/api/alerts/${alertId}/update`, {
+            const res = await fetch(`/api/incidents/${incidentId}/update`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -415,7 +425,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             if (res.ok) {
                 closeModal();
-                fetchAlerts(); // refresh table instantly
+                fetchData(); // refresh table instantly
             } else {
                 alert('Failed to update case details.');
             }
@@ -450,8 +460,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    fetchAlerts();
-    setInterval(fetchAlerts, 10000); // Update every 10 seconds
+    fetchData();
+    setInterval(fetchData, 10000); // Update every 10 seconds
 });
 
 // Global functions for template actions
