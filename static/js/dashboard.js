@@ -300,10 +300,38 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Modal Logic
-    window.openIncidentDetails = (incident) => {
+    window.openIncidentDetails = async (incident) => {
         const modal = document.getElementById('alertModal');
         const content = document.getElementById('modalContent');
         
+        // Fetch timeline logs
+        let timelineHTML = '';
+        try {
+            const res = await fetch(`/api/incidents/${incident.incident_id}/logs`);
+            const logs = await res.json();
+            
+            logs.forEach(log => {
+                let color = 'bg-blue-500';
+                if (log.action_type === 'CREATION') color = 'bg-red-500';
+                else if (log.action_type === 'STATUS_CHANGE') color = 'bg-orange-500';
+                else if (log.action_type === 'ASSIGNMENT') color = 'bg-purple-500';
+                else if (log.action_type === 'NOTE_ADDED') color = 'bg-green-500';
+
+                timelineHTML += `
+                    <div class="relative pl-4">
+                        <div class="absolute -left-[5px] top-1 w-2 h-2 rounded-full ${color}"></div>
+                        <p class="text-[9px] text-slate-500 font-mono">${log.timestamp} - ${log.details} <span class="text-slate-400">(${log.user})</span></p>
+                    </div>
+                `;
+            });
+            
+            if (logs.length === 0) {
+                timelineHTML = `<div class="relative pl-4"><p class="text-[9px] text-slate-500 font-mono">No logs available.</p></div>`;
+            }
+        } catch (e) {
+            timelineHTML = `<div class="relative pl-4"><p class="text-[9px] text-red-500 font-mono">Failed to load timeline.</p></div>`;
+        }
+
         content.innerHTML = `
             <div class="grid grid-cols-2 gap-4">
                 <div class="space-y-4">
@@ -354,21 +382,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <!-- Investigation Timeline -->
             <div class="mt-6 border-t border-slate-800 pt-4">
-                <p class="text-[10px] text-slate-500 uppercase font-bold mb-3">Investigation Timeline</p>
-                <div class="flex flex-col space-y-4 pl-2 border-l-2 border-slate-700/50">
-                    <div class="relative pl-4">
-                        <div class="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-red-500"></div>
-                        <p class="text-[9px] text-slate-500 font-mono">${new Date(incident.created_at).toLocaleTimeString()} - Incident Opened</p>
-                    </div>
-                    <div class="relative pl-4">
-                        <div class="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-blue-500"></div>
-                        <p class="text-[9px] text-slate-500 font-mono">${new Date(new Date(incident.created_at).getTime() + 2000).toLocaleTimeString()} - ML Engine Classified as ${incident.severity}</p>
-                    </div>
-                    ${incident.status !== 'NEW' ? `
-                    <div class="relative pl-4">
-                        <div class="absolute -left-[5px] top-1 w-2 h-2 rounded-full bg-orange-500"></div>
-                        <p class="text-[9px] text-slate-500 font-mono">${new Date(incident.updated_at).toLocaleTimeString()} - Status changed to ${incident.status} by ${incident.assigned_analyst}</p>
-                    </div>` : ''}
+                <p class="text-[10px] text-slate-500 uppercase font-bold mb-3">Orchestration Timeline</p>
+                <div class="flex flex-col space-y-4 pl-2 border-l-2 border-slate-700/50" id="modalTimelineFeed">
+                    ${timelineHTML}
                 </div>
             </div>
 

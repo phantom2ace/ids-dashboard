@@ -83,9 +83,9 @@
                         <td class="py-3 px-4 text-[10px] uppercase tracking-widest font-bold text-red-400">{{ pred.ml_prediction }}</td>
                         <td class="py-3 px-4">
                             <div class="flex items-center space-x-2">
-                                <span class="font-mono text-[10px] text-green-400 w-8">{{ (pred.confidence * 100)|round|int }}%</span>
+                                <span class="font-mono text-[10px] text-green-400 w-8">{{ pred.confidence|round|int }}%</span>
                                 <div class="w-16 h-1.5 bg-slate-800 rounded-full overflow-hidden">
-                                    <div class="h-full bg-green-500" style="width: {{ pred.confidence * 100 }}%"></div>
+                                    <div class="h-full bg-green-500" style="width: {{ pred.confidence }}%"></div>
                                 </div>
                             </div>
                         </td>

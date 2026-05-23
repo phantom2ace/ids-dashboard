@@ -3,6 +3,6 @@ Database initialized.
 [+] Starting Suricata Log Parser...
 [+] Starting Flask Dashboard with Gunicorn...
 [+] IDSSD Platform Running in Production Mode
-[*] Gunicorn PID: 69118 | Parser PID: 69096
+[*] Gunicorn PID: 80177 | Parser PID: 80149
 [*] Logs: parser.log, dashboard.log
 [-] A core process exited. Shutting down.

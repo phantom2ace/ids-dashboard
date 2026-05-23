@@ -454,16 +454,63 @@ def update_incident(incident_id):
     analyst = data.get('analyst')
     
     conn = get_connection()
+    conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
+    
+    # Get current state
+    cursor.execute('SELECT status, assigned_analyst, analyst_notes FROM incidents WHERE incident_id = ?', (incident_id,))
+    current = cursor.fetchone()
+    
+    if not current:
+        conn.close()
+        return jsonify({'success': False, 'error': 'Incident not found'})
+        
+    import datetime
+    now = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+    
+    # Generate logs based on changes
+    if status and status != current['status']:
+        cursor.execute('''
+            INSERT INTO incident_logs (incident_id, timestamp, action_type, user, details)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (incident_id, now, "STATUS_CHANGE", "System", f"Status changed from {current['status']} to {status}"))
+        
+    if analyst and analyst != current['assigned_analyst']:
+        cursor.execute('''
+            INSERT INTO incident_logs (incident_id, timestamp, action_type, user, details)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (incident_id, now, "ASSIGNMENT", "System", f"Incident assigned to {analyst}"))
+        
+    if notes and notes != current['analyst_notes']:
+        cursor.execute('''
+            INSERT INTO incident_logs (incident_id, timestamp, action_type, user, details)
+            VALUES (?, ?, ?, ?, ?)
+        ''', (incident_id, now, "NOTE_ADDED", analyst if analyst != 'Unassigned' else 'System', f"Analyst note added/updated"))
+    
     cursor.execute('''
         UPDATE incidents 
-        SET status = ?, analyst_notes = ?, assigned_analyst = ? 
+        SET status = ?, analyst_notes = ?, assigned_analyst = ?, updated_at = ?
         WHERE incident_id = ?
-    ''', (status, notes, analyst, incident_id))
+    ''', (status, notes, analyst, now, incident_id))
+    
     conn.commit()
     conn.close()
     
     return jsonify({'success': True})
+
+@app.route('/api/incidents/<incident_id>/logs')
+def get_incident_logs(incident_id):
+    conn = get_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT * FROM incident_logs 
+        WHERE incident_id = ? 
+        ORDER BY timestamp ASC
+    ''', (incident_id,))
+    logs = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return jsonify(logs)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

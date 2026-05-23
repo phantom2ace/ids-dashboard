@@ -161,3 +161,410 @@ Targeting: http://localhost:5000/api/predict
 [01:08:56] ✅ Tenant: Local Sens | Src: 215.112.76.91   | Sig: ET POLICY SSH Brute Force | Sev: Medium
 [01:08:58] ✅ Tenant: Mercy Gene | Src: 226.155.123.178 | Sig: Normal Traffic            | Sev: Low
 [01:08:59] ✅ Tenant: Mercy Gene | Src: 86.230.222.160  | Sig: Normal Traffic            | Sev: Low
+[01:09:04] 🚨 Tenant: City Munic | Src: 121.184.140.75  | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:09:09] ✅ Tenant: Mercy Gene | Src: 246.87.164.201  | Sig: Normal Traffic            | Sev: Low
+[01:09:11] ✅ Tenant: City Munic | Src: 124.170.179.19  | Sig: Normal Traffic            | Sev: Low
+[01:09:13] ✅ Tenant: Apex Finan | Src: 255.157.43.59   | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:09:18] ✅ Tenant: Mercy Gene | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:09:23] ✅ Tenant: TechCorp G | Src: 206.252.216.6   | Sig: Normal Traffic            | Sev: Low
+[01:09:24] ✅ Tenant: Apex Finan | Src: 232.78.221.55   | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:09:26] ✅ Tenant: City Munic | Src: 215.87.89.2     | Sig: Normal Traffic            | Sev: Low
+[01:09:27] ✅ Tenant: Mercy Gene | Src: 45.12.99.11     | Sig: Normal Traffic            | Sev: Low
+[01:09:31] ✅ Tenant: Mercy Gene | Src: 123.208.11.215  | Sig: Normal Traffic            | Sev: Low
+[01:09:34] ✅ Tenant: TechCorp G | Src: 239.65.182.109  | Sig: Normal Traffic            | Sev: Low
+[01:09:35] ✅ Tenant: TechCorp G | Src: 83.88.139.195   | Sig: Normal Traffic            | Sev: Low
+[01:09:40] 🚨 Tenant: City Munic | Src: 8.8.8.8         | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:09:44] ✅ Tenant: Mercy Gene | Src: 220.74.197.227  | Sig: Normal Traffic            | Sev: Low
+[01:09:49] ✅ Tenant: Oakridge P | Src: 168.188.181.148 | Sig: Normal Traffic            | Sev: Low
+[01:09:52] ✅ Tenant: Mercy Gene | Src: 182.28.199.165  | Sig: Normal Traffic            | Sev: Low
+[01:09:54] ✅ Tenant: TechCorp G | Src: 148.146.76.73   | Sig: Normal Traffic            | Sev: Low
+[01:09:57] ✅ Tenant: Local Sens | Src: 23.150.110.188  | Sig: Normal Traffic            | Sev: Low
+[01:10:00] ✅ Tenant: TechCorp G | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:10:05] 🚨 Tenant: Local Sens | Src: 173.245.48.0    | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:10:10] ✅ Tenant: TechCorp G | Src: 94.110.92.109   | Sig: Normal Traffic            | Sev: Low
+[01:10:13] ✅ Tenant: Mercy Gene | Src: 75.164.119.208  | Sig: Normal Traffic            | Sev: Low
+[01:10:18] ✅ Tenant: Apex Finan | Src: 65.50.39.16     | Sig: Normal Traffic            | Sev: Low
+[01:10:22] ✅ Tenant: Mercy Gene | Src: 62.85.67.38     | Sig: Normal Traffic            | Sev: Low
+[01:10:25] 🚨 Tenant: TechCorp G | Src: 79.98.167.212   | Sig: ET EXPLOIT Possible SQL I | Sev: High
+[01:10:29] 🚨 Tenant: Mercy Gene | Src: 182.105.63.232  | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:10:33] ✅ Tenant: City Munic | Src: 45.12.99.11     | Sig: Normal Traffic            | Sev: Low
+[01:10:37] ✅ Tenant: Oakridge P | Src: 190.93.240.0    | Sig: Normal Traffic            | Sev: Low
+[01:10:42] ✅ Tenant: TechCorp G | Src: 229.45.213.115  | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:10:45] ✅ Tenant: Oakridge P | Src: 72.171.220.160  | Sig: Normal Traffic            | Sev: Low
+[01:10:50] ✅ Tenant: Oakridge P | Src: 141.101.64.0    | Sig: Normal Traffic            | Sev: Low
+[01:10:55] ✅ Tenant: Apex Finan | Src: 105.60.79.189   | Sig: Normal Traffic            | Sev: Low
+[01:10:56] ✅ Tenant: Local Sens | Src: 212.97.70.118   | Sig: Normal Traffic            | Sev: Low
+[01:10:58] ✅ Tenant: Apex Finan | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:11:00] ✅ Tenant: Local Sens | Src: 221.60.166.28   | Sig: Normal Traffic            | Sev: Low
+[01:11:05] ✅ Tenant: Mercy Gene | Src: 247.40.89.162   | Sig: Normal Traffic            | Sev: Low
+[01:11:09] 🚨 Tenant: City Munic | Src: 20.237.211.204  | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:11:13] ✅ Tenant: TechCorp G | Src: 8.105.83.144    | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:11:18] ✅ Tenant: Apex Finan | Src: 17.184.227.22   | Sig: Normal Traffic            | Sev: Low
+[01:11:21] ✅ Tenant: TechCorp G | Src: 91.16.209.174   | Sig: Normal Traffic            | Sev: Low
+[01:11:23] ✅ Tenant: Local Sens | Src: 183.106.150.167 | Sig: Normal Traffic            | Sev: Low
+[01:11:26] 🚨 Tenant: Mercy Gene | Src: 56.56.222.162   | Sig: Normal Traffic            | Sev: High
+[01:11:29] ✅ Tenant: TechCorp G | Src: 216.5.252.89    | Sig: Normal Traffic            | Sev: Low
+[01:11:31] ✅ Tenant: Apex Finan | Src: 59.90.86.207    | Sig: Normal Traffic            | Sev: Low
+[01:11:34] ✅ Tenant: Local Sens | Src: 190.93.240.0    | Sig: Normal Traffic            | Sev: Low
+[01:11:36] ✅ Tenant: Mercy Gene | Src: 211.4.102.102   | Sig: Normal Traffic            | Sev: Low
+[01:11:39] ✅ Tenant: City Munic | Src: 41.147.3.175    | Sig: Normal Traffic            | Sev: Low
+[01:11:44] ✅ Tenant: City Munic | Src: 101.216.4.98    | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:11:46] ✅ Tenant: City Munic | Src: 240.154.250.227 | Sig: Normal Traffic            | Sev: Low
+[01:11:49] ✅ Tenant: Mercy Gene | Src: 185.22.14.102   | Sig: Normal Traffic            | Sev: Low
+[01:11:54] ✅ Tenant: City Munic | Src: 215.213.116.194 | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:11:56] ✅ Tenant: Mercy Gene | Src: 185.22.14.102   | Sig: Normal Traffic            | Sev: Low
+[01:11:59] ✅ Tenant: TechCorp G | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:12:04] ✅ Tenant: Apex Finan | Src: 46.83.163.2     | Sig: Normal Traffic            | Sev: Low
+[01:12:05] ✅ Tenant: City Munic | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:12:08] ✅ Tenant: Oakridge P | Src: 45.12.99.11     | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:12:10] ✅ Tenant: Local Sens | Src: 22.134.223.184  | Sig: Normal Traffic            | Sev: Low
+[01:12:15] ✅ Tenant: Apex Finan | Src: 39.65.205.63    | Sig: Normal Traffic            | Sev: Low
+[01:12:17] ✅ Tenant: City Munic | Src: 141.35.37.133   | Sig: Normal Traffic            | Sev: Low
+[01:12:22] 🚨 Tenant: Apex Finan | Src: 218.188.46.10   | Sig: ET EXPLOIT Possible SQL I | Sev: High
+[01:12:25] ✅ Tenant: Apex Finan | Src: 149.61.217.106  | Sig: Normal Traffic            | Sev: Low
+[01:12:28] ✅ Tenant: TechCorp G | Src: 40.196.48.13    | Sig: Normal Traffic            | Sev: Low
+[01:12:33] ✅ Tenant: City Munic | Src: 233.127.17.96   | Sig: Normal Traffic            | Sev: Low
+[01:12:35] ✅ Tenant: TechCorp G | Src: 91.200.110.137  | Sig: Normal Traffic            | Sev: Low
+[01:12:37] ✅ Tenant: TechCorp G | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:12:39] ✅ Tenant: Oakridge P | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:12:44] ✅ Tenant: Mercy Gene | Src: 134.109.201.220 | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:12:48] 🚨 Tenant: City Munic | Src: 8.8.8.8         | Sig: ET EXPLOIT Possible SQL I | Sev: High
+[01:12:52] ✅ Tenant: Mercy Gene | Src: 124.126.202.218 | Sig: Normal Traffic            | Sev: Low
+[01:12:54] ✅ Tenant: TechCorp G | Src: 93.249.50.156   | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:12:57] ✅ Tenant: Mercy Gene | Src: 8.8.8.8         | Sig: Normal Traffic            | Sev: Low
+[01:13:00] ✅ Tenant: Mercy Gene | Src: 177.161.164.185 | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:13:02] ✅ Tenant: Mercy Gene | Src: 178.105.60.115  | Sig: Normal Traffic            | Sev: Low
+[01:13:05] ✅ Tenant: Mercy Gene | Src: 141.101.64.0    | Sig: Normal Traffic            | Sev: Low
+[01:13:08] ✅ Tenant: TechCorp G | Src: 213.195.138.254 | Sig: Normal Traffic            | Sev: Low
+[01:13:10] 🚨 Tenant: Apex Finan | Src: 168.161.23.202  | Sig: ET EXPLOIT Possible SQL I | Sev: High
+[01:13:12] ✅ Tenant: Mercy Gene | Src: 113.153.212.103 | Sig: Normal Traffic            | Sev: Low
+[01:13:13] ✅ Tenant: TechCorp G | Src: 45.12.99.11     | Sig: Normal Traffic            | Sev: Low
+[01:13:15] ✅ Tenant: Apex Finan | Src: 8.8.8.8         | Sig: Normal Traffic            | Sev: Low
+[01:13:19] ✅ Tenant: Apex Finan | Src: 153.154.12.166  | Sig: Normal Traffic            | Sev: Low
+[01:13:21] ✅ Tenant: Apex Finan | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:13:25] ✅ Tenant: City Munic | Src: 103.21.244.0    | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:13:29] 🚨 Tenant: Mercy Gene | Src: 190.93.240.0    | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:13:30] ✅ Tenant: Apex Finan | Src: 247.242.82.225  | Sig: Normal Traffic            | Sev: Low
+[01:13:35] 🚨 Tenant: Mercy Gene | Src: 136.229.206.25  | Sig: Normal Traffic            | Sev: High
+[01:13:39] ✅ Tenant: Oakridge P | Src: 48.7.93.98      | Sig: Normal Traffic            | Sev: Low
+[01:13:45] ✅ Tenant: Mercy Gene | Src: 13.237.146.248  | Sig: Normal Traffic            | Sev: Low
+[01:13:50] ✅ Tenant: TechCorp G | Src: 127.146.194.39  | Sig: Normal Traffic            | Sev: Low
+[01:13:53] 🚨 Tenant: Mercy Gene | Src: 69.252.128.40   | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:13:58] 🚨 Tenant: City Munic | Src: 167.142.39.122  | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:14:01] ✅ Tenant: TechCorp G | Src: 206.16.218.199  | Sig: Normal Traffic            | Sev: Low
+❌ Connection Error: Is the Flask app running?
+❌ Connection Error: Is the Flask app running?
+[01:14:10] ✅ Tenant: Oakridge P | Src: 48.164.4.206    | Sig: Normal Traffic            | Sev: Low
+[01:14:15] ✅ Tenant: Mercy Gene | Src: 205.226.42.28   | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:14:19] ✅ Tenant: TechCorp G | Src: 166.164.25.66   | Sig: Normal Traffic            | Sev: Low
+[01:14:21] ✅ Tenant: Local Sens | Src: 200.65.79.224   | Sig: Normal Traffic            | Sev: Low
+[01:14:25] ✅ Tenant: Mercy Gene | Src: 210.244.169.26  | Sig: Normal Traffic            | Sev: Low
+[01:14:31] ✅ Tenant: Mercy Gene | Src: 223.190.38.228  | Sig: Normal Traffic            | Sev: Low
+[01:14:32] ✅ Tenant: Local Sens | Src: 236.111.254.145 | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:14:36] ✅ Tenant: Local Sens | Src: 47.189.213.160  | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:14:40] ✅ Tenant: City Munic | Src: 190.93.240.0    | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:14:41] ✅ Tenant: Apex Finan | Src: 141.101.64.0    | Sig: Normal Traffic            | Sev: Low
+[01:14:45] ✅ Tenant: City Munic | Src: 219.188.8.128   | Sig: Normal Traffic            | Sev: Low
+[01:14:49] 🚨 Tenant: Apex Finan | Src: 8.8.8.8         | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:14:52] ✅ Tenant: City Munic | Src: 45.57.23.117    | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:14:54] ✅ Tenant: City Munic | Src: 2.226.243.81    | Sig: Normal Traffic            | Sev: Low
+[01:14:57] ✅ Tenant: Local Sens | Src: 45.12.99.11     | Sig: Normal Traffic            | Sev: Low
+[01:15:01] ✅ Tenant: Oakridge P | Src: 173.245.48.0    | Sig: Normal Traffic            | Sev: Low
+[01:15:03] ✅ Tenant: Oakridge P | Src: 235.112.148.223 | Sig: Normal Traffic            | Sev: Low
+[01:15:09] ✅ Tenant: Apex Finan | Src: 15.252.144.145  | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:15:11] ✅ Tenant: City Munic | Src: 122.237.73.216  | Sig: Normal Traffic            | Sev: Low
+[01:15:16] 🚨 Tenant: Oakridge P | Src: 141.101.64.0    | Sig: ET EXPLOIT Possible SQL I | Sev: High
+[01:15:21] ✅ Tenant: Apex Finan | Src: 15.146.167.141  | Sig: Normal Traffic            | Sev: Low
+[01:15:25] ✅ Tenant: Mercy Gene | Src: 141.101.64.0    | Sig: Normal Traffic            | Sev: Low
+[01:15:29] ✅ Tenant: Mercy Gene | Src: 54.50.179.102   | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:15:33] ✅ Tenant: Apex Finan | Src: 143.226.25.208  | Sig: Normal Traffic            | Sev: Low
+[01:15:39] ✅ Tenant: TechCorp G | Src: 217.55.46.221   | Sig: Normal Traffic            | Sev: Low
+[01:15:41] ✅ Tenant: TechCorp G | Src: 190.93.240.0    | Sig: Normal Traffic            | Sev: Low
+[01:15:45] ✅ Tenant: TechCorp G | Src: 8.8.8.8         | Sig: Normal Traffic            | Sev: Low
+[01:15:47] ✅ Tenant: Local Sens | Src: 68.114.191.241  | Sig: Normal Traffic            | Sev: Low
+[01:15:49] ✅ Tenant: Mercy Gene | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:15:53] ✅ Tenant: City Munic | Src: 211.32.85.46    | Sig: Normal Traffic            | Sev: Low
+[01:15:58] ✅ Tenant: Mercy Gene | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:16:01] ✅ Tenant: Local Sens | Src: 93.52.70.38     | Sig: Normal Traffic            | Sev: Low
+[01:16:03] ✅ Tenant: City Munic | Src: 134.201.154.13  | Sig: Normal Traffic            | Sev: Low
+[01:16:07] ✅ Tenant: City Munic | Src: 138.142.57.170  | Sig: Normal Traffic            | Sev: Low
+[01:16:12] 🚨 Tenant: Oakridge P | Src: 168.57.16.81    | Sig: ET EXPLOIT Possible SQL I | Sev: High
+[01:16:14] ✅ Tenant: Mercy Gene | Src: 45.12.99.11     | Sig: Normal Traffic            | Sev: Low
+[01:16:18] ✅ Tenant: Mercy Gene | Src: 79.249.107.78   | Sig: Normal Traffic            | Sev: Low
+[01:16:20] ✅ Tenant: Apex Finan | Src: 141.101.64.0    | Sig: Normal Traffic            | Sev: Low
+[01:16:24] ✅ Tenant: TechCorp G | Src: 45.12.99.11     | Sig: Normal Traffic            | Sev: Low
+[01:16:28] ✅ Tenant: Oakridge P | Src: 255.9.125.8     | Sig: Normal Traffic            | Sev: Low
+[01:16:32] 🚨 Tenant: City Munic | Src: 141.101.64.0    | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:16:37] ✅ Tenant: Mercy Gene | Src: 173.245.48.0    | Sig: Normal Traffic            | Sev: Low
+[01:16:42] ✅ Tenant: Mercy Gene | Src: 185.22.14.102   | Sig: Normal Traffic            | Sev: Low
+[01:16:43] ✅ Tenant: TechCorp G | Src: 72.152.196.156  | Sig: Normal Traffic            | Sev: Low
+[01:16:48] ✅ Tenant: Oakridge P | Src: 76.83.202.241   | Sig: Normal Traffic            | Sev: Low
+[01:16:51] ✅ Tenant: Mercy Gene | Src: 91.54.231.155   | Sig: Normal Traffic            | Sev: Low
+[01:16:55] ✅ Tenant: Oakridge P | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:16:57] ✅ Tenant: TechCorp G | Src: 49.246.48.72    | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:16:58] ✅ Tenant: Apex Finan | Src: 190.93.240.0    | Sig: Normal Traffic            | Sev: Low
+[01:17:01] ✅ Tenant: Local Sens | Src: 226.108.20.199  | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:17:05] ✅ Tenant: Oakridge P | Src: 8.8.8.8         | Sig: Normal Traffic            | Sev: Low
+[01:17:10] ✅ Tenant: TechCorp G | Src: 51.195.29.192   | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:17:12] ✅ Tenant: TechCorp G | Src: 162.2.127.118   | Sig: Normal Traffic            | Sev: Low
+[01:17:16] ✅ Tenant: TechCorp G | Src: 188.103.243.147 | Sig: Normal Traffic            | Sev: Low
+[01:17:19] ✅ Tenant: Mercy Gene | Src: 45.12.99.11     | Sig: Normal Traffic            | Sev: Low
+[01:17:22] ✅ Tenant: Apex Finan | Src: 175.183.7.215   | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:17:28] ✅ Tenant: Mercy Gene | Src: 91.152.72.251   | Sig: Normal Traffic            | Sev: Low
+[01:17:30] ✅ Tenant: Oakridge P | Src: 45.12.99.11     | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:17:33] ✅ Tenant: Local Sens | Src: 158.13.9.97     | Sig: Normal Traffic            | Sev: Low
+[01:17:37] 🚨 Tenant: Apex Finan | Src: 233.158.128.74  | Sig: ET EXPLOIT Possible SQL I | Sev: High
+[01:17:42] ✅ Tenant: TechCorp G | Src: 1.168.149.36    | Sig: Normal Traffic            | Sev: Low
+[01:17:43] ✅ Tenant: Apex Finan | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:17:49] ✅ Tenant: Mercy Gene | Src: 248.90.9.232    | Sig: Normal Traffic            | Sev: Low
+[01:17:52] ✅ Tenant: Local Sens | Src: 98.223.227.84   | Sig: Normal Traffic            | Sev: Low
+[01:17:56] ✅ Tenant: Mercy Gene | Src: 115.105.243.127 | Sig: Normal Traffic            | Sev: Low
+[01:17:58] ✅ Tenant: Oakridge P | Src: 169.135.238.99  | Sig: Normal Traffic            | Sev: Low
+[01:18:04] 🚨 Tenant: Oakridge P | Src: 42.11.254.151   | Sig: ET EXPLOIT Possible SQL I | Sev: High
+[01:18:09] ✅ Tenant: Oakridge P | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:18:12] ✅ Tenant: Oakridge P | Src: 173.245.48.0    | Sig: Normal Traffic            | Sev: Low
+[01:18:16] 🚨 Tenant: City Munic | Src: 2.167.66.121    | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:18:19] ✅ Tenant: Oakridge P | Src: 185.132.106.209 | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:18:21] ✅ Tenant: Local Sens | Src: 133.154.167.244 | Sig: Normal Traffic            | Sev: Low
+[01:18:26] ✅ Tenant: Mercy Gene | Src: 132.68.222.216  | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:18:30] ✅ Tenant: Mercy Gene | Src: 224.202.100.188 | Sig: Normal Traffic            | Sev: Low
+[01:18:33] ✅ Tenant: Oakridge P | Src: 190.93.240.0    | Sig: Normal Traffic            | Sev: Low
+[01:18:37] 🚨 Tenant: Apex Finan | Src: 141.101.64.0    | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:18:39] ✅ Tenant: Local Sens | Src: 45.12.99.11     | Sig: Normal Traffic            | Sev: Low
+[01:18:42] ✅ Tenant: Mercy Gene | Src: 1.233.3.80      | Sig: Normal Traffic            | Sev: Low
+[01:18:44] ✅ Tenant: Mercy Gene | Src: 149.215.255.64  | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:18:47] ✅ Tenant: Apex Finan | Src: 34.215.123.128  | Sig: Normal Traffic            | Sev: Low
+[01:18:51] ✅ Tenant: Mercy Gene | Src: 7.77.10.27      | Sig: Normal Traffic            | Sev: Low
+[01:18:54] 🚨 Tenant: City Munic | Src: 208.74.31.181   | Sig: ET EXPLOIT Possible SQL I | Sev: High
+[01:18:56] ✅ Tenant: Mercy Gene | Src: 93.191.75.179   | Sig: Normal Traffic            | Sev: Low
+[01:18:58] ✅ Tenant: TechCorp G | Src: 190.122.225.45  | Sig: Normal Traffic            | Sev: Low
+[01:19:01] ✅ Tenant: Oakridge P | Src: 53.174.117.113  | Sig: Normal Traffic            | Sev: Low
+[01:19:05] ✅ Tenant: Mercy Gene | Src: 2.94.216.220    | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:19:10] ✅ Tenant: Oakridge P | Src: 239.229.200.213 | Sig: Normal Traffic            | Sev: Low
+[01:19:12] ✅ Tenant: Local Sens | Src: 45.12.99.11     | Sig: Normal Traffic            | Sev: Low
+[01:19:16] ✅ Tenant: Mercy Gene | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:19:20] ✅ Tenant: Apex Finan | Src: 91.51.223.181   | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:19:22] ✅ Tenant: Oakridge P | Src: 19.247.243.43   | Sig: Normal Traffic            | Sev: Low
+[01:19:27] ✅ Tenant: Oakridge P | Src: 34.169.77.9     | Sig: Normal Traffic            | Sev: Low
+[01:19:29] ✅ Tenant: Mercy Gene | Src: 217.34.185.195  | Sig: Normal Traffic            | Sev: Low
+[01:19:30] ✅ Tenant: Oakridge P | Src: 238.213.135.129 | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:19:34] ✅ Tenant: Mercy Gene | Src: 219.57.68.206   | Sig: Normal Traffic            | Sev: Low
+[01:19:38] ✅ Tenant: Oakridge P | Src: 20.17.150.92    | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:19:41] ✅ Tenant: TechCorp G | Src: 8.8.8.8         | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:19:44] ✅ Tenant: Local Sens | Src: 19.43.116.63    | Sig: Normal Traffic            | Sev: Low
+[01:19:47] ✅ Tenant: Local Sens | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:19:50] ✅ Tenant: Apex Finan | Src: 173.120.64.169  | Sig: Normal Traffic            | Sev: Low
+[01:19:52] ✅ Tenant: TechCorp G | Src: 61.31.115.245   | Sig: Normal Traffic            | Sev: Low
+[01:19:57] 🚨 Tenant: Mercy Gene | Src: 1.1.1.1         | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:20:01] ✅ Tenant: City Munic | Src: 141.101.64.0    | Sig: Normal Traffic            | Sev: Low
+[01:20:05] ✅ Tenant: TechCorp G | Src: 155.84.106.218  | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:20:09] ✅ Tenant: Local Sens | Src: 185.22.14.102   | Sig: Normal Traffic            | Sev: Low
+[01:20:10] ✅ Tenant: Oakridge P | Src: 141.101.64.0    | Sig: Normal Traffic            | Sev: Low
+[01:20:13] ✅ Tenant: Apex Finan | Src: 153.63.190.241  | Sig: Normal Traffic            | Sev: Low
+[01:20:16] ✅ Tenant: Oakridge P | Src: 241.79.231.207  | Sig: Normal Traffic            | Sev: Low
+[01:20:18] ✅ Tenant: Mercy Gene | Src: 85.31.115.228   | Sig: Normal Traffic            | Sev: Low
+[01:20:21] ✅ Tenant: Apex Finan | Src: 190.219.169.89  | Sig: Normal Traffic            | Sev: Low
+[01:20:23] ✅ Tenant: City Munic | Src: 79.46.89.13     | Sig: Normal Traffic            | Sev: Low
+[01:20:28] ✅ Tenant: TechCorp G | Src: 120.148.96.51   | Sig: Normal Traffic            | Sev: Low
+[01:20:29] ✅ Tenant: Mercy Gene | Src: 116.1.250.18    | Sig: Normal Traffic            | Sev: Low
+[01:20:34] ✅ Tenant: Oakridge P | Src: 169.2.54.157    | Sig: Normal Traffic            | Sev: Low
+[01:20:38] 🚨 Tenant: Local Sens | Src: 166.89.30.171   | Sig: ET EXPLOIT Possible SQL I | Sev: High
+[01:20:43] ✅ Tenant: Mercy Gene | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:20:45] ✅ Tenant: TechCorp G | Src: 178.32.67.88    | Sig: Normal Traffic            | Sev: Low
+[01:20:49] ✅ Tenant: Apex Finan | Src: 141.101.64.0    | Sig: Normal Traffic            | Sev: Low
+[01:20:50] ✅ Tenant: City Munic | Src: 8.8.8.8         | Sig: Normal Traffic            | Sev: Low
+[01:20:52] ✅ Tenant: City Munic | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:20:56] ✅ Tenant: Local Sens | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:20:59] ✅ Tenant: Apex Finan | Src: 215.29.122.43   | Sig: Normal Traffic            | Sev: Low
+[01:21:01] ✅ Tenant: Oakridge P | Src: 85.140.197.98   | Sig: Normal Traffic            | Sev: Low
+[01:21:03] ✅ Tenant: Local Sens | Src: 14.243.74.220   | Sig: Normal Traffic            | Sev: Low
+[01:21:07] ✅ Tenant: Local Sens | Src: 8.8.8.8         | Sig: Normal Traffic            | Sev: Low
+[01:21:11] ✅ Tenant: Apex Finan | Src: 227.38.162.99   | Sig: Normal Traffic            | Sev: Low
+[01:21:15] ✅ Tenant: City Munic | Src: 182.172.178.130 | Sig: Normal Traffic            | Sev: Low
+[01:21:17] ✅ Tenant: Apex Finan | Src: 36.91.48.33     | Sig: Normal Traffic            | Sev: Low
+[01:21:22] ✅ Tenant: Mercy Gene | Src: 121.239.138.36  | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:21:26] 🚨 Tenant: Apex Finan | Src: 7.234.52.116    | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:21:29] ✅ Tenant: City Munic | Src: 3.77.210.120    | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:21:31] ✅ Tenant: Apex Finan | Src: 69.240.27.166   | Sig: Normal Traffic            | Sev: Low
+[01:21:36] ✅ Tenant: Oakridge P | Src: 159.47.143.221  | Sig: Normal Traffic            | Sev: Low
+[01:21:40] ✅ Tenant: Oakridge P | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:21:43] ✅ Tenant: Mercy Gene | Src: 192.225.226.94  | Sig: Normal Traffic            | Sev: Low
+[01:21:49] ✅ Tenant: Mercy Gene | Src: 120.158.242.194 | Sig: Normal Traffic            | Sev: Low
+[01:21:51] ✅ Tenant: Local Sens | Src: 116.170.55.229  | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:21:55] ✅ Tenant: Apex Finan | Src: 119.10.231.100  | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:22:00] ✅ Tenant: Oakridge P | Src: 129.113.128.103 | Sig: Normal Traffic            | Sev: Low
+[01:22:04] ✅ Tenant: Apex Finan | Src: 27.156.150.197  | Sig: Normal Traffic            | Sev: Low
+[01:22:05] ✅ Tenant: Local Sens | Src: 87.19.80.121    | Sig: Normal Traffic            | Sev: Low
+[01:22:10] 🚨 Tenant: Oakridge P | Src: 190.93.240.0    | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:22:13] ✅ Tenant: Oakridge P | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:22:15] ✅ Tenant: Mercy Gene | Src: 23.210.41.120   | Sig: Normal Traffic            | Sev: Low
+[01:22:19] 🚨 Tenant: City Munic | Src: 234.200.56.209  | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:22:23] ✅ Tenant: TechCorp G | Src: 162.57.231.9    | Sig: Normal Traffic            | Sev: Low
+[01:22:27] ✅ Tenant: Mercy Gene | Src: 39.153.237.42   | Sig: Normal Traffic            | Sev: Low
+[01:22:30] ✅ Tenant: Apex Finan | Src: 112.55.48.190   | Sig: Normal Traffic            | Sev: Low
+[01:22:34] ✅ Tenant: Local Sens | Src: 238.220.190.52  | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:22:39] ✅ Tenant: Apex Finan | Src: 70.57.78.90     | Sig: Normal Traffic            | Sev: Low
+[01:22:41] ✅ Tenant: City Munic | Src: 25.96.63.101    | Sig: Normal Traffic            | Sev: Low
+[01:22:43] ✅ Tenant: TechCorp G | Src: 86.170.169.111  | Sig: Normal Traffic            | Sev: Low
+[01:22:44] ✅ Tenant: Apex Finan | Src: 185.22.14.102   | Sig: Normal Traffic            | Sev: Low
+[01:22:48] ✅ Tenant: Apex Finan | Src: 16.136.124.232  | Sig: Normal Traffic            | Sev: Low
+[01:22:52] ✅ Tenant: City Munic | Src: 110.73.230.117  | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:22:55] ✅ Tenant: Mercy Gene | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:23:00] 🚨 Tenant: TechCorp G | Src: 151.148.184.75  | Sig: ET EXPLOIT Possible SQL I | Sev: High
+[01:23:05] ✅ Tenant: City Munic | Src: 141.26.71.68    | Sig: Normal Traffic            | Sev: Low
+[01:23:09] 🚨 Tenant: Apex Finan | Src: 105.87.54.197   | Sig: Normal Traffic            | Sev: High
+[01:23:14] ✅ Tenant: Oakridge P | Src: 185.22.14.102   | Sig: Normal Traffic            | Sev: Low
+[01:23:19] ✅ Tenant: Apex Finan | Src: 8.8.8.8         | Sig: Normal Traffic            | Sev: Low
+[01:23:21] ✅ Tenant: City Munic | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:23:23] ✅ Tenant: Mercy Gene | Src: 208.158.36.159  | Sig: Normal Traffic            | Sev: Low
+[01:23:24] ✅ Tenant: Oakridge P | Src: 254.195.12.7    | Sig: Normal Traffic            | Sev: Low
+[01:23:27] ✅ Tenant: City Munic | Src: 185.22.14.102   | Sig: Normal Traffic            | Sev: Low
+[01:23:31] ✅ Tenant: Mercy Gene | Src: 191.32.99.9     | Sig: Normal Traffic            | Sev: Low
+[01:23:33] ✅ Tenant: City Munic | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:23:37] ✅ Tenant: Apex Finan | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:23:41] ✅ Tenant: Local Sens | Src: 185.22.14.102   | Sig: Normal Traffic            | Sev: Low
+[01:23:43] ✅ Tenant: Oakridge P | Src: 184.91.65.148   | Sig: Normal Traffic            | Sev: Low
+[01:23:45] ✅ Tenant: City Munic | Src: 38.66.143.12    | Sig: Normal Traffic            | Sev: Low
+[01:23:50] ✅ Tenant: Apex Finan | Src: 164.69.142.81   | Sig: Normal Traffic            | Sev: Low
+[01:23:53] ✅ Tenant: Oakridge P | Src: 232.158.81.177  | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:23:55] ✅ Tenant: Apex Finan | Src: 215.254.145.119 | Sig: Normal Traffic            | Sev: Low
+[01:24:00] ✅ Tenant: Mercy Gene | Src: 167.144.94.110  | Sig: Normal Traffic            | Sev: Low
+[01:24:02] ✅ Tenant: Local Sens | Src: 66.50.197.66    | Sig: Normal Traffic            | Sev: Low
+[01:24:06] ✅ Tenant: Mercy Gene | Src: 45.12.99.11     | Sig: Normal Traffic            | Sev: Low
+[01:24:12] ✅ Tenant: Local Sens | Src: 195.152.167.254 | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:24:14] ✅ Tenant: Apex Finan | Src: 83.175.119.126  | Sig: Normal Traffic            | Sev: Low
+[01:24:18] ✅ Tenant: Oakridge P | Src: 98.126.81.13    | Sig: Normal Traffic            | Sev: Low
+[01:24:19] ✅ Tenant: City Munic | Src: 38.131.105.190  | Sig: Normal Traffic            | Sev: Low
+[01:24:21] ✅ Tenant: Mercy Gene | Src: 8.8.8.8         | Sig: Normal Traffic            | Sev: Low
+[01:24:26] ✅ Tenant: City Munic | Src: 22.132.90.135   | Sig: Normal Traffic            | Sev: Low
+[01:24:30] ✅ Tenant: TechCorp G | Src: 135.101.113.62  | Sig: Normal Traffic            | Sev: Low
+[01:24:33] ✅ Tenant: Apex Finan | Src: 21.119.4.37     | Sig: Normal Traffic            | Sev: Low
+[01:24:42] ✅ Tenant: TechCorp G | Src: 102.142.100.179 | Sig: Normal Traffic            | Sev: Low
+[01:24:46] ✅ Tenant: TechCorp G | Src: 179.222.79.44   | Sig: Normal Traffic            | Sev: Low
+[01:24:49] ✅ Tenant: Oakridge P | Src: 190.93.240.0    | Sig: Normal Traffic            | Sev: Low
+[01:24:52] ✅ Tenant: TechCorp G | Src: 150.163.188.198 | Sig: Normal Traffic            | Sev: Low
+[01:24:56] ✅ Tenant: Oakridge P | Src: 40.44.185.6     | Sig: Normal Traffic            | Sev: Low
+[01:24:59] ✅ Tenant: City Munic | Src: 141.101.64.0    | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:25:04] ✅ Tenant: Apex Finan | Src: 190.93.240.0    | Sig: Normal Traffic            | Sev: Low
+[01:25:08] 🚨 Tenant: Local Sens | Src: 149.2.160.42    | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:25:13] ✅ Tenant: Apex Finan | Src: 196.213.219.43  | Sig: Normal Traffic            | Sev: Low
+[01:25:16] ✅ Tenant: Mercy Gene | Src: 57.125.70.241   | Sig: Normal Traffic            | Sev: Low
+[01:25:18] ✅ Tenant: TechCorp G | Src: 201.199.141.157 | Sig: Normal Traffic            | Sev: Low
+[01:25:22] ✅ Tenant: TechCorp G | Src: 207.235.233.234 | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:25:24] ✅ Tenant: Apex Finan | Src: 122.177.104.168 | Sig: Normal Traffic            | Sev: Low
+[01:25:28] 🚨 Tenant: Apex Finan | Src: 62.74.146.116   | Sig: ET EXPLOIT Possible SQL I | Sev: High
+[01:25:31] ✅ Tenant: Apex Finan | Src: 122.234.220.133 | Sig: Normal Traffic            | Sev: Low
+[01:25:34] ✅ Tenant: Mercy Gene | Src: 141.101.64.0    | Sig: Normal Traffic            | Sev: Low
+[01:25:37] ✅ Tenant: Local Sens | Src: 48.33.82.217    | Sig: Normal Traffic            | Sev: Low
+[01:25:38] ✅ Tenant: Local Sens | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:25:43] ✅ Tenant: Oakridge P | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:25:44] ✅ Tenant: City Munic | Src: 173.245.48.0    | Sig: Normal Traffic            | Sev: Low
+[01:25:48] ✅ Tenant: Oakridge P | Src: 173.245.48.0    | Sig: Normal Traffic            | Sev: Low
+[01:25:50] ✅ Tenant: Apex Finan | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:25:55] ✅ Tenant: Oakridge P | Src: 105.217.38.161  | Sig: Normal Traffic            | Sev: Low
+[01:25:58] ✅ Tenant: Apex Finan | Src: 62.8.255.123    | Sig: Normal Traffic            | Sev: Low
+[01:26:00] ✅ Tenant: Local Sens | Src: 48.12.185.162   | Sig: Normal Traffic            | Sev: Low
+[01:26:02] ✅ Tenant: City Munic | Src: 155.231.30.73   | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:26:07] ✅ Tenant: Mercy Gene | Src: 185.22.14.102   | Sig: Normal Traffic            | Sev: Low
+[01:26:10] ✅ Tenant: Mercy Gene | Src: 157.134.215.11  | Sig: Normal Traffic            | Sev: Low
+[01:26:15] ✅ Tenant: Mercy Gene | Src: 185.22.14.102   | Sig: Normal Traffic            | Sev: Low
+[01:26:16] ✅ Tenant: City Munic | Src: 173.245.48.0    | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:26:18] ✅ Tenant: TechCorp G | Src: 8.8.8.8         | Sig: Normal Traffic            | Sev: Low
+[01:26:20] ✅ Tenant: City Munic | Src: 75.117.32.84    | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:26:26] ✅ Tenant: City Munic | Src: 187.222.70.238  | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:26:29] ✅ Tenant: Apex Finan | Src: 45.12.99.11     | Sig: Normal Traffic            | Sev: Low
+[01:26:32] 🚨 Tenant: Apex Finan | Src: 189.128.78.43   | Sig: Normal Traffic            | Sev: High
+[01:26:37] ✅ Tenant: Local Sens | Src: 118.11.177.47   | Sig: Normal Traffic            | Sev: Low
+[01:26:39] ✅ Tenant: Mercy Gene | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:26:42] ✅ Tenant: Local Sens | Src: 165.101.141.213 | Sig: Normal Traffic            | Sev: Low
+[01:26:44] ✅ Tenant: Mercy Gene | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:26:49] ✅ Tenant: Mercy Gene | Src: 14.85.211.28    | Sig: Normal Traffic            | Sev: Low
+[01:26:53] 🚨 Tenant: Apex Finan | Src: 217.111.247.250 | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:26:59] ✅ Tenant: Apex Finan | Src: 8.8.8.8         | Sig: Normal Traffic            | Sev: Low
+[01:27:03] ✅ Tenant: Mercy Gene | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:27:08] ✅ Tenant: Apex Finan | Src: 90.190.92.25    | Sig: Normal Traffic            | Sev: Low
+[01:27:12] ✅ Tenant: Oakridge P | Src: 229.14.201.152  | Sig: Normal Traffic            | Sev: Low
+[01:27:17] ✅ Tenant: City Munic | Src: 20.186.100.206  | Sig: Normal Traffic            | Sev: Low
+[01:27:20] ✅ Tenant: City Munic | Src: 35.204.119.9    | Sig: Normal Traffic            | Sev: Low
+[01:27:23] ✅ Tenant: TechCorp G | Src: 183.109.28.210  | Sig: Normal Traffic            | Sev: Low
+[01:27:29] ✅ Tenant: Local Sens | Src: 220.144.234.234 | Sig: Normal Traffic            | Sev: Low
+[01:27:33] ✅ Tenant: City Munic | Src: 185.22.14.102   | Sig: Normal Traffic            | Sev: Low
+[01:27:35] ✅ Tenant: City Munic | Src: 182.188.175.120 | Sig: Normal Traffic            | Sev: Low
+[01:27:39] ✅ Tenant: TechCorp G | Src: 66.39.55.47     | Sig: Normal Traffic            | Sev: Low
+[01:27:42] ✅ Tenant: Local Sens | Src: 131.238.126.92  | Sig: Normal Traffic            | Sev: Low
+[01:27:47] ✅ Tenant: Local Sens | Src: 197.213.3.68    | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:27:52] ✅ Tenant: TechCorp G | Src: 215.83.38.31    | Sig: Normal Traffic            | Sev: Low
+[01:27:56] ✅ Tenant: Local Sens | Src: 87.113.78.199   | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:27:58] ✅ Tenant: City Munic | Src: 169.135.141.215 | Sig: Normal Traffic            | Sev: Low
+[01:28:00] ✅ Tenant: City Munic | Src: 61.43.245.80    | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:28:02] ✅ Tenant: Mercy Gene | Src: 185.22.14.102   | Sig: Normal Traffic            | Sev: Low
+[01:28:06] ✅ Tenant: Mercy Gene | Src: 220.209.86.255  | Sig: Normal Traffic            | Sev: Low
+[01:28:10] ✅ Tenant: Mercy Gene | Src: 141.101.64.0    | Sig: Normal Traffic            | Sev: Low
+[01:28:13] ✅ Tenant: Apex Finan | Src: 18.210.106.166  | Sig: Normal Traffic            | Sev: Low
+[01:28:15] ✅ Tenant: Local Sens | Src: 72.119.104.47   | Sig: Normal Traffic            | Sev: Low
+[01:28:18] ✅ Tenant: City Munic | Src: 168.25.232.146  | Sig: Normal Traffic            | Sev: Low
+[01:28:22] ✅ Tenant: Mercy Gene | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:28:27] ✅ Tenant: TechCorp G | Src: 39.54.248.242   | Sig: Normal Traffic            | Sev: Low
+[01:28:28] ✅ Tenant: Oakridge P | Src: 141.101.64.0    | Sig: Normal Traffic            | Sev: Low
+[01:28:30] ✅ Tenant: Local Sens | Src: 190.93.240.0    | Sig: Normal Traffic            | Sev: Low
+[01:28:32] ✅ Tenant: City Munic | Src: 222.174.192.181 | Sig: Normal Traffic            | Sev: Low
+[01:28:33] ✅ Tenant: TechCorp G | Src: 190.93.240.0    | Sig: Normal Traffic            | Sev: Low
+[01:28:35] ✅ Tenant: City Munic | Src: 120.11.77.109   | Sig: Normal Traffic            | Sev: Low
+[01:28:39] ✅ Tenant: Oakridge P | Src: 153.69.145.234  | Sig: Normal Traffic            | Sev: Low
+[01:28:44] ✅ Tenant: Apex Finan | Src: 223.63.245.200  | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:28:45] ✅ Tenant: Mercy Gene | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:28:51] ✅ Tenant: Apex Finan | Src: 26.24.128.178   | Sig: Normal Traffic            | Sev: Low
+[01:28:55] ✅ Tenant: TechCorp G | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:28:59] ✅ Tenant: Mercy Gene | Src: 8.8.8.8         | Sig: Normal Traffic            | Sev: Low
+[01:29:02] ✅ Tenant: Local Sens | Src: 65.245.85.215   | Sig: Normal Traffic            | Sev: Low
+[01:29:05] ✅ Tenant: TechCorp G | Src: 185.118.113.200 | Sig: Normal Traffic            | Sev: Low
+[01:29:07] ✅ Tenant: Oakridge P | Src: 185.22.14.102   | Sig: Normal Traffic            | Sev: Low
+[01:29:11] ✅ Tenant: Oakridge P | Src: 61.253.15.119   | Sig: Normal Traffic            | Sev: Low
+[01:29:14] ✅ Tenant: Mercy Gene | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:29:17] ✅ Tenant: Apex Finan | Src: 28.197.177.204  | Sig: Normal Traffic            | Sev: Low
+[01:29:20] ✅ Tenant: Apex Finan | Src: 40.8.220.184    | Sig: Normal Traffic            | Sev: Low
+[01:29:25] 🚨 Tenant: Local Sens | Src: 13.242.163.175  | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:29:29] ✅ Tenant: Local Sens | Src: 173.245.48.0    | Sig: Normal Traffic            | Sev: Low
+[01:29:31] ✅ Tenant: TechCorp G | Src: 185.22.14.102   | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:29:32] ✅ Tenant: City Munic | Src: 8.8.8.8         | Sig: Normal Traffic            | Sev: Low
+[01:29:36] 🚨 Tenant: City Munic | Src: 185.22.14.102   | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:29:39] ✅ Tenant: Apex Finan | Src: 65.167.140.165  | Sig: Normal Traffic            | Sev: Low
+[01:29:44] ✅ Tenant: Oakridge P | Src: 107.23.197.216  | Sig: Normal Traffic            | Sev: Low
+[01:29:48] ✅ Tenant: Mercy Gene | Src: 1.1.1.1         | Sig: Normal Traffic            | Sev: Low
+[01:29:53] ✅ Tenant: Apex Finan | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:29:56] ✅ Tenant: Oakridge P | Src: 109.39.87.63    | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:30:00] ✅ Tenant: Apex Finan | Src: 208.16.212.109  | Sig: Normal Traffic            | Sev: Low
+[01:30:04] ✅ Tenant: City Munic | Src: 170.191.16.111  | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:30:07] ✅ Tenant: Apex Finan | Src: 53.114.51.64    | Sig: Normal Traffic            | Sev: Low
+[01:30:09] ✅ Tenant: TechCorp G | Src: 185.22.14.102   | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:30:14] ✅ Tenant: TechCorp G | Src: 203.151.195.48  | Sig: Normal Traffic            | Sev: Low
+[01:30:15] ✅ Tenant: Apex Finan | Src: 173.245.48.0    | Sig: Normal Traffic            | Sev: Low
+[01:30:21] ✅ Tenant: Oakridge P | Src: 191.114.229.198 | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:30:23] ✅ Tenant: Oakridge P | Src: 214.29.94.136   | Sig: Normal Traffic            | Sev: Low
+[01:30:27] ✅ Tenant: Oakridge P | Src: 185.22.14.102   | Sig: Normal Traffic            | Sev: Low
+[01:30:30] 🚨 Tenant: Local Sens | Src: 222.69.126.128  | Sig: ET EXPLOIT Possible SQL I | Sev: High
+[01:30:35] ✅ Tenant: TechCorp G | Src: 141.101.64.0    | Sig: Normal Traffic            | Sev: Low
+[01:30:38] ✅ Tenant: City Munic | Src: 161.194.2.77    | Sig: Normal Traffic            | Sev: Low
+❌ Connection Error: Is the Flask app running?
+[01:30:48] ✅ Tenant: Mercy Gene | Src: 205.77.152.98   | Sig: Normal Traffic            | Sev: Low
+[01:30:53] ✅ Tenant: Apex Finan | Src: 248.250.135.145 | Sig: Normal Traffic            | Sev: Low
+[01:30:57] ✅ Tenant: City Munic | Src: 8.8.8.8         | Sig: Normal Traffic            | Sev: Low
+[01:31:02] ✅ Tenant: Oakridge P | Src: 18.136.43.178   | Sig: Normal Traffic            | Sev: Low
+[01:31:07] ✅ Tenant: Mercy Gene | Src: 8.8.8.8         | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:31:12] 🚨 Tenant: City Munic | Src: 124.66.164.71   | Sig: ET WEB_SERVER Apache Log4 | Sev: Critical
+[01:31:14] ✅ Tenant: City Munic | Src: 103.21.244.0    | Sig: Normal Traffic            | Sev: Low
+[01:31:15] ✅ Tenant: Mercy Gene | Src: 45.12.99.11     | Sig: Normal Traffic            | Sev: Low
+[01:31:20] ✅ Tenant: TechCorp G | Src: 40.131.40.11    | Sig: Normal Traffic            | Sev: Low
+[01:31:25] ✅ Tenant: Local Sens | Src: 158.147.37.205  | Sig: Normal Traffic            | Sev: Low
+[01:31:30] ✅ Tenant: Local Sens | Src: 1.1.1.1         | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:31:34] ✅ Tenant: City Munic | Src: 167.134.206.150 | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:31:36] ✅ Tenant: Apex Finan | Src: 73.23.152.10    | Sig: ET POLICY SSH Brute Force | Sev: Medium
+[01:31:38] ✅ Tenant: Oakridge P | Src: 8.8.8.8         | Sig: Normal Traffic            | Sev: Low
+[01:31:42] ✅ Tenant: City Munic | Src: 144.221.244.182 | Sig: Normal Traffic            | Sev: Low
+[01:31:43] ✅ Tenant: Local Sens | Src: 103.21.244.0    | Sig: ET SCAN Nmap Scripting En | Sev: Medium
+[01:31:48] ✅ Tenant: Oakridge P | Src: 80.17.217.136   | Sig: Normal Traffic            | Sev: Low
+[01:31:53] ✅ Tenant: Local Sens | Src: 137.30.136.50   | Sig: Normal Traffic            | Sev: Low
+[01:31:55] ✅ Tenant: TechCorp G | Src: 178.144.206.55  | Sig: Normal Traffic            | Sev: Low
+[01:32:00] ✅ Tenant: City Munic | Src: 173.245.48.0    | Sig: Normal Traffic            | Sev: Low
+[01:32:02] ✅ Tenant: Mercy Gene | Src: 185.22.14.102   | Sig: Normal Traffic            | Sev: Low
+[01:32:06] ✅ Tenant: Oakridge P | Src: 20.124.233.234  | Sig: Normal Traffic            | Sev: Low
