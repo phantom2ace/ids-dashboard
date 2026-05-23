@@ -213,17 +213,35 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const fetchData = async () => {
         try {
-            const [incidentsRes, alertsRes] = await Promise.all([
+            const [incidentsRes, alertsRes, firewallRes] = await Promise.all([
                 fetch('/api/incidents'),
-                fetch('/api/alerts')
+                fetch('/api/alerts'),
+                fetch('/api/firewall')
             ]);
             const incidents = await incidentsRes.json();
             const alerts = await alertsRes.json();
+            const firewallBlocks = await firewallRes.json();
             
             updateIncidentTable(incidents);
             updateLiveFeed(alerts);
+            updateFirewallWidget(firewallBlocks);
         } catch (error) {
             console.error('Error fetching data:', error);
+        }
+    };
+
+    const updateFirewallWidget = (blocks) => {
+        const widget = document.getElementById('firewallWidget');
+        const countSpan = document.getElementById('firewallBlockCount');
+        if (widget && countSpan) {
+            if (blocks && blocks.length > 0) {
+                countSpan.innerText = blocks.length;
+                widget.classList.remove('hidden');
+                widget.classList.add('flex');
+            } else {
+                widget.classList.add('hidden');
+                widget.classList.remove('flex');
+            }
         }
     };
 

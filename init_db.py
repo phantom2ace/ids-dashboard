@@ -59,6 +59,17 @@ CREATE TABLE IF NOT EXISTS incident_logs (
 )
 """)
 
+# Create firewall_rules table for SOAR automated blocks
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS firewall_rules (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ip_address TEXT UNIQUE NOT NULL,
+    reason TEXT NOT NULL,
+    org_name TEXT DEFAULT 'All',
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+)
+""")
+
 conn.commit()
 conn.close()
 

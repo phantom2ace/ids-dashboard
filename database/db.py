@@ -131,6 +131,55 @@ def insert_alert(alert):
             alert["timestamp"]
         ))
 
+        # SOAR Playbook: Automated Response Actions
+        if alert['severity'] == 'Critical':
+            import datetime
+            now = datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+            
+            # 1. Auto-Escalate Incident
+            cursor.execute('''
+                UPDATE incidents 
+                SET status = 'ESCALATED', assigned_analyst = 'SOC Lead', updated_at = ?
+                WHERE incident_id = ? AND status = 'NEW'
+            ''', (now, incident_id))
+            
+            if cursor.rowcount > 0:
+                cursor.execute('''
+                    INSERT INTO incident_logs (incident_id, timestamp, action_type, user, details)
+                    VALUES (?, ?, ?, ?, ?)
+                ''', (incident_id, now, "STATUS_CHANGE", "SOAR Engine", "Auto-escalated Critical Incident"))
+                cursor.execute('''
+                    INSERT INTO incident_logs (incident_id, timestamp, action_type, user, details)
+                    VALUES (?, ?, ?, ?, ?)
+                ''', (incident_id, now, "ASSIGNMENT", "SOAR Engine", "Auto-assigned to SOC Lead"))
+
+            # 2. Auto-Block IP
+            try:
+                cursor.execute('''
+                    INSERT INTO firewall_rules (ip_address, reason, org_name, timestamp)
+                    VALUES (?, ?, ?, ?)
+                ''', (alert['src_ip'], f"SOAR Block: {alert['signature']}", alert.get('org_name', 'All'), now))
+                
+                cursor.execute('''
+                    INSERT INTO incident_logs (incident_id, timestamp, action_type, user, details)
+                    VALUES (?, ?, ?, ?, ?)
+                ''', (incident_id, now, "MITIGATION", "SOAR Engine", f"Auto-blocked IP {alert['src_ip']} at Edge Firewall"))
+                
+                # 3. Send Telegram Alert
+                try:
+                    import sys
+                    import os
+                    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+                    from alert_bot import AlertBot
+                    bot = AlertBot()
+                    bot.send_alert(f"SOAR Auto-Mitigation Triggered!\nCritical threat from {alert['src_ip']} ({alert['signature']}).\nIP Blocked and Escalated to SOC Lead.")
+                except Exception as bot_e:
+                    print(f"Failed to send SOAR bot alert: {bot_e}")
+                    
+            except sqlite3.IntegrityError:
+                # IP already blocked
+                pass
+
         conn.commit()
         
         # Phase 13: Real-Time Event Synchronization
@@ -151,26 +200,31 @@ def insert_alert(alert):
     finally:
         conn.close()
 
-def get_recent_alerts(limit=100):
+def get_recent_alerts(limit=100, org_name=None):
     conn = get_connection()
-    alerts = conn.execute("""
-        SELECT *
-        FROM alerts
-        ORDER BY id DESC
-        LIMIT ?
-    """, (limit,)).fetchall()
+    if org_name and org_name != 'All':
+        alerts = conn.execute("""
+            SELECT * FROM alerts WHERE org_name = ? ORDER BY id DESC LIMIT ?
+        """, (org_name, limit)).fetchall()
+    else:
+        alerts = conn.execute("""
+            SELECT * FROM alerts ORDER BY id DESC LIMIT ?
+        """, (limit,)).fetchall()
     conn.close()
     return [dict(a) for a in alerts]
 
-def get_recent_incidents(limit=50):
+def get_recent_incidents(limit=50, org_name=None):
     conn = get_connection()
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
-    cursor.execute('''
-        SELECT * FROM incidents 
-        ORDER BY created_at DESC 
-        LIMIT ?
-    ''', (limit,))
+    if org_name and org_name != 'All':
+        cursor.execute('''
+            SELECT * FROM incidents WHERE org_name = ? ORDER BY created_at DESC LIMIT ?
+        ''', (org_name, limit))
+    else:
+        cursor.execute('''
+            SELECT * FROM incidents ORDER BY created_at DESC LIMIT ?
+        ''', (limit,))
     rows = cursor.fetchall()
     conn.close()
     return [dict(row) for row in rows]

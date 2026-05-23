@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, redirect, url_for
+from flask import Flask, render_template, jsonify, request, redirect, url_for, session
 import sqlite3
 import joblib
 import os
@@ -20,6 +20,20 @@ load_dotenv()
 app = Flask(__name__)
 socketio = SocketIO(app, async_mode='eventlet', cors_allowed_origins="*")
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'default-dev-key-change-me')
+
+@app.context_processor
+def inject_user_role():
+    return dict(
+        current_role=session.get('role', 'Global Admin'),
+        current_org=session.get('org_name', 'All')
+    )
+
+@app.route('/api/switch_role', methods=['POST'])
+def switch_role():
+    data = request.json
+    session['role'] = data.get('role', 'Global Admin')
+    session['org_name'] = data.get('org_name', 'All')
+    return jsonify({"success": True})
 
 # Initialize Alert Bot
 bot = AlertBot()
@@ -367,13 +381,23 @@ def get_analytics():
 def get_threat_map():
     conn = get_connection()
     cursor = conn.cursor()
+    org_name = session.get('org_name', 'All') if session.get('role') != 'Global Admin' else None
+    
     # Get recent unique attacker locations
-    cursor.execute('''
-        SELECT src_ip, country, city, latitude, longitude, severity, signature
-        FROM alerts 
-        WHERE latitude != 0 AND longitude != 0
-        ORDER BY timestamp DESC LIMIT 100
-    ''')
+    if org_name:
+        cursor.execute('''
+            SELECT src_ip, country, city, latitude, longitude, severity, signature
+            FROM alerts 
+            WHERE latitude != 0 AND longitude != 0 AND org_name = ?
+            ORDER BY timestamp DESC LIMIT 100
+        ''', (org_name,))
+    else:
+        cursor.execute('''
+            SELECT src_ip, country, city, latitude, longitude, severity, signature
+            FROM alerts 
+            WHERE latitude != 0 AND longitude != 0
+            ORDER BY timestamp DESC LIMIT 100
+        ''')
     locations = [dict(row) for row in cursor.fetchall()]
     conn.close()
     return jsonify(locations)
@@ -440,14 +464,32 @@ def update_settings():
 
 @app.route('/api/alerts')
 def get_alerts():
-    alerts = get_recent_alerts(50)
+    org_name = session.get('org_name', 'All') if session.get('role') != 'Global Admin' else None
+    alerts = get_recent_alerts(50, org_name=org_name)
     return jsonify(alerts)
 
 @app.route('/api/incidents')
 def get_incidents():
     from database.db import get_recent_incidents
-    incidents = get_recent_incidents(50)
+    org_name = session.get('org_name', 'All') if session.get('role') != 'Global Admin' else None
+    incidents = get_recent_incidents(50, org_name=org_name)
     return jsonify(incidents)
+
+@app.route('/api/firewall')
+def get_firewall_rules():
+    conn = get_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    org_name = session.get('org_name', 'All') if session.get('role') != 'Global Admin' else None
+    
+    if org_name:
+        cursor.execute('SELECT * FROM firewall_rules WHERE org_name = ? ORDER BY timestamp DESC', (org_name,))
+    else:
+        cursor.execute('SELECT * FROM firewall_rules ORDER BY timestamp DESC')
+        
+    rules = [dict(row) for row in cursor.fetchall()]
+    conn.close()
+    return jsonify(rules)
 
 @app.route('/api/incidents/<incident_id>/update', methods=['POST'])
 def update_incident(incident_id):
