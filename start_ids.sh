@@ -13,8 +13,8 @@ PARSER_PID=$!
 
 sleep 2
 
-echo "[+] Starting Flask Dashboard with Gunicorn..."
-$GUNICORN --workers 3 --bind 0.0.0.0:5000 app:app > dashboard.log 2>&1 &
+echo "[+] Starting Flask Dashboard with Gunicorn (Eventlet)..."
+$GUNICORN --worker-class eventlet -w 1 --bind 0.0.0.0:5000 app:app > dashboard.log 2>&1 &
 GUNICORN_PID=$!
 
 # Trap termination signals to cleanly kill child processes

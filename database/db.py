@@ -132,6 +132,19 @@ def insert_alert(alert):
         ))
 
         conn.commit()
+        
+        # Phase 13: Real-Time Event Synchronization
+        # Fire internal webhook to Flask app to broadcast WebSocket event
+        import requests
+        try:
+            requests.post(
+                'http://127.0.0.1:5000/api/internal/notify', 
+                json={'type': 'new_alert', 'incident_id': incident_id, 'alert_id': alert_id},
+                timeout=0.5
+            )
+        except:
+            pass # Ignore if Flask is not running or timeout
+            
     except Exception as e:
         print(f"Error inserting alert: {e}")
         conn.rollback()

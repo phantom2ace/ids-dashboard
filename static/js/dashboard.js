@@ -189,8 +189,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initMap();
     setInterval(updateThreatMap, 15000); // Update map every 15s
+    // Phase 13: Real-Time WebSockets Synchronization
+    const socket = io();
+    
+    socket.on('connect', () => {
+        console.log('[*] Connected to SOC Real-Time Event Stream');
+    });
+    
+    socket.on('new_event', (data) => {
+        console.log('[+] Real-Time Event Received:', data);
+        // Instantly refresh the UI when the parser detects a new attack
+        fetchData();
+    });
+    
+    socket.on('incident_updated', (data) => {
+        console.log('[+] Incident State Changed:', data);
+        // Instantly refresh the UI when an analyst updates a ticket
+        fetchData();
+        
+        // If the modal is currently open for this incident, we could optionally
+        // refresh the modal content here to prevent stale data.
+    });
 
-    // Example: Fetch alerts every 30 seconds
     const fetchData = async () => {
         try {
             const [incidentsRes, alertsRes] = await Promise.all([
@@ -477,7 +497,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     fetchData();
-    setInterval(fetchData, 10000); // Update every 10 seconds
+    setInterval(fetchData, 60000); // Fallback sync every 60 seconds (WebSockets handle real-time)
 });
 
 // Global functions for template actions

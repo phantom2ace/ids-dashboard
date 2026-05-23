@@ -1,5 +1,13 @@
-[2026-05-23 01:35:54 +0000] [81295] [INFO] Starting gunicorn 26.0.0
-[2026-05-23 01:35:54 +0000] [81295] [ERROR] Connection in use: ('0.0.0.0', 5000)
-[2026-05-23 01:35:54 +0000] [81295] [ERROR] connection to ('0.0.0.0', 5000) failed: [Errno 98] Address already in use
-[2026-05-23 01:35:55 +0000] [81295] [ERROR] Connection in use: ('0.0.0.0', 5000)
-[2026-05-23 01:35:55 +0000] [81295] [ERROR] connection to ('0.0.0.0', 5000) failed: [Errno 98] Address already in use
+
+Error: class uri 'eventlet' invalid or not found: 
+
+[Traceback (most recent call last):
+  File "/home/spade/ids-dashboard/.venv/lib/python3.13/site-packages/gunicorn/util.py", line 110, in load_class
+    return load_entry_point(
+        "gunicorn", section, uri
+    )
+  File "/home/spade/ids-dashboard/.venv/lib/python3.13/site-packages/gunicorn/util.py", line 75, in load_entry_point
+    raise ImportError("Entry point %r not found" % ((group, name),))
+ImportError: Entry point ('gunicorn.workers', 'eventlet') not found
+]
+

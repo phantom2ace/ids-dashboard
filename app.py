@@ -12,10 +12,13 @@ from parser import get_geoip
 from dotenv import load_dotenv
 from cve_mapping import get_cve_info
 
+from flask_socketio import SocketIO, emit
+
 # Load environment variables from .env if it exists
 load_dotenv()
 
 app = Flask(__name__)
+socketio = SocketIO(app, async_mode='eventlet', cors_allowed_origins="*")
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'default-dev-key-change-me')
 
 # Initialize Alert Bot
@@ -496,6 +499,9 @@ def update_incident(incident_id):
     conn.commit()
     conn.close()
     
+    # Broadcast that an incident was updated by an analyst
+    socketio.emit('incident_updated', {'incident_id': incident_id, 'status': status, 'analyst': analyst})
+    
     return jsonify({'success': True})
 
 @app.route('/api/incidents/<incident_id>/logs')
@@ -512,5 +518,13 @@ def get_incident_logs(incident_id):
     conn.close()
     return jsonify(logs)
 
+@app.route('/api/internal/notify', methods=['POST'])
+def internal_notify():
+    # Called by parser.py or db.py when a new event/incident is inserted
+    data = request.json
+    # Broadcast to all connected WebSocket clients
+    socketio.emit('new_event', data)
+    return jsonify({'success': True})
+
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    socketio.run(app, debug=True, port=5000)
