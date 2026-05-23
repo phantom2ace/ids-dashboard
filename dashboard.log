@@ -1,13 +1,397 @@
+/home/spade/ids-dashboard/.venv/lib/python3.13/site-packages/engineio/async_drivers/eventlet.py:1: EventletDeprecationWarning: 
+Eventlet is deprecated. It is currently being maintained in bugfix mode, and
+we strongly recommend against using it for new projects.
 
-Error: class uri 'eventlet' invalid or not found: 
+If you are already using Eventlet, we recommend migrating to a different
+framework.  For more detail see
+https://eventlet.readthedocs.io/en/latest/asyncio/migration.html
 
-[Traceback (most recent call last):
-  File "/home/spade/ids-dashboard/.venv/lib/python3.13/site-packages/gunicorn/util.py", line 110, in load_class
-    return load_entry_point(
-        "gunicorn", section, uri
-    )
-  File "/home/spade/ids-dashboard/.venv/lib/python3.13/site-packages/gunicorn/util.py", line 75, in load_entry_point
-    raise ImportError("Entry point %r not found" % ((group, name),))
-ImportError: Entry point ('gunicorn.workers', 'eventlet') not found
-]
+  from eventlet.green.threading import Event
+ * Restarting with stat
+/home/spade/ids-dashboard/.venv/lib/python3.13/site-packages/engineio/async_drivers/eventlet.py:1: EventletDeprecationWarning: 
+Eventlet is deprecated. It is currently being maintained in bugfix mode, and
+we strongly recommend against using it for new projects.
 
+If you are already using Eventlet, we recommend migrating to a different
+framework.  For more detail see
+https://eventlet.readthedocs.io/en/latest/asyncio/migration.html
+
+  from eventlet.green.threading import Event
+ * Debugger is active!
+ * Debugger PIN: 144-828-521
+(94119) wsgi starting up on http://127.0.0.1:5000
+(94119) accepted ('127.0.0.1', 51512)
+127.0.0.1 - - [23/May/2026 02:29:33] "POST /api/internal/notify HTTP/1.1" 200 154 0.003952
+(94119) accepted ('127.0.0.1', 51516)
+127.0.0.1 - - [23/May/2026 02:29:33] "POST /api/internal/notify HTTP/1.1" 200 154 0.000808
+(94119) accepted ('127.0.0.1', 51532)
+127.0.0.1 - - [23/May/2026 02:29:33] "POST /api/internal/notify HTTP/1.1" 200 154 0.007540
+(94119) accepted ('127.0.0.1', 51544)
+127.0.0.1 - - [23/May/2026 02:29:33] "POST /api/internal/notify HTTP/1.1" 200 154 0.005608
+(94119) accepted ('127.0.0.1', 51568)
+127.0.0.1 - - [23/May/2026 02:29:37] "POST /api/predict HTTP/1.1" 200 204 0.861415
+(94119) accepted ('127.0.0.1', 51598)
+(94119) accepted ('127.0.0.1', 51610)
+(94119) accepted ('127.0.0.1', 51630)
+127.0.0.1 - - [23/May/2026 02:29:37] "POST /api/internal/notify HTTP/1.1" 200 154 0.000525
+127.0.0.1 - - [23/May/2026 02:29:37] "POST /api/internal/notify HTTP/1.1" 200 154 0.001127
+127.0.0.1 - - [23/May/2026 02:29:37] "POST /api/internal/notify HTTP/1.1" 200 154 0.000671
+(94119) accepted ('127.0.0.1', 36140)
+127.0.0.1 - - [23/May/2026 02:29:42] "POST /api/predict HTTP/1.1" 200 204 0.959270
+(94119) accepted ('127.0.0.1', 36156)
+(94119) accepted ('127.0.0.1', 36178)
+127.0.0.1 - - [23/May/2026 02:29:42] "POST /api/internal/notify HTTP/1.1" 200 154 0.000784
+127.0.0.1 - - [23/May/2026 02:29:42] "POST /api/internal/notify HTTP/1.1" 200 154 0.001214
+(94119) accepted ('127.0.0.1', 36234)
+/home/spade/ids-dashboard/app.py:632: DeprecationWarning: The parameter "ln" is deprecated since v2.5.2. Instead of ln=1 use new_x=XPos.LMARGIN, new_y=YPos.NEXT.
+  self.cell(0, 10, 'Executive Threat Summary', 0, 1, 'C')
+/home/spade/ids-dashboard/app.py:634: DeprecationWarning: The parameter "ln" is deprecated since v2.5.2. Instead of ln=1 use new_x=XPos.LMARGIN, new_y=YPos.NEXT.
+  self.cell(0, 10, f"Tenant: {tenant} | Period: {start_date or 'All'} to {end_date or 'All'}", 0, 1, 'C')
+/home/spade/ids-dashboard/app.py:642: DeprecationWarning: The parameter "ln" is deprecated since v2.5.2. Instead of ln=1 use new_x=XPos.LMARGIN, new_y=YPos.NEXT.
+  pdf.cell(0, 10, 'Incident Breakdown', 0, 1)
+/home/spade/ids-dashboard/app.py:649: DeprecationWarning: The parameter "ln" is deprecated since v2.5.2. Instead of ln=1 use new_x=XPos.LMARGIN, new_y=YPos.NEXT.
+  pdf.cell(0, 10, f"Total Incidents Detected: {total}", 0, 1)
+/home/spade/ids-dashboard/app.py:650: DeprecationWarning: The parameter "ln" is deprecated since v2.5.2. Instead of ln=1 use new_x=XPos.LMARGIN, new_y=YPos.NEXT.
+  pdf.cell(0, 10, f"Critical Severity: {critical_count}", 0, 1)
+/home/spade/ids-dashboard/app.py:651: DeprecationWarning: The parameter "ln" is deprecated since v2.5.2. Instead of ln=1 use new_x=XPos.LMARGIN, new_y=YPos.NEXT.
+  pdf.cell(0, 10, f"High Severity: {high_count}", 0, 1)
+/home/spade/ids-dashboard/app.py:655: DeprecationWarning: The parameter "ln" is deprecated since v2.5.2. Instead of ln=1 use new_x=XPos.LMARGIN, new_y=YPos.NEXT.
+  pdf.cell(0, 10, 'Recent Critical Threats (Top 10)', 0, 1)
+/home/spade/ids-dashboard/app.py:659: DeprecationWarning: The parameter "ln" is deprecated since v2.5.2. Instead of ln=1 use new_x=XPos.LMARGIN, new_y=YPos.NEXT.
+  pdf.cell(0, 8, f"[{inc['created_at']}] {inc['title']} (IP: {inc['src_ip']}) - Status: {inc['status']}", 0, 1)
+127.0.0.1 - - [23/May/2026 02:29:43] "GET /api/reports/generate?type=pdf_summary HTTP/1.1" 200 1992 0.959997
+(94119) accepted ('127.0.0.1', 36280)
+127.0.0.1 - - [23/May/2026 02:29:48] "POST /api/predict HTTP/1.1" 200 204 0.883706
+(94119) accepted ('127.0.0.1', 36294)
+(94119) accepted ('127.0.0.1', 36306)
+(94119) accepted ('127.0.0.1', 36314)
+127.0.0.1 - - [23/May/2026 02:29:48] "POST /api/internal/notify HTTP/1.1" 200 154 0.000917
+127.0.0.1 - - [23/May/2026 02:29:48] "POST /api/internal/notify HTTP/1.1" 200 154 0.001576
+127.0.0.1 - - [23/May/2026 02:29:48] "POST /api/internal/notify HTTP/1.1" 200 154 0.002562
+(94119) accepted ('127.0.0.1', 36318)
+127.0.0.1 - - [23/May/2026 02:29:48] "POST /api/internal/notify HTTP/1.1" 200 154 0.000497
+(94119) accepted ('127.0.0.1', 58336)
+127.0.0.1 - - [23/May/2026 02:29:52] "POST /api/internal/notify HTTP/1.1" 200 154 0.000656
+(94119) accepted ('127.0.0.1', 58350)
+127.0.0.1 - - [23/May/2026 02:29:52] "POST /api/internal/notify HTTP/1.1" 200 154 0.000752
+(94119) accepted ('127.0.0.1', 58360)
+127.0.0.1 - - [23/May/2026 02:29:52] "POST /api/internal/notify HTTP/1.1" 200 154 0.000736
+(94119) accepted ('127.0.0.1', 58362)
+127.0.0.1 - - [23/May/2026 02:29:53] "POST /api/internal/notify HTTP/1.1" 200 154 0.001060
+(94119) accepted ('127.0.0.1', 58370)
+127.0.0.1 - - [23/May/2026 02:29:58] "POST /api/predict HTTP/1.1" 200 205 0.865591
+(94119) accepted ('127.0.0.1', 58372)
+(94119) accepted ('127.0.0.1', 58374)
+(94119) accepted ('127.0.0.1', 58390)
+127.0.0.1 - - [23/May/2026 02:29:58] "POST /api/internal/notify HTTP/1.1" 200 154 0.000889
+127.0.0.1 - - [23/May/2026 02:29:58] "POST /api/internal/notify HTTP/1.1" 200 154 0.001014
+127.0.0.1 - - [23/May/2026 02:29:58] "POST /api/internal/notify HTTP/1.1" 200 154 0.002479
+(94119) accepted ('127.0.0.1', 58394)
+127.0.0.1 - - [23/May/2026 02:29:58] "POST /api/internal/notify HTTP/1.1" 200 154 0.000508
+(94119) accepted ('127.0.0.1', 58418)
+127.0.0.1 - - [23/May/2026 02:29:58] "POST /api/internal/notify HTTP/1.1" 200 154 0.001208
+(94119) accepted ('127.0.0.1', 59644)
+127.0.0.1 - - [23/May/2026 02:30:03] "POST /api/predict HTTP/1.1" 200 205 0.309113
+(94119) accepted ('127.0.0.1', 59666)
+127.0.0.1 - - [23/May/2026 02:30:03] "POST /api/internal/notify HTTP/1.1" 200 154 0.002411
+(94119) accepted ('127.0.0.1', 59676)
+127.0.0.1 - - [23/May/2026 02:30:04] "POST /api/internal/notify HTTP/1.1" 200 154 0.001945
+(94119) accepted ('127.0.0.1', 59706)
+127.0.0.1 - - [23/May/2026 02:30:08] "POST /api/internal/notify HTTP/1.1" 200 154 0.000657
+(94119) accepted ('127.0.0.1', 54122)
+127.0.0.1 - - [23/May/2026 02:30:08] "POST /api/internal/notify HTTP/1.1" 200 154 0.001515
+(94119) accepted ('127.0.0.1', 54124)
+127.0.0.1 - - [23/May/2026 02:30:15] "POST /api/predict HTTP/1.1" 200 204 2.162734
+(94119) accepted ('127.0.0.1', 54148)
+(94119) accepted ('127.0.0.1', 54170)
+(94119) accepted ('127.0.0.1', 54174)
+(94119) accepted ('127.0.0.1', 54180)
+127.0.0.1 - - [23/May/2026 02:30:15] "POST /api/internal/notify HTTP/1.1" 200 154 0.000587
+127.0.0.1 - - [23/May/2026 02:30:15] "POST /api/internal/notify HTTP/1.1" 200 154 0.000507
+127.0.0.1 - - [23/May/2026 02:30:15] "POST /api/internal/notify HTTP/1.1" 200 154 0.000456
+127.0.0.1 - - [23/May/2026 02:30:15] "POST /api/internal/notify HTTP/1.1" 200 154 0.001052
+(94119) accepted ('127.0.0.1', 54216)
+127.0.0.1 - - [23/May/2026 02:30:17] "POST /api/internal/notify HTTP/1.1" 200 154 0.001130
+(94119) accepted ('127.0.0.1', 54226)
+127.0.0.1 - - [23/May/2026 02:30:17] "POST /api/internal/notify HTTP/1.1" 200 154 0.001392
+(94119) accepted ('127.0.0.1', 46392)
+127.0.0.1 - - [23/May/2026 02:30:22] "POST /api/predict HTTP/1.1" 200 205 0.370014
+(94119) accepted ('127.0.0.1', 46404)
+(94119) accepted ('127.0.0.1', 46426)
+127.0.0.1 - - [23/May/2026 02:30:22] "POST /api/internal/notify HTTP/1.1" 200 154 0.000432
+127.0.0.1 - - [23/May/2026 02:30:22] "POST /api/internal/notify HTTP/1.1" 200 154 0.001543
+(94119) accepted ('127.0.0.1', 46458)
+127.0.0.1 - - [23/May/2026 02:30:22] "POST /api/internal/notify HTTP/1.1" 200 154 0.001401
+(94119) accepted ('127.0.0.1', 46492)
+127.0.0.1 - - [23/May/2026 02:30:27] "POST /api/internal/notify HTTP/1.1" 200 154 0.001789
+(94119) accepted ('127.0.0.1', 46506)
+127.0.0.1 - - [23/May/2026 02:30:27] "POST /api/internal/notify HTTP/1.1" 200 154 0.001861
+(94119) accepted ('127.0.0.1', 46520)
+127.0.0.1 - - [23/May/2026 02:30:27] "POST /api/internal/notify HTTP/1.1" 200 154 0.000499
+(94119) accepted ('127.0.0.1', 39998)
+127.0.0.1 - - [23/May/2026 02:30:32] "POST /api/internal/notify HTTP/1.1" 200 154 0.002192
+(94119) accepted ('127.0.0.1', 40006)
+127.0.0.1 - - [23/May/2026 02:30:32] "POST /api/internal/notify HTTP/1.1" 200 154 0.000667
+(94119) accepted ('127.0.0.1', 40030)
+127.0.0.1 - - [23/May/2026 02:30:32] "POST /api/internal/notify HTTP/1.1" 200 154 0.000443
+(94119) accepted ('127.0.0.1', 40032)
+127.0.0.1 - - [23/May/2026 02:30:33] "POST /api/internal/notify HTTP/1.1" 200 154 0.000500
+(94119) accepted ('127.0.0.1', 40046)
+127.0.0.1 - - [23/May/2026 02:30:33] "POST /api/internal/notify HTTP/1.1" 200 154 0.001265
+(94119) accepted ('127.0.0.1', 40056)
+127.0.0.1 - - [23/May/2026 02:30:36] "POST /api/predict HTTP/1.1" 200 202 1.800610
+(94119) accepted ('127.0.0.1', 40058)
+(94119) accepted ('127.0.0.1', 40064)
+(94119) accepted ('127.0.0.1', 40084)
+(94119) accepted ('127.0.0.1', 40102)
+(94119) accepted ('127.0.0.1', 40126)
+127.0.0.1 - - [23/May/2026 02:30:36] "POST /api/internal/notify HTTP/1.1" 200 154 0.001628
+127.0.0.1 - - [23/May/2026 02:30:36] "POST /api/internal/notify HTTP/1.1" 200 154 0.000688
+127.0.0.1 - - [23/May/2026 02:30:36] "POST /api/internal/notify HTTP/1.1" 200 154 0.000755
+127.0.0.1 - - [23/May/2026 02:30:36] "POST /api/internal/notify HTTP/1.1" 200 154 0.001012
+127.0.0.1 - - [23/May/2026 02:30:36] "POST /api/internal/notify HTTP/1.1" 200 154 0.001276
+(94119) accepted ('127.0.0.1', 47258)
+127.0.0.1 - - [23/May/2026 02:30:40] "POST /api/predict HTTP/1.1" 200 204 0.038313
+(94119) accepted ('127.0.0.1', 47286)
+127.0.0.1 - - [23/May/2026 02:30:43] "POST /api/internal/notify HTTP/1.1" 200 154 0.000592
+(94119) accepted ('127.0.0.1', 47320)
+127.0.0.1 - - [23/May/2026 02:30:43] "POST /api/internal/notify HTTP/1.1" 200 154 0.000587
+(94119) accepted ('127.0.0.1', 47330)
+127.0.0.1 - - [23/May/2026 02:30:43] "POST /api/internal/notify HTTP/1.1" 200 154 0.000618
+(94119) accepted ('127.0.0.1', 47348)
+127.0.0.1 - - [23/May/2026 02:30:43] "POST /api/internal/notify HTTP/1.1" 200 154 0.001789
+(94119) accepted ('127.0.0.1', 47376)
+127.0.0.1 - - [23/May/2026 02:30:43] "POST /api/internal/notify HTTP/1.1" 200 154 0.001319
+(94119) accepted ('127.0.0.1', 47396)
+127.0.0.1 - - [23/May/2026 02:30:44] "POST /api/internal/notify HTTP/1.1" 200 154 0.004091
+(94119) accepted ('127.0.0.1', 47400)
+127.0.0.1 - - [23/May/2026 02:30:44] "POST /api/internal/notify HTTP/1.1" 200 154 0.000524
+(94119) accepted ('127.0.0.1', 47454)
+127.0.0.1 - - [23/May/2026 02:30:47] "POST /api/internal/notify HTTP/1.1" 200 154 0.001197
+(94119) accepted ('127.0.0.1', 47466)
+127.0.0.1 - - [23/May/2026 02:30:47] "POST /api/internal/notify HTTP/1.1" 200 154 0.000548
+(94119) accepted ('127.0.0.1', 43882)
+127.0.0.1 - - [23/May/2026 02:30:53] "POST /api/internal/notify HTTP/1.1" 200 154 0.002245
+(94119) accepted ('127.0.0.1', 43924)
+127.0.0.1 - - [23/May/2026 02:30:54] "POST /api/internal/notify HTTP/1.1" 200 154 0.001997
+(94119) accepted ('127.0.0.1', 43926)
+127.0.0.1 - - [23/May/2026 02:30:54] "POST /api/internal/notify HTTP/1.1" 200 154 0.000674
+(94119) accepted ('127.0.0.1', 43950)
+127.0.0.1 - - [23/May/2026 02:30:54] "POST /api/internal/notify HTTP/1.1" 200 154 0.001346
+(94119) accepted ('127.0.0.1', 44022)
+127.0.0.1 - - [23/May/2026 02:30:57] "POST /api/predict HTTP/1.1" 200 204 0.354681
+(94119) accepted ('127.0.0.1', 44040)
+127.0.0.1 - - [23/May/2026 02:30:57] "POST /api/internal/notify HTTP/1.1" 200 154 0.000791
+(94119) accepted ('127.0.0.1', 44068)
+127.0.0.1 - - [23/May/2026 02:30:57] "POST /api/internal/notify HTTP/1.1" 200 154 0.001641
+(94119) accepted ('127.0.0.1', 34168)
+127.0.0.1 - - [23/May/2026 02:31:01] "POST /api/internal/notify HTTP/1.1" 200 154 0.000525
+(94119) accepted ('127.0.0.1', 34198)
+127.0.0.1 - - [23/May/2026 02:31:01] "POST /api/internal/notify HTTP/1.1" 200 154 0.000889
+(94119) accepted ('127.0.0.1', 34208)
+127.0.0.1 - - [23/May/2026 02:31:06] "POST /api/predict HTTP/1.1" 200 204 0.305586
+(94119) accepted ('127.0.0.1', 34246)
+127.0.0.1 - - [23/May/2026 02:31:06] "POST /api/internal/notify HTTP/1.1" 200 154 0.000922
+(94119) accepted ('127.0.0.1', 34256)
+127.0.0.1 - - [23/May/2026 02:31:06] "POST /api/internal/notify HTTP/1.1" 200 154 0.001149
+(94119) accepted ('127.0.0.1', 34274)
+127.0.0.1 - - [23/May/2026 02:31:06] "POST /api/internal/notify HTTP/1.1" 200 154 0.000900
+(94119) accepted ('127.0.0.1', 34294)
+127.0.0.1 - - [23/May/2026 02:31:08] "POST /api/internal/notify HTTP/1.1" 200 154 0.000934
+(94119) accepted ('127.0.0.1', 32950)
+127.0.0.1 - - [23/May/2026 02:31:08] "POST /api/internal/notify HTTP/1.1" 200 154 0.001015
+(94119) accepted ('127.0.0.1', 32952)
+127.0.0.1 - - [23/May/2026 02:31:08] "POST /api/internal/notify HTTP/1.1" 200 154 0.000579
+(94119) accepted ('127.0.0.1', 32960)
+127.0.0.1 - - [23/May/2026 02:31:08] "POST /api/internal/notify HTTP/1.1" 200 154 0.000439
+(94119) accepted ('127.0.0.1', 32972)
+127.0.0.1 - - [23/May/2026 02:31:12] "POST /api/predict HTTP/1.1" 200 205 0.877281
+(94119) accepted ('127.0.0.1', 32990)
+(94119) accepted ('127.0.0.1', 32994)
+127.0.0.1 - - [23/May/2026 02:31:12] "POST /api/internal/notify HTTP/1.1" 200 154 0.001138
+127.0.0.1 - - [23/May/2026 02:31:12] "POST /api/internal/notify HTTP/1.1" 200 154 0.000387
+(94119) accepted ('127.0.0.1', 33036)
+127.0.0.1 - - [23/May/2026 02:31:12] "POST /api/internal/notify HTTP/1.1" 200 154 0.000405
+(94119) accepted ('127.0.0.1', 33050)
+127.0.0.1 - - [23/May/2026 02:31:17] "POST /api/predict HTTP/1.1" 200 204 0.834555
+(94119) accepted ('127.0.0.1', 33052)
+(94119) accepted ('127.0.0.1', 33060)
+(94119) accepted ('127.0.0.1', 33062)
+(94119) accepted ('127.0.0.1', 33066)
+127.0.0.1 - - [23/May/2026 02:31:17] "POST /api/internal/notify HTTP/1.1" 200 154 0.000530
+127.0.0.1 - - [23/May/2026 02:31:17] "POST /api/internal/notify HTTP/1.1" 200 154 0.000340
+127.0.0.1 - - [23/May/2026 02:31:17] "POST /api/internal/notify HTTP/1.1" 200 154 0.000405
+127.0.0.1 - - [23/May/2026 02:31:17] "POST /api/internal/notify HTTP/1.1" 200 154 0.001125
+(94119) accepted ('127.0.0.1', 56908)
+127.0.0.1 - - [23/May/2026 02:31:21] "POST /api/predict HTTP/1.1" 200 204 0.851375
+(94119) accepted ('127.0.0.1', 56910)
+(94119) accepted ('127.0.0.1', 56924)
+(94119) accepted ('127.0.0.1', 56938)
+(94119) accepted ('127.0.0.1', 56952)
+127.0.0.1 - - [23/May/2026 02:31:21] "POST /api/internal/notify HTTP/1.1" 200 154 0.000602
+127.0.0.1 - - [23/May/2026 02:31:21] "POST /api/internal/notify HTTP/1.1" 200 154 0.000355
+127.0.0.1 - - [23/May/2026 02:31:21] "POST /api/internal/notify HTTP/1.1" 200 154 0.001660
+127.0.0.1 - - [23/May/2026 02:31:21] "POST /api/internal/notify HTTP/1.1" 200 154 0.000468
+(94119) accepted ('127.0.0.1', 57008)
+127.0.0.1 - - [23/May/2026 02:31:24] "POST /api/predict HTTP/1.1" 200 204 0.344734
+(94119) accepted ('127.0.0.1', 57044)
+127.0.0.1 - - [23/May/2026 02:31:24] "POST /api/internal/notify HTTP/1.1" 200 154 0.000685
+(94119) accepted ('127.0.0.1', 57062)
+127.0.0.1 - - [23/May/2026 02:31:27] "POST /api/predict HTTP/1.1" 200 204 0.839159
+(94119) accepted ('127.0.0.1', 57076)
+(94119) accepted ('127.0.0.1', 57078)
+(94119) accepted ('127.0.0.1', 57094)
+(94119) accepted ('127.0.0.1', 57098)
+127.0.0.1 - - [23/May/2026 02:31:27] "POST /api/internal/notify HTTP/1.1" 200 154 0.000359
+127.0.0.1 - - [23/May/2026 02:31:27] "POST /api/internal/notify HTTP/1.1" 200 154 0.000495
+127.0.0.1 - - [23/May/2026 02:31:27] "POST /api/internal/notify HTTP/1.1" 200 154 0.000309
+127.0.0.1 - - [23/May/2026 02:31:27] "POST /api/internal/notify HTTP/1.1" 200 154 0.001248
+(94119) accepted ('127.0.0.1', 57122)
+127.0.0.1 - - [23/May/2026 02:31:27] "POST /api/internal/notify HTTP/1.1" 200 154 0.000491
+(94119) accepted ('127.0.0.1', 59316)
+127.0.0.1 - - [23/May/2026 02:31:32] "POST /api/predict HTTP/1.1" 200 206 0.904168
+(94119) accepted ('127.0.0.1', 59332)
+(94119) accepted ('127.0.0.1', 59340)
+(94119) accepted ('127.0.0.1', 59352)
+(94119) accepted ('127.0.0.1', 59356)
+127.0.0.1 - - [23/May/2026 02:31:32] "POST /api/internal/notify HTTP/1.1" 200 154 0.000433
+127.0.0.1 - - [23/May/2026 02:31:32] "POST /api/internal/notify HTTP/1.1" 200 154 0.000319
+127.0.0.1 - - [23/May/2026 02:31:32] "POST /api/internal/notify HTTP/1.1" 200 154 0.000290
+127.0.0.1 - - [23/May/2026 02:31:32] "POST /api/internal/notify HTTP/1.1" 200 154 0.002368
+(94119) accepted ('127.0.0.1', 59376)
+127.0.0.1 - - [23/May/2026 02:31:32] "POST /api/internal/notify HTTP/1.1" 200 154 0.001143
+(94119) accepted ('127.0.0.1', 59394)
+127.0.0.1 - - [23/May/2026 02:31:34] "POST /api/internal/notify HTTP/1.1" 200 154 0.000501
+(94119) accepted ('127.0.0.1', 59398)
+127.0.0.1 - - [23/May/2026 02:31:34] "POST /api/internal/notify HTTP/1.1" 200 154 0.000481
+(94119) accepted ('127.0.0.1', 59404)
+127.0.0.1 - - [23/May/2026 02:31:34] "POST /api/internal/notify HTTP/1.1" 200 154 0.001863
+(94119) accepted ('127.0.0.1', 59422)
+127.0.0.1 - - [23/May/2026 02:31:34] "POST /api/internal/notify HTTP/1.1" 200 154 0.000529
+(94119) accepted ('127.0.0.1', 59424)
+127.0.0.1 - - [23/May/2026 02:31:37] "POST /api/predict HTTP/1.1" 200 204 0.379359
+(94119) accepted ('127.0.0.1', 59460)
+127.0.0.1 - - [23/May/2026 02:31:37] "POST /api/internal/notify HTTP/1.1" 200 154 0.000582
+(94119) accepted ('127.0.0.1', 59476)
+127.0.0.1 - - [23/May/2026 02:31:37] "POST /api/internal/notify HTTP/1.1" 200 154 0.000474
+(94119) accepted ('127.0.0.1', 41464)
+127.0.0.1 - - [23/May/2026 02:31:39] "POST /api/predict HTTP/1.1" 200 205 0.341601
+(94119) accepted ('127.0.0.1', 41480)
+127.0.0.1 - - [23/May/2026 02:31:39] "POST /api/internal/notify HTTP/1.1" 200 154 0.000630
+(94119) accepted ('127.0.0.1', 41562)
+127.0.0.1 - - [23/May/2026 02:31:43] "POST /api/internal/notify HTTP/1.1" 200 154 0.000875
+(94119) accepted ('127.0.0.1', 41568)
+127.0.0.1 - - [23/May/2026 02:31:43] "POST /api/internal/notify HTTP/1.1" 200 154 0.000576
+(94119) accepted ('127.0.0.1', 41582)
+127.0.0.1 - - [23/May/2026 02:31:43] "POST /api/internal/notify HTTP/1.1" 200 154 0.001681
+(94119) accepted ('127.0.0.1', 41584)
+127.0.0.1 - - [23/May/2026 02:31:43] "POST /api/internal/notify HTTP/1.1" 200 154 0.000508
+(94119) accepted ('127.0.0.1', 41598)
+127.0.0.1 - - [23/May/2026 02:31:46] "POST /api/predict HTTP/1.1" 200 205 0.026693
+(94119) accepted ('127.0.0.1', 56104)
+127.0.0.1 - - [23/May/2026 02:31:49] "POST /api/internal/notify HTTP/1.1" 200 154 0.001591
+(94119) accepted ('127.0.0.1', 56120)
+127.0.0.1 - - [23/May/2026 02:31:49] "POST /api/internal/notify HTTP/1.1" 200 154 0.001352
+(94119) accepted ('127.0.0.1', 56160)
+127.0.0.1 - - [23/May/2026 02:31:54] "POST /api/predict HTTP/1.1" 200 204 0.828659
+(94119) accepted ('127.0.0.1', 56168)
+(94119) accepted ('127.0.0.1', 56178)
+(94119) accepted ('127.0.0.1', 56180)
+(94119) accepted ('127.0.0.1', 56188)
+127.0.0.1 - - [23/May/2026 02:31:54] "POST /api/internal/notify HTTP/1.1" 200 154 0.000830
+127.0.0.1 - - [23/May/2026 02:31:54] "POST /api/internal/notify HTTP/1.1" 200 154 0.000680
+127.0.0.1 - - [23/May/2026 02:31:54] "POST /api/internal/notify HTTP/1.1" 200 154 0.000757
+127.0.0.1 - - [23/May/2026 02:31:54] "POST /api/internal/notify HTTP/1.1" 200 154 0.000588
+(94119) accepted ('127.0.0.1', 36124)
+127.0.0.1 - - [23/May/2026 02:32:03] "POST /api/predict HTTP/1.1" 200 206 0.345669
+(94119) accepted ('127.0.0.1', 36178)
+127.0.0.1 - - [23/May/2026 02:32:04] "POST /api/internal/notify HTTP/1.1" 200 154 0.000677
+(94119) accepted ('127.0.0.1', 36188)
+127.0.0.1 - - [23/May/2026 02:32:04] "POST /api/internal/notify HTTP/1.1" 200 154 0.000639
+(94119) accepted ('127.0.0.1', 36192)
+127.0.0.1 - - [23/May/2026 02:32:06] "POST /api/predict HTTP/1.1" 200 205 0.323490
+(94119) accepted ('127.0.0.1', 41844)
+127.0.0.1 - - [23/May/2026 02:32:10] "POST /api/predict HTTP/1.1" 200 205 0.365740
+(94119) accepted ('127.0.0.1', 41850)
+(94119) accepted ('127.0.0.1', 41852)
+127.0.0.1 - - [23/May/2026 02:32:10] "POST /api/internal/notify HTTP/1.1" 200 154 0.000486
+127.0.0.1 - - [23/May/2026 02:32:10] "POST /api/internal/notify HTTP/1.1" 200 154 0.002622
+(94119) accepted ('127.0.0.1', 41880)
+127.0.0.1 - - [23/May/2026 02:32:10] "POST /api/internal/notify HTTP/1.1" 200 154 0.001533
+(94119) accepted ('127.0.0.1', 41894)
+127.0.0.1 - - [23/May/2026 02:32:13] "POST /api/predict HTTP/1.1" 200 205 0.845095
+(94119) accepted ('127.0.0.1', 41904)
+(94119) accepted ('127.0.0.1', 41930)
+(94119) accepted ('127.0.0.1', 41934)
+127.0.0.1 - - [23/May/2026 02:32:13] "POST /api/internal/notify HTTP/1.1" 200 154 0.000483
+127.0.0.1 - - [23/May/2026 02:32:13] "POST /api/internal/notify HTTP/1.1" 200 154 0.000343
+127.0.0.1 - - [23/May/2026 02:32:13] "POST /api/internal/notify HTTP/1.1" 200 154 0.000615
+/2026 02:31:37] "POST /api/internal/notify HTTP/1.1" 200 154 0.000410
+(93989) accepted ('127.0.0.1', 41466)
+127.0.0.1 - - [23/May/2026 02:31:39] "POST /api/internal/notify HTTP/1.1" 200 154 0.000654
+(93989) accepted ('127.0.0.1', 41490)
+127.0.0.1 - - [23/May/2026 02:31:39] "POST /api/internal/notify HTTP/1.1" 200 154 0.000634
+(93989) accepted ('127.0.0.1', 41502)
+127.0.0.1 - - [23/May/2026 02:31:39] "POST /api/internal/notify HTTP/1.1" 200 154 0.000402
+(93989) accepted ('127.0.0.1', 41518)
+127.0.0.1 - - [23/May/2026 02:31:39] "POST /api/internal/notify HTTP/1.1" 200 154 0.004730
+(93989) accepted ('127.0.0.1', 41534)
+127.0.0.1 - - [23/May/2026 02:31:39] "POST /api/internal/notify HTTP/1.1" 200 154 0.001110
+(93989) accepted ('127.0.0.1', 41542)
+127.0.0.1 - - [23/May/2026 02:31:39] "POST /api/internal/notify HTTP/1.1" 200 154 0.000535
+(93989) accepted ('127.0.0.1', 41554)
+127.0.0.1 - - [23/May/2026 02:31:43] "POST /api/predict HTTP/1.1" 200 205 0.827399
+(93989) accepted ('127.0.0.1', 41580)
+127.0.0.1 - - [23/May/2026 02:31:43] "POST /api/internal/notify HTTP/1.1" 200 154 0.001317
+(93989) accepted ('127.0.0.1', 41612)
+127.0.0.1 - - [23/May/2026 02:31:46] "POST /api/internal/notify HTTP/1.1" 200 154 0.000664
+(93989) accepted ('127.0.0.1', 56078)
+127.0.0.1 - - [23/May/2026 02:31:50] "POST /api/predict HTTP/1.1" 200 204 0.831926
+(93989) accepted ('127.0.0.1', 56086)
+(93989) accepted ('127.0.0.1', 56094)
+(93989) accepted ('127.0.0.1', 56132)
+(93989) accepted ('127.0.0.1', 56144)
+127.0.0.1 - - [23/May/2026 02:31:50] "POST /api/internal/notify HTTP/1.1" 200 154 0.000567
+127.0.0.1 - - [23/May/2026 02:31:50] "POST /api/internal/notify HTTP/1.1" 200 154 0.000481
+127.0.0.1 - - [23/May/2026 02:31:50] "POST /api/internal/notify HTTP/1.1" 200 154 0.000455
+127.0.0.1 - - [23/May/2026 02:31:50] "POST /api/internal/notify HTTP/1.1" 200 154 0.000673
+(93989) accepted ('127.0.0.1', 56152)
+127.0.0.1 - - [23/May/2026 02:31:50] "POST /api/internal/notify HTTP/1.1" 200 154 0.000589
+(93989) accepted ('127.0.0.1', 56202)
+127.0.0.1 - - [23/May/2026 02:31:54] "POST /api/internal/notify HTTP/1.1" 200 154 0.001067
+(93989) accepted ('127.0.0.1', 56204)
+127.0.0.1 - - [23/May/2026 02:31:58] "POST /api/predict HTTP/1.1" 200 205 0.526222
+(93989) accepted ('127.0.0.1', 56206)
+127.0.0.1 - - [23/May/2026 02:31:58] "POST /api/internal/notify HTTP/1.1" 200 154 0.000775
+(93989) accepted ('127.0.0.1', 36130)
+127.0.0.1 - - [23/May/2026 02:32:03] "POST /api/internal/notify HTTP/1.1" 200 154 0.001313
+(93989) accepted ('127.0.0.1', 36146)
+127.0.0.1 - - [23/May/2026 02:32:03] "POST /api/internal/notify HTTP/1.1" 200 154 0.000618
+(93989) accepted ('127.0.0.1', 36152)
+127.0.0.1 - - [23/May/2026 02:32:03] "POST /api/internal/notify HTTP/1.1" 200 154 0.000820
+(93989) accepted ('127.0.0.1', 36154)
+127.0.0.1 - - [23/May/2026 02:32:04] "POST /api/internal/notify HTTP/1.1" 200 154 0.001471
+(93989) accepted ('127.0.0.1', 36170)
+127.0.0.1 - - [23/May/2026 02:32:04] "POST /api/internal/notify HTTP/1.1" 200 154 0.000506
+(93989) accepted ('127.0.0.1', 36200)
+127.0.0.1 - - [23/May/2026 02:32:05] "POST /api/internal/notify HTTP/1.1" 200 154 0.001460
+(93989) accepted ('127.0.0.1', 36208)
+127.0.0.1 - - [23/May/2026 02:32:06] "POST /api/internal/notify HTTP/1.1" 200 154 0.001640
+(93989) accepted ('127.0.0.1', 36210)
+127.0.0.1 - - [23/May/2026 02:32:06] "POST /api/internal/notify HTTP/1.1" 200 154 0.000400
+(93989) accepted ('127.0.0.1', 36214)
+127.0.0.1 - - [23/May/2026 02:32:06] "POST /api/internal/notify HTTP/1.1" 200 154 0.000983
+(93989) accepted ('127.0.0.1', 36218)
+127.0.0.1 - - [23/May/2026 02:32:06] "POST /api/internal/notify HTTP/1.1" 200 154 0.001159
+(93989) accepted ('127.0.0.1', 41846)
+127.0.0.1 - - [23/May/2026 02:32:10] "POST /api/internal/notify HTTP/1.1" 200 154 0.001859
+(93989) accepted ('127.0.0.1', 41866)
+127.0.0.1 - - [23/May/2026 02:32:10] "POST /api/internal/notify HTTP/1.1" 200 154 0.000587
+(93989) accepted ('127.0.0.1', 41868)
+127.0.0.1 - - [23/May/2026 02:32:10] "POST /api/internal/notify HTTP/1.1" 200 154 0.000704
+(93989) accepted ('127.0.0.1', 41870)
+127.0.0.1 - - [23/May/2026 02:32:10] "POST /api/internal/notify HTTP/1.1" 200 154 0.001376
+(93989) accepted ('127.0.0.1', 41906)
+127.0.0.1 - - [23/May/2026 02:32:12] "POST /api/internal/notify HTTP/1.1" 200 154 0.000575
+(93989) accepted ('127.0.0.1', 41914)
+127.0.0.1 - - [23/May/2026 02:32:12] "POST /api/internal/notify HTTP/1.1" 200 154 0.000443

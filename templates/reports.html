@@ -21,34 +21,31 @@
         <form class="space-y-4">
             <div>
                 <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Report Type</label>
-                <select class="w-full bg-[#141820] border border-slate-700 text-slate-300 text-xs rounded px-3 py-2 focus:outline-none focus:border-yellow-500">
-                    <option>Executive Threat Summary (PDF)</option>
-                    <option>Incident Audit Log (CSV)</option>
-                    <option>Compliance Report - SOC2 (PDF)</option>
-                    <option>Tenant Activity Report (CSV)</option>
+                <select id="reportType" class="w-full bg-[#141820] border border-slate-700 text-slate-300 text-xs rounded px-3 py-2 focus:outline-none focus:border-yellow-500">
+                    <option value="pdf_summary">Executive Threat Summary (PDF)</option>
+                    <option value="csv_audit">Incident Audit Log (CSV)</option>
                 </select>
             </div>
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Start Date</label>
-                    <input type="date" class="w-full bg-[#141820] border border-slate-700 text-slate-300 text-xs rounded px-3 py-2 focus:outline-none focus:border-yellow-500">
+                    <input type="date" id="startDate" class="w-full bg-[#141820] border border-slate-700 text-slate-300 text-xs rounded px-3 py-2 focus:outline-none focus:border-yellow-500">
                 </div>
                 <div>
                     <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">End Date</label>
-                    <input type="date" class="w-full bg-[#141820] border border-slate-700 text-slate-300 text-xs rounded px-3 py-2 focus:outline-none focus:border-yellow-500">
+                    <input type="date" id="endDate" class="w-full bg-[#141820] border border-slate-700 text-slate-300 text-xs rounded px-3 py-2 focus:outline-none focus:border-yellow-500">
                 </div>
             </div>
             <div>
                 <label class="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Tenant Filter</label>
-                <select class="w-full bg-[#141820] border border-slate-700 text-slate-300 text-xs rounded px-3 py-2 focus:outline-none focus:border-yellow-500">
-                    <option>All Tenants</option>
-                    <option>Oakridge Public Schools</option>
-                    <option>Mercy General Hospital</option>
-                    <option>TechCorp Global</option>
+                <select id="tenantFilter" class="w-full bg-[#141820] border border-slate-700 text-slate-300 text-xs rounded px-3 py-2 focus:outline-none focus:border-yellow-500">
+                    <option value="All">All Tenants</option>
+                    <option value="School A">School A</option>
+                    <option value="Hospital B">Hospital B</option>
                 </select>
             </div>
             <div class="pt-2">
-                <button type="button" class="w-full bg-yellow-600 hover:bg-yellow-500 text-white px-4 py-2 rounded text-xs uppercase font-bold tracking-wider transition-colors flex justify-center items-center">
+                <button type="button" onclick="generateReport()" class="w-full bg-yellow-600 hover:bg-yellow-500 text-white px-4 py-2 rounded text-xs uppercase font-bold tracking-wider transition-colors flex justify-center items-center">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
                     Generate & Download
                 </button>
@@ -90,5 +87,24 @@
             </ul>
         </div>
     </div>
+    </div>
 </div>
+
+<script>
+function generateReport() {
+    const reportType = document.getElementById('reportType').value;
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+    const tenantFilter = document.getElementById('tenantFilter').value;
+
+    const params = new URLSearchParams({
+        type: reportType,
+        start_date: startDate,
+        end_date: endDate,
+        tenant: tenantFilter
+    });
+
+    window.location.href = '/api/reports/generate?' + params.toString();
+}
+</script>
 {% endblock %}

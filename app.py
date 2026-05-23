@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify, request, redirect, url_for, session
+from flask import Flask, render_template, jsonify, request, redirect, url_for, session, send_file, make_response
 import sqlite3
 import joblib
 import os
@@ -567,6 +567,107 @@ def internal_notify():
     # Broadcast to all connected WebSocket clients
     socketio.emit('new_event', data)
     return jsonify({'success': True})
+
+@app.route('/api/reports/generate')
+def generate_report():
+    report_type = request.args.get('type')
+    start_date = request.args.get('start_date')
+    end_date = request.args.get('end_date')
+    tenant = request.args.get('tenant')
+    
+    # Enforce RBAC
+    if session.get('role') != 'Global Admin':
+        tenant = session.get('org_name', 'All')
+
+    conn = get_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    
+    # Base query for incidents
+    query = "SELECT * FROM incidents WHERE 1=1"
+    params = []
+    
+    if tenant and tenant != 'All':
+        query += " AND org_name = ?"
+        params.append(tenant)
+        
+    if start_date:
+        query += " AND created_at >= ?"
+        params.append(start_date + " 00:00:00")
+        
+    if end_date:
+        query += " AND created_at <= ?"
+        params.append(end_date + " 23:59:59")
+        
+    query += " ORDER BY created_at DESC"
+    
+    cursor.execute(query, params)
+    incidents = cursor.fetchall()
+    conn.close()
+
+    if report_type == 'csv_audit':
+        import csv
+        import io
+        si = io.StringIO()
+        cw = csv.writer(si)
+        cw.writerow(['Incident ID', 'Created At', 'Title', 'Severity', 'Status', 'Tenant', 'Analyst', 'Source IP', 'Mitre Tactic'])
+        for inc in incidents:
+            cw.writerow([
+                inc['incident_id'], inc['created_at'], inc['title'], inc['severity'], 
+                inc['status'], inc['org_name'], inc['assigned_analyst'], inc['src_ip'], inc['mitre_tactic']
+            ])
+        
+        output = make_response(si.getvalue())
+        output.headers["Content-Disposition"] = "attachment; filename=incident_audit_log.csv"
+        output.headers["Content-type"] = "text/csv"
+        return output
+
+    elif report_type == 'pdf_summary':
+        import io
+        from fpdf import FPDF
+        
+        class PDF(FPDF):
+            def header(self):
+                self.set_font('Helvetica', 'B', 15)
+                self.cell(0, 10, 'Executive Threat Summary', 0, 1, 'C')
+                self.set_font('Helvetica', 'I', 10)
+                self.cell(0, 10, f"Tenant: {tenant} | Period: {start_date or 'All'} to {end_date or 'All'}", 0, 1, 'C')
+                self.ln(10)
+
+        pdf = PDF()
+        pdf.add_page()
+        pdf.set_font('Helvetica', '', 11)
+        
+        pdf.set_font('Helvetica', 'B', 12)
+        pdf.cell(0, 10, 'Incident Breakdown', 0, 1)
+        pdf.set_font('Helvetica', '', 11)
+        
+        critical_count = sum(1 for i in incidents if i['severity'] == 'Critical')
+        high_count = sum(1 for i in incidents if i['severity'] == 'High')
+        total = len(incidents)
+        
+        pdf.cell(0, 10, f"Total Incidents Detected: {total}", 0, 1)
+        pdf.cell(0, 10, f"Critical Severity: {critical_count}", 0, 1)
+        pdf.cell(0, 10, f"High Severity: {high_count}", 0, 1)
+        pdf.ln(10)
+        
+        pdf.set_font('Helvetica', 'B', 12)
+        pdf.cell(0, 10, 'Recent Critical Threats (Top 10)', 0, 1)
+        pdf.set_font('Helvetica', '', 10)
+        
+        for inc in [i for i in incidents if i['severity'] == 'Critical'][:10]:
+            pdf.cell(0, 8, f"[{inc['created_at']}] {inc['title']} (IP: {inc['src_ip']}) - Status: {inc['status']}", 0, 1)
+            
+        # Return PDF
+        pdf_bytes = pdf.output()
+        buffer = io.BytesIO(pdf_bytes)
+        
+        return send_file(
+            buffer,
+            as_attachment=True,
+            download_name='executive_threat_summary.pdf',
+            mimetype='application/pdf'
+        )
 
 if __name__ == '__main__':
     socketio.run(app, debug=True, port=5000)
